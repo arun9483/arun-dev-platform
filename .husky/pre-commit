@@ -1,2 +1,2 @@
-pnpm exec lint-staged
-pnpm run test
+pnpm exec lint-staged --config lint-staged.config.mjs
+pnpm run test:unit
