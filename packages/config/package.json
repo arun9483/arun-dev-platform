@@ -1,0 +1,25 @@
+{
+  "name": "@arun-dev/config",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "exports": {
+    "./eslint": "./eslint.config.mjs",
+    "./typescript/base": "./tsconfig.base.json",
+    "./typescript/nextjs": "./tsconfig.nextjs.json",
+    "./tailwind": "./tailwind.config.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.4",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.2.0",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "typescript-eslint": "8.57.1",
+    "typescript": "5.9.3",
+    "tailwindcss": "4.2.2"
+  }
+}

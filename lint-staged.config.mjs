@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 
 const rootDir = resolve(import.meta.dirname);
+const prettierIgnorePath = resolve(rootDir, '.prettierignore');
 
 const workspaceConfigs = [
   { dir: 'apps/web', config: 'apps/web/eslint.config.mjs' },
@@ -32,7 +33,9 @@ function getEslintCommand(files) {
 export default {
   '*.{ts,tsx,js,mjs,cjs}': (files) => [
     ...getEslintCommand(files),
-    `prettier --write ${files.join(' ')}`,
+    `prettier --write --ignore-path ${prettierIgnorePath} ${files.join(' ')}`,
   ],
-  '*.{json,md,mdx,css,yaml,yml}': (files) => [`prettier --write ${files.join(' ')}`],
+  '*.{json,md,mdx,css,yaml,yml}': (files) => [
+    `prettier --write --ignore-path ${prettierIgnorePath} ${files.join(' ')}`,
+  ],
 };

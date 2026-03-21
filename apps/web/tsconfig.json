@@ -1,0 +1,25 @@
+{
+  "extends": "@arun-dev/config/typescript/nextjs",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@features/*": ["./features/*"],
+      "@components/*": ["./components/*"],
+      "@lib/*": ["./lib/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": [
+    "node_modules",
+    "**/*.unit.spec.ts",
+    "**/*.unit.spec.tsx",
+    "**/*.integration.spec.ts",
+    "**/*.integration.spec.tsx",
+    "**/*.e2e.spec.ts",
+    "tests/setup.ts",
+    "vitest.config.ts",
+    "vitest.unit.config.ts",
+    "vitest.integration.config.ts"
+  ]
+}

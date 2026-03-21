@@ -1,22 +1,9 @@
-import js from '@eslint/js';
-import tseslint from 'typescript-eslint';
-
-const baseConfig = tseslint.config(js.configs.recommended, ...tseslint.configs.strict, {
-  rules: {
-    'no-console': ['error', { allow: ['warn', 'error'] }],
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
-    ],
-    '@typescript-eslint/no-explicit-any': 'error',
-    '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
-  },
-});
+import { baseConfig, ignores } from './packages/config/eslint.config.mjs';
 
 export default [
+  ignores,
   {
-    ignores: ['node_modules/**', '.next/**', 'dist/**', 'coverage/**', '.turbo/**'],
+    ignores: ['.turbo/**'],
   },
   ...baseConfig,
 ];

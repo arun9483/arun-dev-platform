@@ -9,26 +9,30 @@
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "vitest run --passWithNoTests",
+    "test": "pnpm run test:unit && pnpm run test:integration",
+    "test:unit": "vitest run --passWithNoTests --config vitest.unit.config.ts",
+    "test:integration": "vitest run --passWithNoTests --config vitest.integration.config.ts",
     "test:e2e": "[ -d tests/e2e ] && ls tests/e2e/*.spec.* >/dev/null 2>&1 && playwright test || echo 'No e2e tests found, skipping'"
   },
   "dependencies": {
     "@arun-dev/ui": "workspace:*",
-    "next": "^16.2.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "tailwindcss": "^4.1.0"
+    "next": "16.2.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "tailwindcss": "4.2.2"
   },
   "devDependencies": {
     "@arun-dev/config": "workspace:*",
-    "@playwright/test": "^1.51.0",
-    "@testing-library/react": "^16.3.0",
-    "@types/node": "^22.13.0",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "eslint": "^9.22.0",
-    "eslint-config-next": "^16.2.0",
-    "typescript": "^5.8.0",
-    "vitest": "^3.1.0"
+    "@playwright/test": "1.58.2",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.2",
+    "@types/node": "22.19.15",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.2.0",
+    "jsdom": "29.0.1",
+    "typescript": "5.9.3",
+    "vitest": "3.2.4"
   }
 }
