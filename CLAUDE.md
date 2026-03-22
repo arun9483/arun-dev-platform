@@ -175,14 +175,28 @@ You must use:
 - Exception: `peerDependencies` may use `>=` for consumer flexibility
 - Exception: `workspace:*` for internal monorepo packages
 
-### Deployment (Planned)
+### Deployment
 
-- Vercel (edge-ready where possible, fast builds, preview deployments)
+- **Vercel** — native GitHub integration, auto-deploys on push to `main`
+- **GitHub Actions** — CI pipeline on PRs (lint, format, typecheck, tests, build, e2e)
+- **Pre-push hook** — local safeguard (lint, typecheck, tests) for direct pushes to `main`
+- Preview deployments auto-created on every PR
+- See `docs/deployment.md` for full deployment architecture
 
 ### Environment
 
 - Use environment variables for configs
 - Do not hardcode secrets
+- Production env vars: Vercel Dashboard (Production scope)
+- Preview env vars: Vercel Dashboard (Preview scope)
+- Local dev: `apps/web/.env.local` (copy from `.env.example`)
+
+### Sensitive Files (STRICT)
+
+- NEVER read, cat, print, or reference the contents of `.env.local`, `.env.production`, `.env.staging`, or any `.env.*` file (except `.env.example`)
+- NEVER include environment variable values in code suggestions, tool output, or conversation
+- Only `.env.example` (with placeholder values, no real secrets) may be read or modified
+- All real secrets must be configured in Vercel Dashboard or GitHub Secrets — never stored in the codebase
 
 ## 5. Folder Structure Rules (STRICT)
 

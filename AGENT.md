@@ -301,6 +301,8 @@ You MUST:
 - Do not introduce hidden coupling
 - Do not assume missing requirements
 - Do not add libraries without explanation
+- Do not read, print, or reference contents of `.env.local`, `.env.production`, `.env.staging`, or any `.env.*` file (except `.env.example`)
+- Do not include environment variable values in code suggestions or output
 
 ---
 

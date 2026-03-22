@@ -7,6 +7,7 @@
     "build": "next build",
     "clean": "rm -rf .next .turbo",
     "start": "next start",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "pnpm run test:unit && pnpm run test:integration",

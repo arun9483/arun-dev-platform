@@ -295,8 +295,9 @@ packages/
 
 ## Environments
 
-- Development
-- Production
+- Development (local)
+- Staging (`staging.arunkumartripathi.dev`)
+- Production (`arunkumartripathi.dev`)
 
 ---
 
@@ -304,16 +305,41 @@ packages/
 
 - Use environment variables for configs
 - Do not hardcode secrets
+- Production env vars configured in Vercel Dashboard (Production scope)
+- Staging env vars configured in Vercel Dashboard (Preview scope)
+- Local dev uses `.env.local` (copied from `.env.example`)
 
 ---
 
-# 📦 14. Build & Deployment (Planned)
+# 📦 14. Build & Deployment
 
 ---
 
-## Platform (Recommended)
+## Platform
 
-- Vercel
+- **Vercel** — hosting and deployment (native GitHub integration)
+- **GitHub Actions** — CI pipeline on PRs
+- **Pre-push hook** — local safeguard for direct pushes
+
+---
+
+## Deployment Model
+
+- Push to `main` → Vercel auto-deploys to production
+- PR opened → Vercel creates preview deployment
+- Pre-push hook enforces lint, typecheck, and tests before push
+- CI workflow enforces full checks on PRs
+
+---
+
+## CI Pipeline (automatic on PRs)
+
+1. Lint
+2. Format check
+3. Typecheck
+4. Tests (unit + integration)
+5. Build
+6. E2E tests (skips gracefully if none exist)
 
 ---
 
@@ -321,7 +347,10 @@ packages/
 
 - Edge-ready where possible
 - Fast builds
-- Preview deployments
+- Every push triggers a build — no commits are skipped
+- Turborepo remote cache enabled for CI speedup
+
+See [docs/deployment.md](./deployment.md) for full deployment architecture.
 
 ---
 

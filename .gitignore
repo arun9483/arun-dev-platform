@@ -9,6 +9,9 @@ dist/
 # Turbo
 .turbo/
 
+# Vercel
+.vercel/
+
 # TypeScript
 *.tsbuildinfo
 
