@@ -391,6 +391,14 @@ You MUST:
 2. Reference architecture rules
 3. Confirm assumptions (if unclear)
 
+### Before Committing
+
+You MUST:
+
+1. Show the proposed commit message to the user
+2. Wait for user confirmation before committing
+3. Do not commit until the user approves the message
+
 ### While Writing Code
 
 - Follow folder structure strictly
