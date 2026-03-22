@@ -241,6 +241,20 @@ Project {
 
 - `/components` → shared, dumb UI components
 - `/features/*/components` → feature-specific UI
+- `/packages/ui` → design system components (brand-agnostic)
+- `/packages/tokens` → design tokens (pure CSS custom properties)
+
+---
+
+## Design System
+
+- Pure CSS token-based architecture (no CSS-in-JS)
+- White-label compatible via brand CSS presets in `packages/tokens/src/brands/`
+- Theme support: system (default), dark, light via CSS custom properties
+- Components use semantic CSS variables (`var(--color-bg-primary)`), never hardcoded values
+- Brand selection at build time via `NEXT_PUBLIC_BRAND` env var and `prebuild` script
+
+See [docs/design-system.md](./design-system.md) for full design system architecture.
 
 ---
 
@@ -249,6 +263,7 @@ Project {
 - No business logic inside components
 - Max component size ~200 lines
 - Prefer composition over inheritance
+- No hardcoded color/font values — use CSS variables
 
 ---
 
@@ -284,8 +299,9 @@ Project {
 ## Allowed Shared Locations
 
 - `/lib` → utilities (pure functions only)
-- `/packages/ui` → design system
-- `/packages/config` → shared configs
+- `/packages/tokens` → design tokens (pure CSS)
+- `/packages/ui` → design system components
+- `/packages/config` → shared configs (ESLint, TypeScript)
 
 ---
 

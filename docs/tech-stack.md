@@ -52,28 +52,39 @@ The tech stack is chosen based on:
 
 ## Primary Choice
 
-- **Tailwind CSS**
+- **Tailwind CSS 4.x** (CSS-first configuration, no JS config files)
+- **Pure CSS custom properties** for design tokens
+- **No CSS-in-JS** — zero runtime style generation
 
 ---
 
-## With:
+## Design Token Architecture
 
-- Design tokens (colors, spacing, typography)
-- Centralized theme configuration
+- Tokens live in `packages/tokens/` (pure CSS, publishable)
+- Structural tokens (radius, shadows, typography scale) in `base.css`
+- Brand-specific tokens (colors, fonts) in `brands/*.css`
+- White-label compatible via `prebuild` script and `NEXT_PUBLIC_BRAND` env var
+
+---
+
+## Theme Support
+
+- Three modes: system (default), dark, light
+- CSS custom properties + `prefers-color-scheme` + `data-theme` attribute
+- FOUC prevention via inline script in `<head>`
 
 ---
 
 ## Rules
 
 - No inline styles (except dynamic cases)
-- No hardcoded values (use tokens)
-- Shared UI must use consistent design tokens
+- No hardcoded color/font values — use CSS variables (`var(--token-name)`)
+- No `tailwind.config.ts` — Tailwind v4 uses CSS-first configuration
+- No CSS-in-JS, styled-components, or runtime style generation
+- Shared UI must use semantic tokens (`--color-bg-primary`) over raw brand tokens
+- Components must be brand-agnostic
 
----
-
-## Optional (Advanced)
-
-- Vanilla Extract (only if strongly justified)
+See [docs/design-system.md](./design-system.md) for full design system architecture.
 
 ---
 
@@ -94,6 +105,7 @@ apps/
   web/
 
 packages/
+  tokens/
   ui/
   config/
 ```
@@ -102,8 +114,9 @@ packages/
 
 ## Package Responsibilities
 
-- `ui` → reusable components
-- `config` → shared configs (eslint, tsconfig, tailwind)
+- `tokens` → design tokens (pure CSS, white-label compatible)
+- `ui` → reusable design system components (brand-agnostic)
+- `config` → shared configs (ESLint, TypeScript)
 
 ---
 

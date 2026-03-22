@@ -6,6 +6,9 @@ node_modules/
 out/
 dist/
 
+# Generated brand CSS
+apps/web/styles/brand.css
+
 # Turbo
 .turbo/
 

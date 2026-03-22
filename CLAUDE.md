@@ -128,11 +128,15 @@ You must use:
 
 ### Styling
 
-- Tailwind CSS with design tokens (colors, spacing, typography) and centralized theme configuration
+- Tailwind CSS 4.x (CSS-first configuration, no JS config files)
+- Pure CSS custom properties for design tokens — no CSS-in-JS
+- Tokens live in `packages/tokens/` (pure CSS, publishable, white-label compatible)
+- Brand selection via `NEXT_PUBLIC_BRAND` env var and `prebuild` script
+- Theme support: system (default), dark, light via `data-theme` attribute
 - No inline styles (except dynamic cases)
-- No hardcoded values (use tokens)
-- Shared UI must use consistent design tokens
-- Optional: Vanilla Extract (only if strongly justified)
+- No hardcoded color/font values — use CSS variables (`var(--token-name)`)
+- Components must use semantic tokens (`--color-bg-primary`) over raw brand tokens
+- See `docs/design-system.md` for full architecture
 
 ### Content & Data
 
@@ -211,15 +215,16 @@ apps/
       profile/
     lib/                  # Shared utilities (pure functions only, constants, generic helpers)
     styles/
-      tokens/             # Colors, spacing, typography
-      themes/             # Theme configuration (light/dark, etc.)
+      brand.css           # Generated brand re-export (gitignored, created by prebuild)
+      themes/             # Theme switching logic (FOUC prevention script)
     tests/
       setup.ts          # Shared test setup (jest-dom matchers)
       e2e/              # E2E tests only (Playwright, *.e2e.spec.ts)
 
 packages/
-  ui/                     # Reusable design system components (no business logic)
-  config/                 # Shared configs (ESLint, TypeScript, Tailwind)
+  tokens/                 # Design tokens (pure CSS, white-label compatible)
+  ui/                     # Reusable design system components (brand-agnostic)
+  config/                 # Shared configs (ESLint, TypeScript)
 
 docs/                     # Architecture and system documentation
 ```
