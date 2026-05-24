@@ -1,0 +1,10 @@
+{
+  "name": "@arun-dev/tokens",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./src/base.css": "./src/base.css",
+    "./src/brands/arun.css": "./src/brands/arun.css",
+    "./src/brands/default.css": "./src/brands/default.css"
+  }
+}

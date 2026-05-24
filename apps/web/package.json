@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "prebuild": "tsx scripts/prebuild.ts",
+    "predev": "tsx scripts/prebuild.ts",
     "dev": "next dev",
     "build": "next build",
     "clean": "rm -rf .next .turbo",
@@ -16,6 +18,7 @@
     "test:e2e": "[ -d tests/e2e ] && ls tests/e2e/*.spec.* >/dev/null 2>&1 && playwright test || echo 'No e2e tests found, skipping'"
   },
   "dependencies": {
+    "@arun-dev/tokens": "workspace:*",
     "@arun-dev/ui": "workspace:*",
     "next": "16.2.0",
     "react": "19.2.4",
@@ -25,14 +28,17 @@
   "devDependencies": {
     "@arun-dev/config": "workspace:*",
     "@playwright/test": "1.58.2",
+    "@tailwindcss/postcss": "4.2.2",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
     "@types/node": "22.19.15",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "@vitest/coverage-v8": "3.2.4",
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.0",
     "jsdom": "29.0.1",
+    "tsx": "4.19.4",
     "typescript": "5.9.3",
     "vitest": "3.2.4"
   }

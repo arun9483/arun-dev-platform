@@ -2,6 +2,10 @@ import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
 
 export default defineConfig({
+  esbuild: {
+    jsx: 'automatic',
+    jsxImportSource: 'react',
+  },
   test: {
     name: 'unit',
     environment: 'jsdom',
@@ -10,7 +14,13 @@ export default defineConfig({
     setupFiles: ['./tests/setup.ts'],
     coverage: {
       provider: 'v8',
-      include: ['app/**', 'features/**', 'components/**', 'lib/**'],
+      thresholds: {
+        lines: 100,
+        functions: 100,
+        branches: 100,
+        statements: 100,
+      },
+      include: ['app/**', 'features/**', 'components/**', 'lib/**', 'styles/**', 'scripts/**'],
       exclude: [
         '**/*.unit.spec.ts',
         '**/*.unit.spec.tsx',
@@ -18,6 +28,8 @@ export default defineConfig({
         '**/*.integration.spec.tsx',
         '**/*.e2e.spec.ts',
         '**/types/**',
+        '**/*.config.ts',
+        '**/next-env.d.ts',
       ],
     },
   },

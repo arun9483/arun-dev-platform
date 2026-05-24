@@ -1,0 +1,3 @@
+/* Default brand — mirrors the arun brand.
+   Used as a fallback when NEXT_PUBLIC_BRAND is unset. */
+@import './arun.css';
