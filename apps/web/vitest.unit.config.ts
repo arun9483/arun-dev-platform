@@ -39,6 +39,8 @@ export default defineConfig({
       '@features': resolve(__dirname, './features'),
       '@components': resolve(__dirname, './components'),
       '@lib': resolve(__dirname, './lib'),
+      'next/font/google': resolve(__dirname, './__mocks__/next-font-google.ts'),
+      'next/navigation': resolve(__dirname, './__mocks__/next-navigation.ts'),
     },
   },
 });

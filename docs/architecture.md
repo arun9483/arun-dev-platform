@@ -231,6 +231,101 @@ Project {
 
 ---
 
+## 7.1 RSC Orchestration — Loader Pattern
+
+### The Problem
+
+RSC pages cannot use React hooks (`useState`, `useEffect`). The standard hook-based orchestration layer does not apply. Without a strict rule, pages accumulate inline service calls and become untestable blobs.
+
+### The Two Data Flow Paths
+
+```
+Client Component path (interactive UI):
+  Component → Hook (useState/useEffect) → Service → Repository
+
+Server Component path (RSC page):
+  Page (thin render) → Loader (async fn) → Service → Repository
+```
+
+The **Loader** is the server-side equivalent of the Hook. It owns all orchestration for an RSC page.
+
+### Loader Rules (STRICT)
+
+1. **Every RSC page must have a co-located `page.loader.ts`** — no inline service calls in `page.tsx`
+2. **The page file is render-only** — max ~30 lines, imports loader result, renders components
+3. **Loaders accept a `deps` parameter with a default factory** — enables full unit testability with injected mock services
+4. **Loaders return an explicitly typed `*PageData` object** — all fields typed, no implicit any
+5. **Loaders call services only** — never repositories or data sources directly (no layer skipping)
+6. **Loaders must have a co-located `page.loader.unit.spec.ts`** — tests inject mock deps
+7. **Loaders are pure async functions** — no React, no state, no side effects
+
+### File Naming Convention
+
+```
+app/
+  page.tsx                          ← thin render
+  page.loader.ts                    ← orchestration
+  page.loader.unit.spec.ts          ← loader tests
+  [feature]/
+    page.tsx
+    page.loader.ts
+    page.loader.unit.spec.ts
+    [slug]/
+      page.tsx
+      page.loader.ts
+      page.loader.unit.spec.ts
+```
+
+### Loader Contract (Standard Shape)
+
+```ts
+// 1. Explicit deps type
+type PageDeps = {
+  someService: SomeService;
+};
+
+// 2. Default factory using real repositories
+function createPageDeps(): PageDeps {
+  return {
+    someService: createSomeService(someRepository),
+  };
+}
+
+// 3. Typed return
+export type SomePageData = {
+  items: Item[];
+};
+
+// 4. Injectable loader
+export async function loadSomePage(deps: PageDeps = createPageDeps()): Promise<SomePageData> {
+  const items = await deps.someService.getAll();
+  return { items };
+}
+```
+
+### Compliant Page Shape
+
+```tsx
+// app/some/page.tsx — THIN
+import { loadSomePage } from './page.loader';
+import { SomeList } from '@/features/some/components/SomeList';
+
+export default async function SomePage() {
+  const { items } = await loadSomePage();
+  return <SomeList items={items} />;
+}
+```
+
+### Violations (Not Allowed)
+
+- Calling `createXxxService(xxxRepository)` inside `page.tsx`
+- Calling service methods directly inside `page.tsx`
+- Loaders calling repositories directly
+- Loaders with no unit tests
+- Pages longer than ~30 lines due to inline orchestration
+
+---
+
 ---
 
 # 🎨 8. UI Architecture

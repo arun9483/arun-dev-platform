@@ -3,20 +3,28 @@ import { render, screen } from '@testing-library/react';
 import HomePage from './page';
 
 describe('HomePage', () => {
-  it('renders the platform heading', () => {
-    render(<HomePage />);
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Arun Dev Platform');
+  it('renders the profile name heading', async () => {
+    render(await HomePage());
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Arun Tripathi');
   });
 
-  it('renders the tagline', () => {
-    render(<HomePage />);
-    expect(
-      screen.getByText('Engineering excellence, technical depth, real-world impact.'),
-    ).toBeInTheDocument();
+  it('renders the experience section', async () => {
+    render(await HomePage());
+    expect(screen.getByRole('heading', { name: /experience/i })).toBeInTheDocument();
   });
 
-  it('renders a main landmark', () => {
-    render(<HomePage />);
-    expect(screen.getByRole('main')).toBeInTheDocument();
+  it('renders the featured projects section', async () => {
+    render(await HomePage());
+    expect(screen.getByRole('heading', { name: /featured projects/i })).toBeInTheDocument();
+  });
+
+  it('renders the latest articles section', async () => {
+    render(await HomePage());
+    expect(screen.getByRole('heading', { name: /latest articles/i })).toBeInTheDocument();
+  });
+
+  it('renders the achievements section', async () => {
+    render(await HomePage());
+    expect(screen.getByRole('heading', { name: /achievements/i })).toBeInTheDocument();
   });
 });

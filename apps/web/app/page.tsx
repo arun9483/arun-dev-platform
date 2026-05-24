@@ -1,12 +1,50 @@
-export default function HomePage() {
+import { loadHomePage } from './page.loader';
+import { ProfileCard } from '@/features/profile/components/ProfileCard';
+import { ExperienceTimeline } from '@/features/profile/components/ExperienceTimeline';
+import { ProjectList } from '@/features/projects/components/ProjectList';
+import { ArticleList } from '@/features/articles/components/ArticleList';
+import { AchievementList } from '@/features/achievements/components/AchievementList';
+import Link from 'next/link';
+
+export default async function HomePage() {
+  const { profile, featuredSkills, featuredProjects, featuredArticles, featuredAchievements } =
+    await loadHomePage();
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8">
-      <h1 className="text-4xl font-bold tracking-tight text-[var(--color-text-primary)]">
-        Arun Dev Platform
-      </h1>
-      <p className="mt-4 text-lg text-[var(--color-text-secondary)]">
-        Engineering excellence, technical depth, real-world impact.
-      </p>
-    </main>
+    <div className="mx-auto max-w-4xl px-6 py-16 space-y-20">
+      <section>
+        <ProfileCard profile={profile} featuredSkills={featuredSkills} />
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-xl font-semibold text-primary">Experience</h2>
+        <ExperienceTimeline experience={profile.experience} />
+      </section>
+
+      <section className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold text-primary">Featured Projects</h2>
+          <Link href="/projects" className="text-sm underline text-accent">
+            View all
+          </Link>
+        </div>
+        <ProjectList projects={featuredProjects} />
+      </section>
+
+      <section className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold text-primary">Latest Articles</h2>
+          <Link href="/articles" className="text-sm underline text-accent">
+            View all
+          </Link>
+        </div>
+        <ArticleList articles={featuredArticles} />
+      </section>
+
+      <section className="space-y-6">
+        <h2 className="text-xl font-semibold text-primary">Achievements</h2>
+        <AchievementList achievements={featuredAchievements} />
+      </section>
+    </div>
   );
 }

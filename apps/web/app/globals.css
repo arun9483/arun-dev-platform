@@ -3,9 +3,479 @@
 @import 'tailwindcss';
 @import '../styles/brand.css';
 
-/* Base styles — applied globally via CSS variables */
+/* ── Design token extensions ── */
+:root {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Token aliases — bridge between code usage and brand.css names */
+  --color-accent-primary: var(--color-text-accent);
+  --color-accent-subtle: var(--color-bg-accent);
+  --color-bg-tertiary: var(--color-bg-surface);
+
+  /* Typography */
+  --tracking-heading: -0.02em;
+
+  /* Difficulty semantic tokens — map to existing feedback tokens */
+  --color-difficulty-beginner: var(--color-success);
+  --color-difficulty-beginner-bg: var(--color-success-bg);
+  --color-difficulty-intermediate: var(--color-warning);
+  --color-difficulty-intermediate-bg: var(--color-warning-bg);
+  --color-difficulty-advanced: var(--color-error);
+  --color-difficulty-advanced-bg: var(--color-error-bg);
+
+  /* Code block — always dark, theme-independent */
+  --code-bg: #0d1117;
+  --code-header-bg: #161b22;
+  --code-border: #21262d;
+  --code-text-dim: #8b949e;
+  --code-copy-bg: rgba(255, 255, 255, 0.05);
+  --code-copied-bg: rgba(74, 222, 128, 0.1);
+  --code-copied-color: #4ade80;
+  --code-copied-border: rgba(74, 222, 128, 0.3);
+  --code-border-dim: #30363d;
+
+  /* sugar-high syntax tokens (applied via inline style="color:var(--sh-*)") */
+  --sh-keyword: #c792ea;
+  --sh-string: #c3e88d;
+  --sh-comment: #546e7a;
+  --sh-jsxliterals: #89ddff;
+  --sh-identifier: #e2e8f0;
+  --sh-sign: #89ddff;
+  --sh-class: #ffcb6b;
+  --sh-property: #80cbc4;
+  --sh-entity: #82aaff;
+  --sh-space: inherit;
+}
+
+/* ─────────────────────────────────────────────────
+   UTILITY CLASSES
+   Naming convention: {concept}-{modifier}
+   e.g. text-primary, bg-surface, border-accent
+   ───────────────────────────────────────────────── */
+
+/* ── Text colors ── */
+@utility text-primary {
+  color: var(--color-text-primary);
+}
+@utility text-secondary {
+  color: var(--color-text-secondary);
+}
+@utility text-muted {
+  color: var(--color-text-muted);
+}
+@utility text-accent {
+  color: var(--color-text-accent);
+}
+@utility text-on-accent {
+  color: var(--color-text-on-accent);
+}
+@utility text-error {
+  color: var(--color-error);
+}
+
+/* Display heading — color + tracking for large titles. Use with text-size + font-weight. */
+@utility text-display {
+  color: var(--color-text-primary);
+  letter-spacing: var(--tracking-heading);
+}
+
+/* Overline — uppercase small caps label above sections (typography term) */
+@utility overline {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-text-muted);
+}
+
+/* ── Background colors ── */
+@utility bg-primary {
+  background-color: var(--color-bg-primary);
+}
+@utility bg-secondary {
+  background-color: var(--color-bg-secondary);
+}
+@utility bg-surface {
+  background-color: var(--color-bg-surface);
+}
+@utility bg-accent {
+  background-color: var(--color-text-accent);
+}
+@utility bg-accent-subtle {
+  background-color: var(--color-bg-accent);
+}
+@utility bg-error-subtle {
+  background-color: var(--color-error-bg);
+}
+
+/* ── Borders ── */
+@utility border-default {
+  border: 1px solid var(--color-border-default);
+}
+@utility border-accent {
+  border: 1px solid var(--color-border-accent);
+}
+@utility border-top-default {
+  border-top: 1px solid var(--color-border-default);
+}
+@utility border-b-default {
+  border-bottom: 1px solid var(--color-border-default);
+}
+@utility border-color-default {
+  border-color: var(--color-border-default);
+}
+
+/* ─────────────────────────────────────────────────
+   COMPONENT PATTERNS
+   ───────────────────────────────────────────────── */
+
+/* ── Card ── */
+@utility card {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border-default);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Chip / pill ──
+   Shape base: use `chip` + one color variant.
+   e.g. `chip chip-default` or `chip chip-accent` */
+
+@utility chip {
+  font-size: var(--text-xs);
+  padding-inline: 0.625rem;
+  padding-block: 0.25rem;
+  border-radius: 9999px;
+  font-weight: 500;
+}
+
+/* Neutral (tech tags, nav chips) */
+@utility chip-default {
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border-default);
+}
+
+/* Accent (featured, skills, labels) */
+@utility chip-accent {
+  background-color: var(--color-bg-accent);
+  color: var(--color-text-accent);
+  border: 1px solid var(--color-border-accent);
+}
+
+/* ── Button ──
+   Shape base: use `btn` + one color variant.
+   e.g. `btn btn-ghost` or `btn btn-primary` */
+
+@utility btn {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+  border-radius: 9999px;
+  transition: opacity 150ms ease;
+}
+
+/* Ghost (outline, secondary action) */
+@utility btn-ghost {
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-default);
+}
+
+/* Primary (filled, main CTA) */
+@utility btn-primary {
+  background-color: var(--color-text-accent);
+  color: var(--color-text-on-accent);
+}
+
+/* ── Badge ──
+   Color base for status/difficulty badges. Reads --badge-bg / --badge-color
+   set by the variant class. Use with `chip` for shape.
+   e.g. `chip badge difficulty-beginner` */
+
+@utility badge {
+  background-color: var(--badge-bg, var(--color-bg-surface));
+  color: var(--badge-color, var(--color-text-secondary));
+}
+
+@utility difficulty-beginner {
+  --badge-bg: var(--color-difficulty-beginner-bg);
+  --badge-color: var(--color-difficulty-beginner);
+}
+
+@utility difficulty-intermediate {
+  --badge-bg: var(--color-difficulty-intermediate-bg);
+  --badge-color: var(--color-difficulty-intermediate);
+}
+
+@utility difficulty-advanced {
+  --badge-bg: var(--color-difficulty-advanced-bg);
+  --badge-color: var(--color-difficulty-advanced);
+}
+
+/* ── Metric ──
+   Accent-tinted stat card (impact metrics) */
+@utility metric {
+  padding: 0.75rem;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  background-color: var(--color-bg-accent);
+  border: 1px solid var(--color-border-accent);
+}
+
+/* ── Bar accent ──
+   Decorative horizontal rule in brand color */
+@utility bar-accent {
+  width: 2.5rem;
+  height: 0.25rem;
+  border-radius: 9999px;
+  background-color: var(--color-text-accent);
+  flex-shrink: 0;
+}
+
+/* ── Cover ──
+   Full-width image cover wrapper */
+@utility cover {
+  width: 100%;
+  overflow: hidden;
+  max-height: 420px;
+  background-color: var(--color-bg-surface);
+}
+
+/* ── Code block ──
+   Dark-theme container, always independent of site theme.
+   Dynamic copy-button state (copied vs idle) stays as inline style — it changes at runtime. */
+
+@utility code-block {
+  background-color: var(--code-bg);
+  border: 1px solid var(--code-border);
+}
+
+@utility code-header {
+  background-color: var(--code-header-bg);
+  border-bottom: 1px solid var(--code-border);
+}
+
+@utility code-pre {
+  background-color: var(--code-bg);
+  margin: 0;
+}
+
+@utility text-code-dim {
+  color: var(--code-text-dim);
+}
+
+/* ── Link back ──
+   Inline navigation link pointing backwards */
+@utility link-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  transition: opacity 150ms ease;
+}
+
+/* ─────────────────────────────────────────────────
+   BASE STYLES
+   ───────────────────────────────────────────────── */
+
 body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Prose — MDX / article typography ── */
+.prose {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-primary);
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--leading-tight);
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+}
+
+.prose h1 {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-weight-bold);
+}
+.prose h2 {
+  font-size: var(--text-2xl);
+  padding-bottom: 0.4em;
+  border-bottom: 1px solid var(--color-border-default);
+}
+.prose h3 {
+  font-size: var(--text-xl);
+}
+.prose h4 {
+  font-size: var(--text-lg);
+}
+
+.prose p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.prose strong {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.prose a {
+  color: var(--color-text-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose ul,
+.prose ol {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-left: 1.5em;
+}
+.prose ul {
+  list-style-type: disc;
+}
+.prose ol {
+  list-style-type: decimal;
+}
+.prose li {
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-accent);
+}
+
+.prose pre {
+  background-color: var(--code-bg);
+  color: var(--color-text-inverse);
+  padding: 1.25em 1.5em;
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  border-radius: 0;
+}
+
+.prose blockquote {
+  border-left: 4px solid var(--color-border-accent);
+  padding-left: 1em;
+  margin-left: 0;
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--color-border-default);
+  margin: 2.5em 0;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-size: var(--text-sm);
+}
+.prose th,
+.prose td {
+  padding: 0.5em 0.75em;
+  border: 1px solid var(--color-border-default);
+  text-align: left;
+}
+.prose th {
+  background-color: var(--color-bg-surface);
+  font-weight: var(--font-weight-semibold);
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+.prose > :last-child {
+  margin-bottom: 0;
+}
+
+/* GFM task lists */
+.prose ul:has(li input[type='checkbox']) {
+  list-style: none;
+  padding-left: 0;
+}
+.prose li:has(input[type='checkbox']) {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5em;
+  padding-left: 0;
+}
+.prose input[type='checkbox'] {
+  margin-top: 0.2em;
+  accent-color: var(--color-text-accent);
+  flex-shrink: 0;
+}
+
+.sh__token--comment {
+  font-style: italic;
+}
+
+/* ── Nav link ── */
+.nav-link {
+  position: relative;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  padding-bottom: 2px;
+  transition: color 150ms ease;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  border-radius: 9999px;
+  background-color: var(--color-text-accent);
+  transition: width 200ms ease;
+}
+.nav-link:hover {
+  color: var(--color-text-accent);
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+.nav-link[data-active='true'] {
+  color: var(--color-text-accent);
+  font-weight: 600;
+}
+.nav-link[data-active='true']::after {
+  width: 100%;
 }
