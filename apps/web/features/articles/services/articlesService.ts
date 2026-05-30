@@ -1,19 +1,13 @@
-import type { Article, ArticleMeta, ArticleDifficulty } from '../types';
+import type { Article, ArticleMeta } from '../types';
 import type { ArticlesRepository } from '../repositories/articlesRepository';
-import { articlesRepository } from '../repositories/articlesRepository';
-
-export type ArticleFilter = {
-  tag?: string;
-  category?: string;
-  difficulty?: ArticleDifficulty;
-  featured?: boolean;
-};
+import type { SearchDocument } from '@/lib/search/types';
 
 export type ArticlesService = {
-  getAll: (filter?: ArticleFilter) => Promise<ArticleMeta[]>;
+  getAll: () => Promise<ArticleMeta[]>;
   getBySlug: (slug: string) => Promise<Article | null>;
   getFeatured: () => Promise<ArticleMeta[]>;
   getAllSlugs: () => Promise<string[]>;
+  getSearchDocuments: () => Promise<SearchDocument[]>;
 };
 
 function sortByDate(articles: ArticleMeta[]): ArticleMeta[] {
@@ -22,22 +16,22 @@ function sortByDate(articles: ArticleMeta[]): ArticleMeta[] {
   );
 }
 
+function articleToSearchDocument(article: ArticleMeta): SearchDocument {
+  return {
+    id: article.slug,
+    type: 'article',
+    href: `/articles/${article.slug}`,
+    title: article.title,
+    description: article.summary,
+    tags: article.metadata.tags.join(' '),
+  };
+}
+
 export function createArticlesService(repository: ArticlesRepository): ArticlesService {
   return {
-    getAll: async (filter) => {
+    getAll: async () => {
       const all = await repository.findAll();
-      const filtered = filter
-        ? all.filter((article) => {
-            if (filter.tag && !article.metadata.tags.includes(filter.tag)) return false;
-            if (filter.category && article.metadata.category !== filter.category) return false;
-            if (filter.difficulty && article.metadata.difficulty !== filter.difficulty)
-              return false;
-            if (filter.featured !== undefined && article.metadata.featured !== filter.featured)
-              return false;
-            return true;
-          })
-        : all;
-      return sortByDate(filtered);
+      return sortByDate(all);
     },
 
     getBySlug: (slug) => repository.findBySlug(slug),
@@ -48,7 +42,10 @@ export function createArticlesService(repository: ArticlesRepository): ArticlesS
     },
 
     getAllSlugs: () => repository.findAllSlugs(),
+
+    getSearchDocuments: async () => {
+      const all = await repository.findAll();
+      return all.map(articleToSearchDocument);
+    },
   };
 }
-
-export const articlesService = createArticlesService(articlesRepository);

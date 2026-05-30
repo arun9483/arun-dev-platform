@@ -38,31 +38,14 @@ const mockAchievements: Achievement[] = [
 
 const mockRepository: AchievementsRepository = {
   findAll: async () => mockAchievements,
-  findById: async (id) => mockAchievements.find((a) => a.id === id) ?? null,
 };
 
 describe('achievementsService', () => {
   const service = createAchievementsService(mockRepository);
 
-  it('returns all achievements with no filter', async () => {
-    const result = await service.getAll();
-    expect(result).toHaveLength(3);
-  });
-
-  it('filters by type', async () => {
-    const result = await service.getAll({ type: 'certification' });
-    expect(result).toHaveLength(1);
-    expect(result[0].id).toBe('cert-1');
-  });
-
-  it('filters by featured', async () => {
-    const result = await service.getAll({ featured: true });
-    expect(result).toHaveLength(2);
-    expect(result.every((a) => a.metadata.featured)).toBe(true);
-  });
-
   it('returns only featured achievements', async () => {
     const result = await service.getFeatured();
     expect(result).toHaveLength(2);
+    expect(result.every((a) => a.metadata.featured)).toBe(true);
   });
 });

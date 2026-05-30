@@ -2,7 +2,7 @@
 
 import { useSearch } from '../hooks/useSearch';
 import { SearchResultCard } from './SearchResultCard';
-import type { SearchDocument } from '@/lib/search/searchIndex';
+import type { SearchDocument } from '@/lib/search/types';
 
 type Props = {
   documents: SearchDocument[];

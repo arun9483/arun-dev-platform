@@ -42,27 +42,9 @@ const mockRepository: ProjectsRepository = {
 describe('projectsService', () => {
   const service = createProjectsService(mockRepository);
 
-  it('returns all projects with no filter', async () => {
+  it('returns all projects', async () => {
     const result = await service.getAll();
     expect(result).toHaveLength(2);
-  });
-
-  it('filters by tag', async () => {
-    const result = await service.getAll({ tag: 'frontend' });
-    expect(result).toHaveLength(1);
-    expect(result[0].id).toBe('project-a');
-  });
-
-  it('filters by techStack', async () => {
-    const result = await service.getAll({ techStack: 'Node.js' });
-    expect(result).toHaveLength(1);
-    expect(result[0].id).toBe('project-b');
-  });
-
-  it('filters by featured', async () => {
-    const result = await service.getAll({ featured: true });
-    expect(result).toHaveLength(1);
-    expect(result[0].id).toBe('project-a');
   });
 
   it('returns project by slug', async () => {
@@ -84,5 +66,19 @@ describe('projectsService', () => {
   it('returns all slugs', async () => {
     const slugs = await service.getAllSlugs();
     expect(slugs).toEqual(['project-a', 'project-b']);
+  });
+
+  it('returns search documents with project-shaped fields', async () => {
+    const docs = await service.getSearchDocuments();
+    expect(docs).toHaveLength(2);
+    expect(docs[0]).toEqual({
+      id: 'project-a',
+      type: 'project',
+      href: '/projects/project-a',
+      title: 'Project A',
+      description: 'Desc A',
+      tags: 'frontend performance',
+      techStack: 'React TypeScript',
+    });
   });
 });

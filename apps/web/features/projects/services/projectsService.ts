@@ -1,34 +1,30 @@
 import type { Project } from '../types';
 import type { ProjectsRepository } from '../repositories/projectsRepository';
-import { projectsRepository } from '../repositories/projectsRepository';
-
-export type ProjectFilter = {
-  tag?: string;
-  techStack?: string;
-  featured?: boolean;
-};
+import type { SearchDocument } from '@/lib/search/types';
 
 export type ProjectsService = {
-  getAll: (filter?: ProjectFilter) => Promise<Project[]>;
+  getAll: () => Promise<Project[]>;
   getBySlug: (slug: string) => Promise<Project | null>;
   getFeatured: () => Promise<Project[]>;
   getAllSlugs: () => Promise<string[]>;
+  getSearchDocuments: () => Promise<SearchDocument[]>;
 };
+
+function projectToSearchDocument(project: Project): SearchDocument {
+  return {
+    id: project.slug,
+    type: 'project',
+    href: `/projects/${project.slug}`,
+    title: project.title,
+    description: project.description,
+    tags: project.metadata.tags.join(' '),
+    techStack: project.techStack.join(' '),
+  };
+}
 
 export function createProjectsService(repository: ProjectsRepository): ProjectsService {
   return {
-    getAll: async (filter) => {
-      const all = await repository.findAll();
-      if (!filter) return all;
-
-      return all.filter((project) => {
-        if (filter.tag && !project.metadata.tags.includes(filter.tag)) return false;
-        if (filter.techStack && !project.techStack.includes(filter.techStack)) return false;
-        if (filter.featured !== undefined && project.metadata.featured !== filter.featured)
-          return false;
-        return true;
-      });
-    },
+    getAll: () => repository.findAll(),
 
     getBySlug: (slug) => repository.findBySlug(slug),
 
@@ -41,7 +37,10 @@ export function createProjectsService(repository: ProjectsRepository): ProjectsS
       const all = await repository.findAll();
       return all.map((p) => p.slug);
     },
+
+    getSearchDocuments: async () => {
+      const all = await repository.findAll();
+      return all.map(projectToSearchDocument);
+    },
   };
 }
-
-export const projectsService = createProjectsService(projectsRepository);

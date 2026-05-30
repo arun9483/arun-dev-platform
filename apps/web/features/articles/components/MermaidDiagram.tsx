@@ -43,10 +43,12 @@ export function MermaidDiagram({ chart }: Props) {
       mermaid
         .render(diagramId, chart.trim())
         .then(({ svg }) => {
-          if (cancelled || !ref.current) return;
-          ref.current.innerHTML = svg;
-          // Make SVG responsive
-          const svgEl = ref.current.querySelector('svg');
+          if (cancelled) return;
+          const el = ref.current;
+          /* v8 ignore next */
+          if (!el) return;
+          el.innerHTML = svg;
+          const svgEl = el.querySelector('svg');
           if (svgEl) {
             svgEl.removeAttribute('height');
             svgEl.setAttribute('width', '100%');

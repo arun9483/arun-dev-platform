@@ -20,7 +20,6 @@ const mockDeps = {
     getFeaturedSkills: vi
       .fn()
       .mockResolvedValue([{ name: 'React', category: 'frontend' as const }]),
-    getSkillsByCategory: vi.fn(),
   },
   projectsService: {
     getAll: vi.fn(),
@@ -35,7 +34,6 @@ const mockDeps = {
     getAllSlugs: vi.fn(),
   },
   achievementsService: {
-    getAll: vi.fn(),
     getFeatured: vi.fn().mockResolvedValue([]),
   },
 };
@@ -59,6 +57,15 @@ describe('loadHomePage', () => {
     expect(mockDeps.projectsService.getFeatured).toHaveBeenCalledOnce();
     expect(mockDeps.articlesService.getFeatured).toHaveBeenCalledOnce();
     expect(mockDeps.achievementsService.getFeatured).toHaveBeenCalledOnce();
+  });
+
+  it('exercises the default deps factory when called with no args (smoke test)', async () => {
+    const data = await loadHomePage();
+    expect(data.profile).toBeDefined();
+    expect(Array.isArray(data.featuredProjects)).toBe(true);
+    expect(Array.isArray(data.featuredArticles)).toBe(true);
+    expect(Array.isArray(data.featuredAchievements)).toBe(true);
+    expect(Array.isArray(data.featuredSkills)).toBe(true);
   });
 
   it('fetches all services in parallel (Promise.all)', async () => {

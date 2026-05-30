@@ -39,4 +39,9 @@ describe('loadProjectsPage', () => {
     await loadProjectsPage(mockDeps);
     expect(mockDeps.projectsService.getAll).toHaveBeenCalledOnce();
   });
+
+  it('exercises the default deps factory when called with no args (smoke test)', async () => {
+    const data = await loadProjectsPage();
+    expect(Array.isArray(data.projects)).toBe(true);
+  });
 });

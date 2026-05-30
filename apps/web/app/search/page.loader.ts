@@ -2,42 +2,21 @@ import { projectsRepository } from '@/features/projects/repositories/projectsRep
 import { articlesRepository } from '@/features/articles/repositories/articlesRepository';
 import { createProjectsService } from '@/features/projects/services/projectsService';
 import { createArticlesService } from '@/features/articles/services/articlesService';
-import type { ProjectsService } from '@/features/projects/services/projectsService';
-import type { ArticlesService } from '@/features/articles/services/articlesService';
-import type { Project } from '@/features/projects/types';
-import type { ArticleMeta } from '@/features/articles/types';
-import type { SearchDocument } from '@/lib/search/searchIndex';
+import { createSearchService } from '@/features/agent/services/searchService';
+import type { SearchService } from '@/features/agent/services/searchService';
+import type { SearchDocument } from '@/lib/search/types';
 
 type SearchPageDeps = {
-  projectsService: ProjectsService;
-  articlesService: ArticlesService;
+  searchService: SearchService;
 };
 
 function createSearchPageDeps(): SearchPageDeps {
   return {
-    projectsService: createProjectsService(projectsRepository),
-    articlesService: createArticlesService(articlesRepository),
+    searchService: createSearchService([
+      createProjectsService(projectsRepository),
+      createArticlesService(articlesRepository),
+    ]),
   };
-}
-
-export function toSearchDocuments(projects: Project[], articles: ArticleMeta[]): SearchDocument[] {
-  return [
-    ...projects.map((p) => ({
-      id: p.slug,
-      type: 'project' as const,
-      title: p.title,
-      description: p.description,
-      tags: p.metadata.tags.join(' '),
-      techStack: p.techStack.join(' '),
-    })),
-    ...articles.map((a) => ({
-      id: a.slug,
-      type: 'article' as const,
-      title: a.title,
-      description: a.summary,
-      tags: a.metadata.tags.join(' '),
-    })),
-  ];
 }
 
 export type SearchPageData = {
@@ -47,9 +26,6 @@ export type SearchPageData = {
 export async function loadSearchPage(
   deps: SearchPageDeps = createSearchPageDeps(),
 ): Promise<SearchPageData> {
-  const [projects, articles] = await Promise.all([
-    deps.projectsService.getAll(),
-    deps.articlesService.getAll(),
-  ]);
-  return { documents: toSearchDocuments(projects, articles) };
+  const documents = await deps.searchService.getDocuments();
+  return { documents };
 }

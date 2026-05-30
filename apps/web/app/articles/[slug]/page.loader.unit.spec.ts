@@ -57,4 +57,13 @@ describe('loadArticleDetail', () => {
     await loadArticleDetail('art-a', mockDeps);
     expect(mockDeps.articlesService.getBySlug).toHaveBeenCalledWith('art-a');
   });
+
+  it('exercises the default deps factory when called with no deps (smoke test)', async () => {
+    const slugs = await loadArticleSlugs();
+    expect(Array.isArray(slugs)).toBe(true);
+    if (slugs.length > 0) {
+      const data = await loadArticleDetail(slugs[0]);
+      expect(data).not.toBeNull();
+    }
+  });
 });

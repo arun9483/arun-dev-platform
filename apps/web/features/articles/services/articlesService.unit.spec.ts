@@ -74,30 +74,6 @@ describe('articlesService', () => {
     expect(result[2].id).toBe('article-b');
   });
 
-  it('filters by tag', async () => {
-    const result = await service.getAll({ tag: 'react' });
-    expect(result).toHaveLength(2);
-    expect(result.every((a) => a.metadata.tags.includes('react'))).toBe(true);
-  });
-
-  it('filters by category', async () => {
-    const result = await service.getAll({ category: 'backend' });
-    expect(result).toHaveLength(1);
-    expect(result[0].id).toBe('article-b');
-  });
-
-  it('filters by difficulty', async () => {
-    const result = await service.getAll({ difficulty: 'advanced' });
-    expect(result).toHaveLength(1);
-    expect(result[0].id).toBe('article-a');
-  });
-
-  it('filters by featured', async () => {
-    const result = await service.getAll({ featured: true });
-    expect(result).toHaveLength(2);
-    expect(result.every((a) => a.metadata.featured)).toBe(true);
-  });
-
   it('returns article with content by slug', async () => {
     const result = await service.getBySlug('article-a');
     expect(result?.content).toBe('# Article A');
@@ -117,5 +93,18 @@ describe('articlesService', () => {
   it('returns all slugs', async () => {
     const slugs = await service.getAllSlugs();
     expect(slugs).toEqual(['article-a', 'article-b', 'article-c']);
+  });
+
+  it('returns search documents with article-shaped fields', async () => {
+    const docs = await service.getSearchDocuments();
+    expect(docs).toHaveLength(3);
+    expect(docs[0]).toEqual({
+      id: 'article-a',
+      type: 'article',
+      href: '/articles/article-a',
+      title: 'Article A',
+      description: 'Summary A',
+      tags: 'react performance',
+    });
   });
 });

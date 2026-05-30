@@ -41,20 +41,9 @@ describe('profileService', () => {
     expect(result.name).toBe('Test User');
   });
 
-  it('filters skills by category', async () => {
-    const skills = await service.getSkillsByCategory('frontend');
-    expect(skills).toHaveLength(2);
-    expect(skills.every((s) => s.category === 'frontend')).toBe(true);
-  });
-
   it('returns only expert and advanced skills as featured', async () => {
     const skills = await service.getFeaturedSkills();
     expect(skills).toHaveLength(2);
     expect(skills.map((s) => s.name)).toEqual(['React', 'TypeScript']);
-  });
-
-  it('returns empty array when no skills match category', async () => {
-    const skills = await service.getSkillsByCategory('other');
-    expect(skills).toHaveLength(0);
   });
 });

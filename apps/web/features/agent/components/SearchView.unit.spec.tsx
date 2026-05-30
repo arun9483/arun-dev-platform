@@ -1,7 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { SearchView } from './SearchView';
-import type { SearchDocument, SearchResult } from '@/lib/search/searchIndex';
+import type { SearchDocument } from '@/lib/search/types';
+import type { SearchResult } from '../types';
 
 vi.mock('../hooks/useSearch', () => ({
   useSearch: vi.fn(),
@@ -21,6 +22,7 @@ const defaultHookState = {
 const mockResult: SearchResult = {
   id: 'platform-rebuild',
   type: 'project',
+  href: '/projects/platform-rebuild',
   title: 'Platform Rebuild',
   description: 'Rebuilt the platform.',
   tags: 'web performance',

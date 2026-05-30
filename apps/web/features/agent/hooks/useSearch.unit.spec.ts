@@ -1,12 +1,13 @@
 import { renderHook, waitFor, act } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { useSearch } from './useSearch';
-import type { SearchDocument } from '@/lib/search/searchIndex';
+import type { SearchDocument } from '@/lib/search/types';
 
 const docs: SearchDocument[] = [
   {
     id: 'p1',
     type: 'project',
+    href: '/projects/p1',
     title: 'Platform Rebuild',
     description: 'Rebuilt the core platform with microservices.',
     tags: 'performance scalability',
@@ -15,6 +16,7 @@ const docs: SearchDocument[] = [
   {
     id: 'ar1',
     type: 'article',
+    href: '/articles/ar1',
     title: 'React Server Components',
     description: 'A deep dive into React Server Components and streaming.',
     tags: 'react performance frontend',
@@ -22,6 +24,7 @@ const docs: SearchDocument[] = [
   {
     id: 'ar2',
     type: 'article',
+    href: '/articles/ar2',
     title: 'CSS Grid Layout',
     description: 'Getting started with CSS Grid for responsive layouts.',
     tags: 'css layout frontend',

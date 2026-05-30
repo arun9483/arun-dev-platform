@@ -41,6 +41,15 @@ describe('loadProjectDetail', () => {
     expect(data.project.title).toBe('Project A');
   });
 
+  it('exercises the default deps factory when called with no deps (smoke test)', async () => {
+    const slugs = await loadProjectSlugs();
+    expect(Array.isArray(slugs)).toBe(true);
+    if (slugs.length > 0) {
+      const data = await loadProjectDetail(slugs[0]);
+      expect(data).not.toBeNull();
+    }
+  });
+
   it('returns null for an unknown slug', async () => {
     const deps = {
       projectsService: { ...mockDeps.projectsService, getBySlug: vi.fn().mockResolvedValue(null) },

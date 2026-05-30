@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { createSearchIndex, search } from '@/lib/search/searchIndex';
-import type { SearchDocument, SearchResult } from '@/lib/search/searchIndex';
-import type MiniSearch from 'minisearch';
+import { createSearchIndex, search } from '../services/searchService';
+import type { SearchIndex } from '../services/searchService';
+import type { SearchResult } from '../types';
+import type { SearchDocument } from '@/lib/search/types';
 
 export type UseSearchResult = {
   query: string;
@@ -14,7 +15,7 @@ export type UseSearchResult = {
 
 export function useSearch(documents: SearchDocument[]): UseSearchResult {
   const [query, setQuery] = useState('');
-  const [index, setIndex] = useState<MiniSearch<SearchDocument> | null>(null);
+  const [index, setIndex] = useState<SearchIndex | null>(null);
   const [isIndexing, setIsIndexing] = useState(true);
 
   useEffect(() => {

@@ -18,6 +18,9 @@ apps/web/styles/brand.css
 # TypeScript
 *.tsbuildinfo
 
+# Node V8 compile cache (tsx runtime)
+node-compile-cache/
+
 # Testing
 coverage/
 *.lcov
