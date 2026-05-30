@@ -43,8 +43,9 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Claude
-.claude/
+# Claude — ignore personal/local state but allow committable skills
+.claude/*
+!.claude/skills/
 
 # Package manager
 .pnp.*
