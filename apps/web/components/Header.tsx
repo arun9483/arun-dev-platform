@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Nav } from './Nav';
+import { ThemeSwitcher } from './ThemeSwitcher';
 
 export function Header() {
   return (
@@ -8,7 +9,10 @@ export function Header() {
         <Link href="/" className="text-sm font-bold tracking-tight text-accent">
           arun.dev
         </Link>
-        <Nav />
+        <div className="flex items-center gap-4">
+          <Nav />
+          <ThemeSwitcher />
+        </div>
       </div>
     </header>
   );
