@@ -26,6 +26,7 @@ const mockDeps = {
     getBySlug: vi.fn().mockResolvedValue(mockArticle),
     getFeatured: vi.fn(),
     getAllSlugs: vi.fn().mockResolvedValue(['art-a', 'art-b']),
+    getSearchDocuments: vi.fn(),
   },
 };
 
@@ -61,8 +62,9 @@ describe('loadArticleDetail', () => {
   it('exercises the default deps factory when called with no deps (smoke test)', async () => {
     const slugs = await loadArticleSlugs();
     expect(Array.isArray(slugs)).toBe(true);
-    if (slugs.length > 0) {
-      const data = await loadArticleDetail(slugs[0]);
+    const slug = slugs.at(0);
+    if (slug !== undefined) {
+      const data = await loadArticleDetail(slug);
       expect(data).not.toBeNull();
     }
   });

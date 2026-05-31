@@ -19,6 +19,7 @@ const mockDeps = {
     getBySlug: vi.fn(),
     getFeatured: vi.fn(),
     getAllSlugs: vi.fn(),
+    getSearchDocuments: vi.fn(),
   },
 };
 
@@ -28,7 +29,7 @@ describe('loadArticlesPage', () => {
   it('returns all articles', async () => {
     const data = await loadArticlesPage(mockDeps);
     expect(data.articles).toHaveLength(1);
-    expect(data.articles[0].id).toBe('art-1');
+    expect(data.articles.at(0)?.id).toBe('art-1');
   });
 
   it('calls getAll exactly once', async () => {

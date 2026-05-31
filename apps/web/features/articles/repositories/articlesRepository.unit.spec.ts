@@ -12,8 +12,8 @@ describe('articlesRepository', () => {
       const all = await articlesRepository.findAll();
       expect(Array.isArray(all)).toBe(true);
       if (all.length > 0) {
-        expect(typeof all[0].slug).toBe('string');
-        expect(typeof all[0].title).toBe('string');
+        expect(typeof all.at(0)?.slug).toBe('string');
+        expect(typeof all.at(0)?.title).toBe('string');
       }
     });
 
@@ -27,8 +27,9 @@ describe('articlesRepository', () => {
   describe('findBySlug', () => {
     it('returns article with content when slug exists', async () => {
       const slugs = await articlesRepository.findAllSlugs();
-      if (slugs.length === 0) return;
-      const article = await articlesRepository.findBySlug(slugs[0]);
+      const slug = slugs.at(0);
+      if (slug === undefined) return;
+      const article = await articlesRepository.findBySlug(slug);
       expect(article).not.toBeNull();
       expect(article?.content).toBeDefined();
     });

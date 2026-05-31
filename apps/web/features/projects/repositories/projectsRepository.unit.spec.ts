@@ -9,10 +9,11 @@ describe('projectsRepository', () => {
 
   it('returns a project by slug when it exists', async () => {
     const all = await projectsRepository.findAll();
-    if (all.length === 0) return;
-    const found = await projectsRepository.findBySlug(all[0].slug);
+    const first = all.at(0);
+    if (first === undefined) return;
+    const found = await projectsRepository.findBySlug(first.slug);
     expect(found).not.toBeNull();
-    expect(found?.slug).toBe(all[0].slug);
+    expect(found?.slug).toBe(first.slug);
   });
 
   it('returns null when the slug does not exist', async () => {

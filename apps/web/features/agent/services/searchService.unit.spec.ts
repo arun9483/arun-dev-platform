@@ -57,7 +57,7 @@ describe('createSearchIndex + search', () => {
   it('matches by title', () => {
     const results = search(index, 'platform');
     expect(results.length).toBeGreaterThan(0);
-    expect(results[0].id).toBe('platform-rebuild');
+    expect(results.at(0)?.id).toBe('platform-rebuild');
   });
 
   it('matches by tag', () => {
@@ -73,8 +73,8 @@ describe('createSearchIndex + search', () => {
   it('attaches a numeric score and href to each result', () => {
     const results = search(index, 'react');
     expect(results.length).toBeGreaterThan(0);
-    expect(typeof results[0].score).toBe('number');
-    expect(results[0].href).toMatch(/^\/(projects|articles)\//);
+    expect(typeof results.at(0)?.score).toBe('number');
+    expect(results.at(0)?.href).toMatch(/^\/(projects|articles)\//);
   });
 
   it('returns empty array for empty query', () => {

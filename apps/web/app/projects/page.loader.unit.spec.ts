@@ -23,6 +23,7 @@ const mockDeps = {
     getBySlug: vi.fn(),
     getFeatured: vi.fn(),
     getAllSlugs: vi.fn(),
+    getSearchDocuments: vi.fn(),
   },
 };
 
@@ -32,7 +33,7 @@ describe('loadProjectsPage', () => {
   it('returns all projects', async () => {
     const data = await loadProjectsPage(mockDeps);
     expect(data.projects).toHaveLength(1);
-    expect(data.projects[0].id).toBe('proj-1');
+    expect(data.projects.at(0)?.id).toBe('proj-1');
   });
 
   it('calls getAll exactly once', async () => {

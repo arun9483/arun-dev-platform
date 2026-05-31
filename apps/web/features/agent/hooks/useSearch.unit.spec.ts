@@ -65,8 +65,8 @@ describe('useSearch', () => {
     await waitFor(() => expect(result.current.isIndexing).toBe(false));
     act(() => result.current.setQuery('platform'));
     await waitFor(() => expect(result.current.results.length).toBeGreaterThan(0));
-    expect(result.current.results[0]).toHaveProperty('score');
-    expect(typeof result.current.results[0].score).toBe('number');
+    expect(result.current.results.at(0)).toHaveProperty('score');
+    expect(typeof result.current.results.at(0)?.score).toBe('number');
   });
 
   it('clears results when query is reset to empty', async () => {

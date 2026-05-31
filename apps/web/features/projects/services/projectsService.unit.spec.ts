@@ -60,7 +60,7 @@ describe('projectsService', () => {
   it('returns only featured projects', async () => {
     const result = await service.getFeatured();
     expect(result).toHaveLength(1);
-    expect(result[0].metadata.featured).toBe(true);
+    expect(result.at(0)?.metadata.featured).toBe(true);
   });
 
   it('returns all slugs', async () => {

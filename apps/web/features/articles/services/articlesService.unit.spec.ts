@@ -69,9 +69,9 @@ describe('articlesService', () => {
   it('returns all articles sorted by date descending', async () => {
     const result = await service.getAll();
     expect(result).toHaveLength(3);
-    expect(result[0].id).toBe('article-a');
-    expect(result[1].id).toBe('article-c');
-    expect(result[2].id).toBe('article-b');
+    expect(result.at(0)?.id).toBe('article-a');
+    expect(result.at(1)?.id).toBe('article-c');
+    expect(result.at(2)?.id).toBe('article-b');
   });
 
   it('returns article with content by slug', async () => {
@@ -87,7 +87,7 @@ describe('articlesService', () => {
   it('returns only featured articles sorted by date', async () => {
     const result = await service.getFeatured();
     expect(result).toHaveLength(2);
-    expect(result[0].id).toBe('article-a');
+    expect(result.at(0)?.id).toBe('article-a');
   });
 
   it('returns all slugs', async () => {

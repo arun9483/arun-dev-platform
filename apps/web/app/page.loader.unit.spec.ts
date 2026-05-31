@@ -26,12 +26,14 @@ const mockDeps = {
     getBySlug: vi.fn(),
     getFeatured: vi.fn().mockResolvedValue([]),
     getAllSlugs: vi.fn(),
+    getSearchDocuments: vi.fn(),
   },
   articlesService: {
     getAll: vi.fn(),
     getBySlug: vi.fn(),
     getFeatured: vi.fn().mockResolvedValue([]),
     getAllSlugs: vi.fn(),
+    getSearchDocuments: vi.fn(),
   },
   achievementsService: {
     getFeatured: vi.fn().mockResolvedValue([]),
