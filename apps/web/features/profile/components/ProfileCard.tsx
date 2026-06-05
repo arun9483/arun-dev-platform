@@ -32,7 +32,7 @@ export function ProfileCard({ profile, featuredSkills }: Props) {
             rel="noopener noreferrer"
             className="btn btn-ghost hover:opacity-75"
           >
-            GitHub ↗
+            GitHub ↗<span className="sr-only"> (opens in new tab)</span>
           </a>
         )}
         {socialLinks.linkedin && (
@@ -42,7 +42,7 @@ export function ProfileCard({ profile, featuredSkills }: Props) {
             rel="noopener noreferrer"
             className="btn btn-ghost hover:opacity-75"
           >
-            LinkedIn ↗
+            LinkedIn ↗<span className="sr-only"> (opens in new tab)</span>
           </a>
         )}
         {socialLinks.website && (
@@ -52,7 +52,7 @@ export function ProfileCard({ profile, featuredSkills }: Props) {
             rel="noopener noreferrer"
             className="btn btn-ghost hover:opacity-75"
           >
-            Website ↗
+            Website ↗<span className="sr-only"> (opens in new tab)</span>
           </a>
         )}
       </nav>

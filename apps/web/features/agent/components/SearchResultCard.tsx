@@ -21,7 +21,7 @@ export function SearchResultCard({ result }: Props) {
     >
       <div className="flex items-center gap-2">
         <span className={`chip ${chipVariant}`}>{label}</span>
-        <h2 className="text-sm font-semibold text-primary truncate">{result.title}</h2>
+        <p className="text-sm font-semibold text-primary truncate">{result.title}</p>
       </div>
       <p className="text-xs text-secondary line-clamp-2">{result.description}</p>
       {result.tags && (

@@ -73,7 +73,8 @@
   color: var(--color-error);
 }
 
-/* Display heading — color + tracking for large titles. Use with text-size + font-weight. */
+/* Display heading modifier — adds color + negative tracking. Always pair with a size:
+   e.g. `text-4xl font-bold text-display`. Does not set font-size by design. */
 @utility text-display {
   color: var(--color-text-primary);
   letter-spacing: var(--tracking-heading);
@@ -167,7 +168,7 @@
    e.g. `btn btn-ghost` or `btn btn-primary` */
 
 @utility btn {
-  font-size: var(--text-xs);
+  font-size: var(--text-sm);
   font-weight: 500;
   padding-inline: 1rem;
   padding-block: 0.5rem;
@@ -478,4 +479,9 @@ body {
 }
 .nav-link[data-active='true']::after {
   width: 100%;
+}
+.nav-link:focus-visible {
+  outline: 2px solid var(--color-text-accent);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
 }

@@ -10,11 +10,9 @@ export function ProjectCard({ project }: Props) {
   const { slug, title, description, techStack, impact, metadata } = project;
 
   return (
-    <article className="card rounded-xl p-6 space-y-5 transition-shadow hover:shadow-md">
+    <article className="card rounded-xl p-6 space-y-5 transition-shadow hover:shadow-md relative group">
       <div className="flex items-start justify-between gap-4">
-        <Link href={`/projects/${slug}`}>
-          <h2 className="text-lg font-semibold hover:underline text-primary">{title}</h2>
-        </Link>
+        <h2 className="text-lg font-semibold text-primary group-hover:underline">{title}</h2>
         {metadata.featured && <span className="chip chip-accent shrink-0">Featured</span>}
       </div>
 
@@ -35,6 +33,12 @@ export function ProjectCard({ project }: Props) {
           </span>
         ))}
       </div>
+
+      <Link
+        href={`/projects/${slug}`}
+        aria-label={title}
+        className="absolute inset-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--color-text-accent)]"
+      />
     </article>
   );
 }

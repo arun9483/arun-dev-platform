@@ -20,9 +20,9 @@ export function ArticleCard({ article }: Props) {
   });
 
   return (
-    <article className="card rounded-xl p-6 space-y-4 transition-shadow hover:shadow-md">
+    <article className="card rounded-xl p-6 space-y-4 transition-shadow hover:shadow-md relative group">
       <div className="flex items-center gap-2 text-xs text-muted">
-        <span>{date}</span>
+        <time dateTime={publishedAt}>{date}</time>
         <span aria-hidden>·</span>
         <span>{metadata.readTime} min read</span>
         <span aria-hidden>·</span>
@@ -31,11 +31,9 @@ export function ArticleCard({ article }: Props) {
         </span>
       </div>
 
-      <Link href={`/articles/${slug}`}>
-        <h2 className="text-base font-semibold leading-snug hover:underline text-primary">
-          {title}
-        </h2>
-      </Link>
+      <h2 className="text-base font-semibold leading-snug text-primary group-hover:underline">
+        {title}
+      </h2>
 
       <p className="text-sm leading-relaxed text-secondary">{summary}</p>
 
@@ -46,6 +44,12 @@ export function ArticleCard({ article }: Props) {
           </span>
         ))}
       </div>
+
+      <Link
+        href={`/articles/${slug}`}
+        aria-label={title}
+        className="absolute inset-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--color-text-accent)]"
+      />
     </article>
   );
 }

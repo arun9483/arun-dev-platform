@@ -13,7 +13,7 @@ export function SearchView({ documents }: Props) {
   const trimmed = query.trim();
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-16 space-y-8">
+    <div className="mx-auto max-w-4xl px-6 py-8 sm:py-16 space-y-8">
       <div className="space-y-2">
         <h1 className="text-3xl font-bold text-display">Search</h1>
         <p className="text-base text-secondary">Search across projects and articles.</p>
@@ -25,7 +25,6 @@ export function SearchView({ documents }: Props) {
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search projects and articles…"
         className="w-full px-4 py-3 rounded-xl text-sm bg-surface text-primary placeholder:text-muted border-default focus:outline-none focus:ring-2 focus:ring-[var(--color-text-accent)]"
-        autoFocus
         aria-label="Search"
         disabled={isIndexing}
       />

@@ -19,10 +19,12 @@ export function AchievementCard({ achievement }: Props) {
     <article className="card rounded-xl p-5 space-y-3 transition-shadow hover:shadow-md">
       <div className="flex items-center justify-between gap-2">
         <span className="chip chip-accent">{TYPE_LABEL[type]}</span>
-        <span className="text-xs text-muted">{formatted}</span>
+        <time dateTime={date} className="text-xs text-muted">
+          {formatted}
+        </time>
       </div>
 
-      <h3 className="font-semibold text-sm text-primary">{title}</h3>
+      <h2 className="font-semibold text-sm text-primary">{title}</h2>
       <p className="text-xs text-secondary">{issuer}</p>
 
       {description && <p className="text-xs leading-relaxed text-secondary">{description}</p>}
@@ -34,7 +36,7 @@ export function AchievementCard({ achievement }: Props) {
           rel="noopener noreferrer"
           className="text-xs font-medium underline underline-offset-2 text-accent"
         >
-          View credential ↗
+          View credential ↗<span className="sr-only"> (opens in new tab)</span>
         </a>
       )}
     </article>

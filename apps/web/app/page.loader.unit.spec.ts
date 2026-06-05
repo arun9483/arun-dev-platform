@@ -36,6 +36,7 @@ const mockDeps = {
     getSearchDocuments: vi.fn(),
   },
   achievementsService: {
+    getAll: vi.fn().mockResolvedValue([]),
     getFeatured: vi.fn().mockResolvedValue([]),
   },
 };

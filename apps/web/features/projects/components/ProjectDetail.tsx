@@ -15,7 +15,7 @@ export function ProjectDetail({ project }: Props) {
     <div>
       {coverImage && <Cover src={coverImage} alt={`Cover image for ${title}`} />}
 
-      <div className="mx-auto max-w-4xl px-6 py-12 space-y-12">
+      <div className="mx-auto max-w-4xl px-6 py-8 sm:py-12 space-y-12">
         <BackLink href="/projects">Back to projects</BackLink>
 
         <div className="space-y-5">
@@ -30,7 +30,7 @@ export function ProjectDetail({ project }: Props) {
                 rel="noopener noreferrer"
                 className="btn btn-ghost hover:opacity-75"
               >
-                GitHub ↗
+                GitHub ↗<span className="sr-only"> (opens in new tab)</span>
               </a>
             )}
             {links.live && (
@@ -40,7 +40,7 @@ export function ProjectDetail({ project }: Props) {
                 rel="noopener noreferrer"
                 className="btn btn-primary hover:opacity-75"
               >
-                Live site ↗
+                Live site ↗<span className="sr-only"> (opens in new tab)</span>
               </a>
             )}
           </div>

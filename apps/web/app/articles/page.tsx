@@ -9,7 +9,7 @@ export const metadata = {
 export default async function ArticlesPage() {
   const { articles } = await loadArticlesPage();
   return (
-    <div className="mx-auto max-w-4xl px-6 py-16 space-y-10">
+    <div className="mx-auto max-w-4xl px-6 py-8 sm:py-16 space-y-10">
       <div className="space-y-2">
         <h1 className="text-3xl font-bold text-display">Articles</h1>
         <p className="text-base text-secondary">

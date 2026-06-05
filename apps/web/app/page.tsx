@@ -11,19 +11,19 @@ export default async function HomePage() {
     await loadHomePage();
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-16 space-y-20">
+    <div className="mx-auto max-w-4xl px-6 py-8 sm:py-16 space-y-12 sm:space-y-20">
       <section>
         <ProfileCard profile={profile} featuredSkills={featuredSkills} />
       </section>
 
       <section className="space-y-6">
-        <h2 className="text-xl font-semibold text-primary">Experience</h2>
+        <h2 className="text-2xl font-semibold text-primary">Experience</h2>
         <ExperienceTimeline experience={profile.experience} />
       </section>
 
       <section className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-primary">Featured Projects</h2>
+          <h2 className="text-2xl font-semibold text-primary">Featured Projects</h2>
           <Link href="/projects" className="text-sm underline text-accent">
             View all
           </Link>
@@ -33,7 +33,7 @@ export default async function HomePage() {
 
       <section className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-primary">Latest Articles</h2>
+          <h2 className="text-2xl font-semibold text-primary">Latest Articles</h2>
           <Link href="/articles" className="text-sm underline text-accent">
             View all
           </Link>
@@ -42,7 +42,12 @@ export default async function HomePage() {
       </section>
 
       <section className="space-y-6">
-        <h2 className="text-xl font-semibold text-primary">Achievements</h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-semibold text-primary">Achievements</h2>
+          <Link href="/achievements" className="text-sm underline text-accent">
+            View all
+          </Link>
+        </div>
         <AchievementList achievements={featuredAchievements} />
       </section>
     </div>

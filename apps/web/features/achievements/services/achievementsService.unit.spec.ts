@@ -43,6 +43,11 @@ const mockRepository: AchievementsRepository = {
 describe('achievementsService', () => {
   const service = createAchievementsService(mockRepository);
 
+  it('returns all achievements', async () => {
+    const result = await service.getAll();
+    expect(result).toHaveLength(3);
+  });
+
   it('returns only featured achievements', async () => {
     const result = await service.getFeatured();
     expect(result).toHaveLength(2);

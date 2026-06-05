@@ -35,7 +35,7 @@ export function ArticleDetail({ article }: Props) {
     <div>
       {coverImage && <Cover src={coverImage} alt={`Cover image for ${title}`} />}
 
-      <div className="mx-auto max-w-2xl px-6 py-12 space-y-10">
+      <div className="mx-auto max-w-2xl px-6 py-8 sm:py-12 space-y-10">
         <BackLink href="/articles">Back to articles</BackLink>
 
         <header className="space-y-5">

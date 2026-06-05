@@ -42,7 +42,7 @@ export function ThemeSwitcher() {
       onClick={handleClick}
       aria-label={ARIA_LABEL[theme]}
       title={ARIA_LABEL[theme]}
-      className="flex items-center justify-center w-8 h-8 rounded-lg text-secondary hover:text-primary hover:bg-surface transition-colors"
+      className="flex items-center justify-center w-10 h-10 rounded-lg text-secondary hover:text-primary hover:bg-surface transition-colors"
     >
       {theme === 'system' && <MonitorIcon />}
       {theme === 'light' && <SunIcon />}

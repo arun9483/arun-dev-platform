@@ -8,7 +8,7 @@ type Props = {
 export function SkillList({ skills, title }: Props) {
   return (
     <section>
-      {title && <h3 className="overline mb-3">{title}</h3>}
+      {title && <p className="overline mb-3">{title}</p>}
       <ul className="flex flex-wrap gap-2">
         {skills.map((skill) => (
           <li key={skill.name} className="chip chip-accent">
