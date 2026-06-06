@@ -4,15 +4,19 @@ import { ImpactMetricBadge } from './ImpactMetricBadge';
 
 type Props = {
   project: Project;
+  headingLevel?: 'h2' | 'h3';
 };
 
-export function ProjectCard({ project }: Props) {
+export function ProjectCard({ project, headingLevel = 'h2' }: Props) {
   const { slug, title, description, techStack, impact, metadata } = project;
+  const Heading = headingLevel;
 
   return (
-    <article className="card rounded-xl p-6 space-y-5 transition-shadow hover:shadow-md relative group">
+    <article className="card rounded-xl p-6 space-y-5 transition-all hover:shadow-md hover:-translate-y-px relative group">
       <div className="flex items-start justify-between gap-4">
-        <h2 className="text-lg font-semibold text-primary group-hover:underline">{title}</h2>
+        <Heading className="text-lg font-semibold text-primary group-hover:text-accent group-hover:underline transition-colors">
+          {title}
+        </Heading>
         {metadata.featured && <span className="chip chip-accent shrink-0">Featured</span>}
       </div>
 

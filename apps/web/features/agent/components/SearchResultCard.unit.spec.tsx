@@ -89,12 +89,14 @@ describe('SearchResultCard', () => {
     expect(badge.className).toContain('chip-default');
   });
 
-  it('renders tags prefixed with #', () => {
+  it('renders tags as chip elements', () => {
     render(<SearchResultCard result={projectResult} />);
-    expect(screen.getByText('#web #performance #scalability')).toBeInTheDocument();
+    expect(screen.getByText('web')).toBeInTheDocument();
+    expect(screen.getByText('performance')).toBeInTheDocument();
+    expect(screen.getByText('scalability')).toBeInTheDocument();
   });
 
-  it('does not render tags section when tags is empty', () => {
+  it('does not render tag chips when tags is empty', () => {
     render(<SearchResultCard result={noTagsResult} />);
     expect(screen.queryByText(/^#/)).not.toBeInTheDocument();
   });

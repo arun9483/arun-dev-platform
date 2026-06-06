@@ -3,9 +3,10 @@ import { ArticleCard } from './ArticleCard';
 
 type Props = {
   articles: ArticleMeta[];
+  headingLevel?: 'h2' | 'h3';
 };
 
-export function ArticleList({ articles }: Props) {
+export function ArticleList({ articles, headingLevel = 'h2' }: Props) {
   if (articles.length === 0) {
     return <p className="text-sm text-secondary">No articles found.</p>;
   }
@@ -14,7 +15,7 @@ export function ArticleList({ articles }: Props) {
     <ul className="space-y-6">
       {articles.map((article) => (
         <li key={article.id}>
-          <ArticleCard article={article} />
+          <ArticleCard article={article} headingLevel={headingLevel} />
         </li>
       ))}
     </ul>

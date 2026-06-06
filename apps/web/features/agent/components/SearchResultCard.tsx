@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { TagChips } from '@/components/TagChips';
 import type { SearchResult } from '../types';
 
 type Props = {
@@ -24,15 +25,7 @@ export function SearchResultCard({ result }: Props) {
         <p className="text-sm font-semibold text-primary truncate">{result.title}</p>
       </div>
       <p className="text-xs text-secondary line-clamp-2">{result.description}</p>
-      {result.tags && (
-        <p className="text-xs text-muted">
-          {result.tags
-            .split(' ')
-            .filter(Boolean)
-            .map((t) => `#${t}`)
-            .join(' ')}
-        </p>
-      )}
+      {result.tags && <TagChips tags={result.tags.split(' ').filter(Boolean)} />}
     </Link>
   );
 }

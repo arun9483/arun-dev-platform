@@ -28,7 +28,7 @@ export default async function HomePage() {
             View all
           </Link>
         </div>
-        <ProjectList projects={featuredProjects} />
+        <ProjectList projects={featuredProjects} headingLevel="h3" />
       </section>
 
       <section className="space-y-6">
@@ -38,7 +38,7 @@ export default async function HomePage() {
             View all
           </Link>
         </div>
-        <ArticleList articles={featuredArticles} />
+        <ArticleList articles={featuredArticles} headingLevel="h3" />
       </section>
 
       <section className="space-y-6">
@@ -48,7 +48,7 @@ export default async function HomePage() {
             View all
           </Link>
         </div>
-        <AchievementList achievements={featuredAchievements} />
+        <AchievementList achievements={featuredAchievements} headingLevel="h3" />
       </section>
     </div>
   );

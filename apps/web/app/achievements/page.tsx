@@ -2,7 +2,7 @@ import { loadAchievementsPage } from './page.loader';
 import { AchievementList } from '@/features/achievements/components/AchievementList';
 
 export const metadata = {
-  title: 'Achievements — Arun Dev Platform',
+  title: 'Achievements',
   description: 'Certifications, awards, and recognitions.',
 };
 

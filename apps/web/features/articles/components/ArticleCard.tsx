@@ -3,6 +3,7 @@ import type { ArticleMeta } from '../types';
 
 type Props = {
   article: ArticleMeta;
+  headingLevel?: 'h2' | 'h3';
 };
 
 const DIFFICULTY_LABEL: Record<ArticleMeta['metadata']['difficulty'], string> = {
@@ -11,8 +12,9 @@ const DIFFICULTY_LABEL: Record<ArticleMeta['metadata']['difficulty'], string> = 
   advanced: 'Advanced',
 };
 
-export function ArticleCard({ article }: Props) {
+export function ArticleCard({ article, headingLevel = 'h2' }: Props) {
   const { slug, title, summary, publishedAt, metadata } = article;
+  const Heading = headingLevel;
   const date = new Date(publishedAt).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
@@ -20,7 +22,7 @@ export function ArticleCard({ article }: Props) {
   });
 
   return (
-    <article className="card rounded-xl p-6 space-y-4 transition-shadow hover:shadow-md relative group">
+    <article className="card rounded-xl p-6 space-y-4 transition-all hover:shadow-md hover:-translate-y-px relative group">
       <div className="flex items-center gap-2 text-xs text-muted">
         <time dateTime={publishedAt}>{date}</time>
         <span aria-hidden>·</span>
@@ -31,9 +33,9 @@ export function ArticleCard({ article }: Props) {
         </span>
       </div>
 
-      <h2 className="text-base font-semibold leading-snug text-primary group-hover:underline">
+      <Heading className="text-base font-semibold leading-snug text-primary group-hover:text-accent group-hover:underline transition-colors">
         {title}
-      </h2>
+      </Heading>
 
       <p className="text-sm leading-relaxed text-secondary">{summary}</p>
 

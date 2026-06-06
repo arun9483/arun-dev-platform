@@ -10,11 +10,13 @@ export function ProfileCard({ profile, featuredSkills }: Props) {
   const { name, title, summary, location, socialLinks } = profile;
 
   return (
-    <article className="space-y-8">
+    <article className="space-y-8" aria-labelledby="profile-name">
       <div className="space-y-4">
         <div className="bar-accent" />
         <div>
-          <h1 className="text-4xl font-bold text-display">{name}</h1>
+          <h1 id="profile-name" className="text-4xl font-bold text-display">
+            {name}
+          </h1>
           <p className="text-xl mt-2 font-medium text-accent">{title}</p>
           {location && <p className="text-sm mt-1.5 text-muted">{location}</p>}
         </div>

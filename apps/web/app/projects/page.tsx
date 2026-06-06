@@ -2,7 +2,7 @@ import { loadProjectsPage } from './page.loader';
 import { ProjectList } from '@/features/projects/components/ProjectList';
 
 export const metadata = {
-  title: 'Projects — Arun Dev Platform',
+  title: 'Projects',
   description: 'Engineering case studies with real-world impact metrics.',
 };
 

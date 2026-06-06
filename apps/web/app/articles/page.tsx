@@ -2,7 +2,7 @@ import { loadArticlesPage } from './page.loader';
 import { ArticleList } from '@/features/articles/components/ArticleList';
 
 export const metadata = {
-  title: 'Articles — Arun Dev Platform',
+  title: 'Articles',
   description: 'Deep technical articles on frontend architecture, performance, and browser APIs.',
 };
 

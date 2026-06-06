@@ -13,7 +13,10 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const data = await loadProjectDetail(slug);
   if (!data) return {};
-  return { title: data.project.title, description: data.project.description };
+  return {
+    title: { absolute: data.project.title },
+    description: data.project.description,
+  };
 }
 
 export default async function ProjectDetailPage({ params }: Props) {

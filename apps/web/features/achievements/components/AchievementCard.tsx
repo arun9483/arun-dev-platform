@@ -2,6 +2,7 @@ import type { Achievement, AchievementType } from '../types';
 
 type Props = {
   achievement: Achievement;
+  headingLevel?: 'h2' | 'h3';
 };
 
 const TYPE_LABEL: Record<AchievementType, string> = {
@@ -11,8 +12,9 @@ const TYPE_LABEL: Record<AchievementType, string> = {
   contribution: 'Contribution',
 };
 
-export function AchievementCard({ achievement }: Props) {
+export function AchievementCard({ achievement, headingLevel = 'h2' }: Props) {
   const { title, issuer, date, type, description, credentialUrl } = achievement;
+  const Heading = headingLevel;
   const formatted = new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
 
   return (
@@ -24,7 +26,7 @@ export function AchievementCard({ achievement }: Props) {
         </time>
       </div>
 
-      <h2 className="font-semibold text-sm text-primary">{title}</h2>
+      <Heading className="font-semibold text-sm text-primary">{title}</Heading>
       <p className="text-xs text-secondary">{issuer}</p>
 
       {description && <p className="text-xs leading-relaxed text-secondary">{description}</p>}

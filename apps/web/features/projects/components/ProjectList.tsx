@@ -3,9 +3,10 @@ import { ProjectCard } from './ProjectCard';
 
 type Props = {
   projects: Project[];
+  headingLevel?: 'h2' | 'h3';
 };
 
-export function ProjectList({ projects }: Props) {
+export function ProjectList({ projects, headingLevel = 'h2' }: Props) {
   if (projects.length === 0) {
     return <p className="text-sm text-secondary">No projects found.</p>;
   }
@@ -14,7 +15,7 @@ export function ProjectList({ projects }: Props) {
     <ul className="space-y-6">
       {projects.map((project) => (
         <li key={project.id}>
-          <ProjectCard project={project} />
+          <ProjectCard project={project} headingLevel={headingLevel} />
         </li>
       ))}
     </ul>
