@@ -514,6 +514,25 @@ A task is complete only if:
 - No tight coupling introduced
 - Code is readable and maintainable
 
+## 16. Claude Code Plugins (MCP)
+
+This project ships with a shared Claude Code plugin configuration in `.claude/settings.json` (committed to the repo). Every contributor gets the same setup automatically when opening the project in Claude Code.
+
+| Plugin / Server                             | Purpose                                                                                                                                                                         |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mcpServers.playwright` (`@playwright/mcp`) | Browser automation — UX audits, visual regression, E2E assistance. Configured with `--output-dir screenshots` so screenshots default to the monorepo-root `screenshots/` folder |
+| `frontend-design@claude-plugins-official`   | Visual design and accessibility analysis                                                                                                                                        |
+| `context7@claude-plugins-official`          | Up-to-date library documentation lookup                                                                                                                                         |
+
+### Screenshot convention
+
+- Screenshots are saved to `screenshots/` at the monorepo root (gitignored, `.gitkeep` preserves the folder)
+- Always use a `screenshots/` prefix in the filename: `screenshots/audit-home-desktop.png`
+- Delete all `*.png` files after a review session: `rm screenshots/*.png`
+- The prefix acts as a reliable fallback even if `--output-dir` is not yet active in the current session
+
+`.claude/settings.local.json` is gitignored — use it for personal overrides (e.g. custom MCP server paths on your machine).
+
 ## 15. Final Instruction
 
 You are not just writing code. You are acting as a senior engineer contributing to a scalable system.

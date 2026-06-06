@@ -27,6 +27,11 @@ coverage/
 test-results/
 playwright-report/
 
+# Playwright MCP — review screenshots and accessibility snapshots (never commit)
+screenshots/*
+!screenshots/.gitkeep
+.playwright-mcp/
+
 # Environment variables
 .env
 .env.*
@@ -43,9 +48,10 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Claude — ignore personal/local state but allow committable skills
+# Claude — ignore personal/local state but allow committable skills and shared project config
 .claude/*
 !.claude/skills/
+!.claude/settings.json
 
 # Package manager
 .pnp.*
