@@ -47,6 +47,11 @@ describe('SearchView', () => {
     expect(screen.getByRole('searchbox', { name: 'Search' })).toBeInTheDocument();
   });
 
+  it('wraps the input in a search landmark', () => {
+    render(<SearchView documents={docs} />);
+    expect(screen.getByRole('search')).toBeInTheDocument();
+  });
+
   it('passes documents to useSearch', () => {
     render(<SearchView documents={docs} />);
     expect(vi.mocked(useSearch)).toHaveBeenCalledWith(docs);

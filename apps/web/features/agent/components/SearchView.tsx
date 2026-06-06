@@ -19,20 +19,42 @@ export function SearchView({ documents }: Props) {
         <p className="text-base text-secondary">Search across projects and articles.</p>
       </div>
 
-      <input
-        type="search"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search projects and articles…"
-        className="w-full px-4 py-3 rounded-xl text-sm bg-surface text-primary placeholder:text-muted border-default focus:outline-none focus:ring-2 focus:ring-[var(--color-text-accent)]"
-        aria-label="Search"
-        disabled={isIndexing}
-      />
+      <form role="search" onSubmit={(e) => e.preventDefault()}>
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search projects and articles…"
+          className="w-full px-4 py-3 rounded-xl text-sm bg-surface text-primary placeholder:text-muted border-default focus:outline-none focus:ring-2 focus:ring-[var(--color-text-accent)]"
+          aria-label="Search"
+          disabled={isIndexing}
+        />
+      </form>
 
-      {trimmed && (
+      {trimmed ? (
         <p className="text-xs text-muted" aria-live="polite">
           {results.length} result{results.length !== 1 ? 's' : ''} for &ldquo;{trimmed}&rdquo;
         </p>
+      ) : (
+        <div className="space-y-3" aria-hidden={isIndexing}>
+          <p className="text-xs font-medium uppercase tracking-wider text-muted">
+            Try searching for
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {['Next.js', 'TypeScript', 'performance', 'design system', 'RSC', 'Tailwind'].map(
+              (term) => (
+                <button
+                  key={term}
+                  type="button"
+                  onClick={() => setQuery(term)}
+                  className="chip chip-default cursor-pointer hover:bg-surface transition-colors"
+                >
+                  {term}
+                </button>
+              ),
+            )}
+          </div>
+        </div>
       )}
 
       {results.length > 0 && (
