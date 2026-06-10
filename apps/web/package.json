@@ -16,8 +16,8 @@
     "test:e2e": "[ -d tests/e2e ] && ls tests/e2e/*.spec.* >/dev/null 2>&1 && playwright test || echo 'No e2e tests found, skipping'"
   },
   "dependencies": {
-    "@arun-dev/tokens": "workspace:*",
-    "@arun-dev/ui": "workspace:*",
+    "@arun-dev/tokens": "0.1.0",
+    "@arun-dev/ui": "0.1.0",
     "gray-matter": "4.0.3",
     "mermaid": "11.15.0",
     "minisearch": "7.1.1",

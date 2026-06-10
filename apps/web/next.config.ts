@@ -15,7 +15,6 @@ const SECURITY_HEADERS = [
 ];
 
 const nextConfig: NextConfig = {
-  transpilePackages: ['@arun-dev/tokens', '@arun-dev/ui'],
   experimental: {
     optimizePackageImports: ['mermaid', 'minisearch'],
   },

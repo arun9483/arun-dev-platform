@@ -5,7 +5,6 @@ const prettierIgnorePath = resolve(rootDir, '.prettierignore');
 
 const workspaceConfigs = [
   { dir: 'apps/web', config: 'apps/web/eslint.config.mjs' },
-  { dir: 'packages/ui', config: 'packages/ui/eslint.config.mjs' },
   { dir: 'packages/config', config: 'packages/config/eslint.config.mjs' },
 ];
 

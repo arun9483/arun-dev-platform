@@ -336,18 +336,19 @@ export default async function SomePage() {
 
 - `/components` → shared, dumb UI components
 - `/features/*/components` → feature-specific UI
-- `/packages/ui` → design system components (brand-agnostic)
-- `/packages/tokens` → design tokens (pure CSS custom properties)
+- `@arun-dev/ui` (npm) → design system components (brand-agnostic)
+- `@arun-dev/tokens` (npm) → design tokens (pure CSS custom properties)
 
 ---
 
 ## Design System
 
 - Pure CSS token-based architecture (no CSS-in-JS)
-- White-label compatible via brand CSS presets in `packages/tokens/src/brands/`
+- Consumed as published npm packages (`@arun-dev/tokens`, `@arun-dev/ui`) from the separate [arun-design-system](https://github.com/arun9483/arun-design-system) monorepo
+- White-label compatible via brand CSS presets (`@arun-dev/tokens/brands/*`) and the `createBrand()` generator
 - Theme support: system (default), dark, light via CSS custom properties
 - Components use semantic CSS variables (`var(--color-bg-primary)`), never hardcoded values
-- Brand selection at build time via `NEXT_PUBLIC_BRAND` env var and `prebuild` script
+- Brand selection via the brand import in `app/globals.css`
 
 See [docs/design-system.md](./design-system.md) for full design system architecture.
 
@@ -394,9 +395,9 @@ See [docs/design-system.md](./design-system.md) for full design system architect
 ## Allowed Shared Locations
 
 - `/lib` → utilities (pure functions only)
-- `/packages/tokens` → design tokens (pure CSS)
-- `/packages/ui` → design system components
 - `/packages/config` → shared configs (ESLint, TypeScript)
+- `@arun-dev/tokens` (npm) → design tokens (pure CSS)
+- `@arun-dev/ui` (npm) → design system components
 
 ---
 

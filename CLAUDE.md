@@ -197,8 +197,8 @@ You must use:
 
 - CSS Modules + CSS custom properties (no utility framework, no CSS-in-JS)
 - Pure CSS custom properties for design tokens — no CSS-in-JS
-- Tokens live in `packages/tokens/` (pure CSS, publishable, white-label compatible)
-- Brand selection via `NEXT_PUBLIC_BRAND` env var and `prebuild` script
+- Design tokens come from the published `@arun-dev/tokens` npm package (pure CSS, white-label compatible) — maintained in the separate [arun-design-system](https://github.com/arun9483/arun-design-system) monorepo
+- Brand selection: `globals.css` imports `@arun-dev/tokens/base` + a brand stylesheet (`@arun-dev/tokens/brands/default`); custom brands are generated with `createBrand()` from `@arun-dev/tokens/createBrand`
 - Theme support: system (default), dark, light via `data-theme` attribute
 - Components must use semantic tokens (`--color-bg-primary`) over raw brand tokens
 - See `docs/design-system.md` for full architecture
@@ -223,7 +223,7 @@ font-size: var(--text-sm);
 backdrop-filter: blur(var(--blur-lg));
 ```
 
-If no token exists for a value, add one to `packages/tokens/src/primitives/` — do NOT write a raw value. Use `calc()` with existing tokens for derived values (e.g. `calc(-1 * var(--space-2xl))`).
+If no token exists for a value, add one to `packages/tokens/src/primitives/` in the [arun-design-system](https://github.com/arun9483/arun-design-system) repo and release a new `@arun-dev/tokens` version — do NOT write a raw value. Use `calc()` with existing tokens for derived values (e.g. `calc(-1 * var(--space-2xl))`).
 
 **Documented exceptions** (CSS language limitations — cannot be tokenized):
 
@@ -350,16 +350,17 @@ apps/
       profile/
     lib/                  # Shared utilities (pure functions only, constants, generic helpers)
     styles/
-      brand.css           # Generated brand re-export (gitignored, created by prebuild)
       themes/             # Theme switching logic (FOUC prevention script)
     tests/
       setup.ts          # Shared test setup (jest-dom matchers)
       e2e/              # E2E tests only (Playwright, *.e2e.spec.ts)
 
 packages/
-  tokens/                 # Design tokens (pure CSS, white-label compatible)
-  ui/                     # Reusable design system components (brand-agnostic)
   config/                 # Shared configs (ESLint, TypeScript)
+
+# Design system (@arun-dev/tokens, @arun-dev/ui) is consumed as published npm
+# packages from the separate arun-design-system monorepo:
+# https://github.com/arun9483/arun-design-system
 
 docs/                     # Architecture and system documentation
 ```

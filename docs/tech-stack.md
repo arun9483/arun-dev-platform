@@ -60,10 +60,10 @@ The tech stack is chosen based on:
 
 ## Design Token Architecture
 
-- Tokens live in `packages/tokens/` (pure CSS, publishable)
-- Structural tokens (radius, shadows, typography scale) in `base.css`
-- Brand-specific tokens (colors, fonts) in `brands/*.css`
-- White-label compatible via `prebuild` script and `NEXT_PUBLIC_BRAND` env var
+- Tokens come from the published `@arun-dev/tokens` npm package, maintained in the separate [arun-design-system](https://github.com/arun9483/arun-design-system) monorepo
+- Structural tokens (radius, shadows, typography scale) via `@arun-dev/tokens/base`
+- Brand-specific tokens (colors) via `@arun-dev/tokens/brands/default`
+- White-label compatible: custom brands generated with `createBrand()` from `@arun-dev/tokens/createBrand`
 
 ---
 
