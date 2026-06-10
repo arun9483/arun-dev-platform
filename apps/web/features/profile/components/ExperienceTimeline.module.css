@@ -1,0 +1,50 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  position: relative;
+  padding-left: var(--space-md);
+  border-left: var(--space-2px) solid var(--color-border-default);
+}
+
+.dot {
+  position: absolute;
+  left: calc(
+    -1 * (var(--space-3xs) + var(--space-2px))
+  ); /* -(4px + 2px) = -6px: centers dot on the 2px border */
+  top: calc(
+    var(--space-3xs) + var(--space-2px)
+  ); /* 4px + 2px = 6px: aligns with first line cap-height */
+  width: calc(var(--space-2px) * 5); /* 2px × 5 = 10px */
+  height: calc(var(--space-2px) * 5); /* 2px × 5 = 10px */
+  border-radius: var(--radius-full);
+  background-color: var(--color-text-accent);
+}
+
+.highlights {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  margin-top: var(--space-xs);
+  list-style: none;
+  padding: 0;
+}
+
+.highlight {
+  display: flex;
+  gap: var(--space-2xs);
+}
+
+.company {
+  margin-bottom: var(--space-xs);
+}
+
+.date {
+  margin-bottom: var(--space-3xs);
+}

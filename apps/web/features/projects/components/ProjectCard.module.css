@@ -1,0 +1,49 @@
+.article {
+  border-radius: var(--radius-xl);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  position: relative;
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+/* Heading changes on card hover (replaces group-hover:*) */
+.heading {
+  transition: color var(--duration-fast) var(--ease-smooth);
+}
+.article:hover .heading {
+  color: var(--color-text-accent);
+  text-decoration: underline;
+}
+
+.impactGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2xs);
+}
+
+@media (min-width: 640px) {
+  /* sm: --breakpoint-sm */
+  .impactGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-xl);
+}

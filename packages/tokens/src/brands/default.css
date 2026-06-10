@@ -1,3 +1,5 @@
-/* Default brand — mirrors the arun brand.
-   Used as a fallback when NEXT_PUBLIC_BRAND is unset. */
-@import './arun.css';
+/* Default brand — independent fallback for consumers who provide no brand.
+   Provides palette + semantic tokens out of the box.
+   To create a custom brand: use createBrand() from @arun-dev/tokens/createBrand. */
+@import './default/palette.css';
+@import './default/semantic.css';

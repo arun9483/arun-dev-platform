@@ -1,4 +1,5 @@
 import type { Experience } from '../types';
+import styles from './ExperienceTimeline.module.css';
 
 type Props = {
   experience: Experience[];
@@ -10,18 +11,18 @@ function formatDateRange(startDate: string, endDate?: string): string {
 
 export function ExperienceTimeline({ experience }: Props) {
   return (
-    <ol className="space-y-8" aria-label="Work experience">
+    <ol className={styles.list} aria-label="Work experience">
       {experience.map((item, index) => (
-        <li key={index} className="relative pl-6 border-l-2 border-color-default">
-          <div className="absolute -left-[6px] top-1.5 w-2.5 h-2.5 rounded-full bg-accent" />
-          <p className="text-xs mb-1 text-secondary">
+        <li key={index} className={styles.item}>
+          <div className={styles.dot} />
+          <p className={`text-size-xs text-color-secondary ${styles.date}`}>
             {formatDateRange(item.startDate, item.endDate)}
           </p>
-          <h3 className="font-semibold text-base text-primary">{item.role}</h3>
-          <p className="text-sm mb-3 text-secondary">{item.company}</p>
-          <ul className="space-y-1">
+          <h3 className="font-weight-semibold text-size-base text-color-primary">{item.role}</h3>
+          <p className={`text-size-sm text-color-secondary ${styles.company}`}>{item.company}</p>
+          <ul className={styles.highlights}>
             {item.highlights.map((highlight, i) => (
-              <li key={i} className="text-sm flex gap-2 text-secondary">
+              <li key={i} className={`text-size-sm text-color-secondary ${styles.highlight}`}>
                 <span aria-hidden>—</span>
                 <span>{highlight}</span>
               </li>

@@ -3,6 +3,7 @@ import { ImpactMetricBadge } from './ImpactMetricBadge';
 import { BackLink } from '@/components/BackLink';
 import { Cover } from '@/components/Cover';
 import { TagChips } from '@/components/TagChips';
+import styles from './ProjectDetail.module.css';
 
 type Props = {
   project: Project;
@@ -13,22 +14,30 @@ export function ProjectDetail({ project }: Props) {
 
   return (
     <div>
-      {coverImage && <Cover src={coverImage} alt={`Cover image for ${title}`} />}
+      {coverImage && (
+        <Cover src={coverImage} alt={`Cover image for ${title}`}>
+          <BackLink href="/projects">Back to projects</BackLink>
+        </Cover>
+      )}
 
-      <div className="mx-auto max-w-4xl px-6 py-8 sm:py-12 space-y-12">
-        <BackLink href="/projects">Back to projects</BackLink>
+      <div className={styles.container}>
+        {!coverImage && <BackLink href="/projects">Back to projects</BackLink>}
 
-        <div className="space-y-5">
+        <div className={styles.header}>
           <div className="bar-accent" />
-          <h1 className="text-4xl font-bold text-display">{title}</h1>
-          <p className="text-base leading-relaxed max-w-2xl text-secondary">{description}</p>
-          <div className="flex gap-2 flex-wrap">
+          <h1 className="text-size-4xl font-weight-bold type-display">{title}</h1>
+          <p
+            className={`text-size-base line-height-relaxed text-color-secondary ${styles.description}`}
+          >
+            {description}
+          </p>
+          <div className={styles.links}>
             {links.github && (
               <a
                 href={links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-ghost hover:opacity-75"
+                className="btn btn-ghost"
               >
                 GitHub ↗<span className="sr-only"> (opens in new tab)</span>
               </a>
@@ -38,7 +47,7 @@ export function ProjectDetail({ project }: Props) {
                 href={links.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-primary hover:opacity-75"
+                className="btn btn-primary"
               >
                 Live site ↗<span className="sr-only"> (opens in new tab)</span>
               </a>
@@ -47,9 +56,9 @@ export function ProjectDetail({ project }: Props) {
         </div>
 
         {impact.length > 0 && (
-          <section className="space-y-4">
-            <h2 className="overline">Impact</h2>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <section className={styles.impactSection}>
+            <h2 className={`type-overline ${styles.impactLabel}`}>Impact</h2>
+            <div className={styles.impactGrid}>
               {impact.map((metric, i) => (
                 <ImpactMetricBadge key={i} metric={metric} />
               ))}
@@ -57,19 +66,19 @@ export function ProjectDetail({ project }: Props) {
           </section>
         )}
 
-        <div className="card rounded-xl p-8 space-y-8">
-          <div className="space-y-3">
-            <h2 className="overline">Problem</h2>
-            <p className="text-base leading-relaxed text-primary">{problem}</p>
+        <div className={`card ${styles.caseStudy}`}>
+          <div className={styles.caseStudySection}>
+            <h2 className="type-overline">Problem</h2>
+            <p className="text-size-base line-height-relaxed text-color-primary">{problem}</p>
           </div>
-          <div className="space-y-3 border-top-default pt-8">
-            <h2 className="overline">Solution</h2>
-            <p className="text-base leading-relaxed text-primary">{solution}</p>
+          <div className={styles.caseStudySectionDivider}>
+            <h2 className="type-overline">Solution</h2>
+            <p className="text-size-base line-height-relaxed text-color-primary">{solution}</p>
           </div>
         </div>
 
-        <section className="space-y-4">
-          <h2 className="overline">Tech Stack</h2>
+        <section className={styles.techSection}>
+          <h2 className="type-overline">Tech Stack</h2>
           <TagChips tags={techStack} />
         </section>
       </div>

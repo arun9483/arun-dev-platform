@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import styles from './BackLink.module.css';
 
 type Props = {
   href: string;
@@ -8,10 +9,7 @@ type Props = {
 
 export function BackLink({ href, children }: Props) {
   return (
-    <Link
-      href={href}
-      className="link-back hover:opacity-75 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-text-accent)] focus-visible:ring-offset-1"
-    >
+    <Link href={href} className={styles.linkBack}>
       ← {children}
     </Link>
   );

@@ -1,8 +1,10 @@
 'use client';
 
+import { Card, Chip } from '@arun-dev/ui';
 import { useSearch } from '../hooks/useSearch';
 import { SearchResultCard } from './SearchResultCard';
 import type { SearchDocument } from '@/lib/search/types';
+import styles from './SearchView.module.css';
 
 type Props = {
   documents: SearchDocument[];
@@ -13,10 +15,10 @@ export function SearchView({ documents }: Props) {
   const trimmed = query.trim();
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-8 sm:py-16 space-y-8">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold text-display">Search</h1>
-        <p className="text-base text-secondary">Search across projects and articles.</p>
+    <div className={styles.container}>
+      <div className={styles.heading}>
+        <h1 className="text-size-3xl font-weight-bold type-display">Search</h1>
+        <p className="text-size-base text-color-secondary">Search across projects and articles.</p>
       </div>
 
       <form role="search" onSubmit={(e) => e.preventDefault()}>
@@ -25,40 +27,62 @@ export function SearchView({ documents }: Props) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search projects and articles…"
-          className="w-full px-4 py-3 rounded-xl text-sm bg-surface text-primary placeholder:text-muted border-default focus:outline-none focus:ring-2 focus:ring-[var(--color-text-accent)]"
+          className={styles.input}
           aria-label="Search"
           disabled={isIndexing}
         />
       </form>
 
       {trimmed ? (
-        <p className="text-xs text-muted" aria-live="polite">
+        <p className="text-size-xs text-color-muted" aria-live="polite">
           {results.length} result{results.length !== 1 ? 's' : ''} for &ldquo;{trimmed}&rdquo;
         </p>
       ) : (
-        <div className="space-y-3" aria-hidden={isIndexing}>
-          <p className="text-xs font-medium uppercase tracking-wider text-muted">
-            Try searching for
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {['Next.js', 'TypeScript', 'performance', 'design system', 'RSC', 'Tailwind'].map(
-              (term) => (
-                <button
+        <div className={styles.emptyState} aria-hidden={isIndexing}>
+          <div className={styles.suggestions}>
+            <p className="text-size-xs font-weight-medium uppercase letter-spacing-wider text-color-muted">
+              Try searching for
+            </p>
+            <div className={styles.suggestionChips}>
+              {['Next.js', 'TypeScript', 'performance', 'design system', 'RSC'].map((term) => (
+                <Chip
                   key={term}
-                  type="button"
+                  as="button"
                   onClick={() => setQuery(term)}
-                  className="chip chip-default cursor-pointer hover:bg-surface transition-colors"
+                  className={styles.suggestionBtn}
                 >
                   {term}
-                </button>
-              ),
-            )}
+                </Chip>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.indexedContent}>
+            <p className="text-size-xs font-weight-medium uppercase letter-spacing-wider text-color-muted">
+              What&rsquo;s indexed
+            </p>
+            <div className={styles.indexedGrid}>
+              {Object.entries(
+                documents.reduce<Record<string, number>>((acc, d) => {
+                  acc[d.type] = (acc[d.type] ?? 0) + 1;
+                  return acc;
+                }, {}),
+              ).map(([type, count]) => (
+                <Card key={type} className={styles.indexedCard}>
+                  <span className="text-size-2xl font-weight-bold type-display">{count}</span>
+                  <span className="text-size-xs text-color-muted capitalize">
+                    {type}
+                    {count !== 1 ? 's' : ''}
+                  </span>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       )}
 
       {results.length > 0 && (
-        <ul className="space-y-4" aria-label="Search results">
+        <ul className={styles.results} aria-label="Search results">
           {results.map((result) => (
             <li key={result.id}>
               <SearchResultCard result={result} />
@@ -68,7 +92,9 @@ export function SearchView({ documents }: Props) {
       )}
 
       {trimmed && results.length === 0 && !isIndexing && (
-        <p className="text-sm text-secondary">No results found for &ldquo;{trimmed}&rdquo;.</p>
+        <p className="text-size-sm text-color-secondary">
+          No results found for &ldquo;{trimmed}&rdquo;.
+        </p>
       )}
     </div>
   );

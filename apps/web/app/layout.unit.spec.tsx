@@ -40,12 +40,12 @@ describe('RootLayout', () => {
     expect(html).toContain('localStorage');
   });
 
-  it('applies antialiased class to the body', () => {
+  it('renders the body element', () => {
     const html = renderToString(
       <RootLayout>
         <span />
       </RootLayout>,
     );
-    expect(html).toContain('antialiased');
+    expect(html).toContain('<body');
   });
 });

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import styles from './Nav.module.css';
 
 const NAV_LINKS = [
   { href: '/projects', label: 'Projects' },
@@ -17,13 +18,17 @@ export function Nav() {
 
   return (
     <>
-      <nav aria-label="Main navigation" className="hidden sm:block">
-        <ul className="flex items-center gap-6">
+      <nav aria-label="Main navigation" className={styles.navDesktop}>
+        <ul className={styles.list}>
           {NAV_LINKS.map(({ href, label }) => {
             const isActive = pathname.startsWith(href);
             return (
               <li key={href}>
-                <Link href={href} className="nav-link" data-active={isActive ? 'true' : 'false'}>
+                <Link
+                  href={href}
+                  className={styles.navLink}
+                  data-active={isActive ? 'true' : 'false'}
+                >
                   {label}
                 </Link>
               </li>
@@ -34,7 +39,7 @@ export function Nav() {
 
       <button
         type="button"
-        className="sm:hidden flex items-center justify-center w-10 h-10 rounded-lg text-secondary hover:text-primary hover:bg-surface transition-colors"
+        className={styles.hamburger}
         aria-label={open ? 'Close menu' : 'Open menu'}
         aria-expanded={open}
         aria-controls="mobile-nav"
@@ -44,19 +49,15 @@ export function Nav() {
       </button>
 
       {open && (
-        <nav
-          id="mobile-nav"
-          aria-label="Main navigation"
-          className="sm:hidden absolute top-full left-0 right-0 bg-primary border-b border-default shadow-md px-6 py-4 z-50"
-        >
-          <ul className="flex flex-col gap-1">
+        <nav id="mobile-nav" aria-label="Main navigation" className={styles.mobileNav}>
+          <ul className={styles.mobileList}>
             {NAV_LINKS.map(({ href, label }) => {
               const isActive = pathname.startsWith(href);
               return (
                 <li key={href}>
                   <Link
                     href={href}
-                    className="nav-link block py-2"
+                    className={`${styles.navLink} ${styles.mobileLink}`}
                     data-active={isActive ? 'true' : 'false'}
                     onClick={() => setOpen(false)}
                   >

@@ -9,12 +9,17 @@ export const metadata = {
 export default async function ProjectsPage() {
   const { projects } = await loadProjectsPage();
   return (
-    <div className="mx-auto max-w-4xl px-6 py-8 sm:py-16 space-y-10">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold text-display">Projects</h1>
-        <p className="text-base text-secondary">Engineering case studies with measurable impact.</p>
+    <div className="page-container stack space-xl">
+      <div className="stack space-2xs">
+        <h1 className="text-size-3xl font-weight-bold type-display">Projects</h1>
+        <p className="text-size-base text-color-secondary">
+          Engineering case studies with measurable impact.
+        </p>
       </div>
       <ProjectList projects={projects} />
+      <p className="text-size-sm text-color-muted">
+        More case studies in progress — check back soon.
+      </p>
     </div>
   );
 }

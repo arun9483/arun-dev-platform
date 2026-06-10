@@ -3,8 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./src/base.css": "./src/base.css",
-    "./src/brands/arun.css": "./src/brands/arun.css",
-    "./src/brands/default.css": "./src/brands/default.css"
+    "./base": "./src/base.css",
+    "./brands/default": "./src/brands/default.css",
+    "./brands/default/palette": "./src/brands/default/palette.css",
+    "./brands/default/semantic": "./src/brands/default/semantic.css",
+    "./primitives/typography": "./src/primitives/typography.css",
+    "./primitives/spacing": "./src/primitives/spacing.css",
+    "./primitives/radius": "./src/primitives/radius.css",
+    "./primitives/shadow": "./src/primitives/shadow.css",
+    "./primitives/motion": "./src/primitives/motion.css",
+    "./primitives/elevation": "./src/primitives/elevation.css",
+    "./primitives/breakpoints": "./src/primitives/breakpoints.css",
+    "./createBrand": "./src/createBrand.ts"
   }
 }

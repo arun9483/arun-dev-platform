@@ -1,0 +1,125 @@
+.navDesktop {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  /* sm: --breakpoint-sm */
+  .navDesktop {
+    display: block;
+  }
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hamburger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-xl);
+  height: var(--space-xl);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition:
+    color var(--duration-fast) var(--ease-smooth),
+    background-color var(--duration-fast) var(--ease-smooth);
+}
+
+.hamburger:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-surface);
+}
+
+@media (min-width: 640px) {
+  /* sm: --breakpoint-sm */
+  .hamburger {
+    display: none;
+  }
+}
+
+.mobileNav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--color-bg-primary);
+  border-bottom: var(--space-px) solid var(--color-border-default);
+  box-shadow: var(--shadow-md);
+  padding-inline: var(--space-md);
+  padding-block: var(--space-sm);
+  z-index: var(--z-sticky);
+}
+
+@media (min-width: 640px) {
+  /* sm: --breakpoint-sm */
+  .mobileNav {
+    display: none;
+  }
+}
+
+.mobileList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mobileLink {
+  display: block;
+  padding-block: var(--space-2xs);
+}
+
+/* ── Nav link — co-located from globals.css ── */
+.navLink {
+  position: relative;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  padding-bottom: var(--space-2px);
+  transition: color var(--duration-fast) var(--ease-smooth);
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: calc(-1 * var(--space-2px));
+  left: 0;
+  width: 0;
+  height: var(--space-2px);
+  border-radius: var(--radius-full);
+  background-color: var(--color-text-accent);
+  transition: width var(--duration-normal) var(--ease-smooth);
+}
+
+.navLink:hover {
+  color: var(--color-text-accent);
+}
+
+.navLink:hover::after {
+  width: 100%;
+}
+
+.navLink[data-active='true'] {
+  color: var(--color-text-accent);
+  font-weight: var(--font-weight-semibold);
+}
+
+.navLink[data-active='true']::after {
+  width: 100%;
+}
+
+.navLink:focus-visible {
+  outline-offset: var(--space-3xs);
+}

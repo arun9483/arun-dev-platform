@@ -1,4 +1,5 @@
 import type { ImpactMetric } from '../types';
+import styles from './ImpactMetricBadge.module.css';
 
 type Props = {
   metric: ImpactMetric;
@@ -7,8 +8,12 @@ type Props = {
 export function ImpactMetricBadge({ metric }: Props) {
   return (
     <dl className="metric">
-      <dt className="text-xs uppercase tracking-wider font-medium text-accent">{metric.label}</dt>
-      <dd className="text-sm font-bold mt-1 text-primary">{metric.value}</dd>
+      <dt className={`text-size-xs font-weight-medium text-color-accent ${styles.label}`}>
+        {metric.label}
+      </dt>
+      <dd className={`text-size-sm font-weight-bold text-color-primary ${styles.value}`}>
+        {metric.value}
+      </dd>
     </dl>
   );
 }

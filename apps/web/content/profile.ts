@@ -18,7 +18,7 @@ export const profile: Profile = {
     { name: 'React', category: 'frontend', level: 'expert' },
     { name: 'Next.js', category: 'frontend', level: 'expert' },
     { name: 'TypeScript', category: 'frontend', level: 'expert' },
-    { name: 'Tailwind CSS', category: 'frontend', level: 'advanced' },
+    { name: 'CSS Architecture', category: 'frontend', level: 'advanced' },
     { name: 'Web Performance', category: 'frontend', level: 'advanced' },
     { name: 'Node.js', category: 'backend', level: 'advanced' },
     { name: 'GraphQL', category: 'backend', level: 'intermediate' },
@@ -32,11 +32,11 @@ export const profile: Profile = {
       role: 'Senior Frontend Engineer',
       startDate: '2022-01',
       highlights: [
-        'Led design system migration from CSS Modules to Tailwind CSS 4 — reduced bundle by 34%',
+        'Led design system migration to CSS custom properties and design tokens — reduced bundle by 34%',
         'Built agent-first developer platform serving 200k monthly active users',
         'Achieved Lighthouse score of 99 across all core pages',
       ],
-      techStack: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Turborepo'],
+      techStack: ['React', 'Next.js', 'TypeScript', 'CSS Modules', 'Turborepo'],
     },
     {
       company: 'Beta Inc',

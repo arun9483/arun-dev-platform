@@ -1,16 +1,18 @@
+import { Chip } from '@arun-dev/ui';
+import styles from './TagChips.module.css';
+
 type Props = {
   tags: readonly string[];
   variant?: 'default' | 'accent';
 };
 
 export function TagChips({ tags, variant = 'default' }: Props) {
-  const className = `chip chip-${variant}`;
   return (
-    <div className="flex flex-wrap gap-1.5">
+    <div className={styles.list}>
       {tags.map((tag) => (
-        <span key={tag} className={className}>
+        <Chip key={tag} variant={variant}>
           {tag}
-        </span>
+        </Chip>
       ))}
     </div>
   );

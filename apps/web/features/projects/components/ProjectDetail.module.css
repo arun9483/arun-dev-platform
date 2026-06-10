@@ -1,0 +1,83 @@
+.container {
+  max-width: var(--size-container-md);
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+  padding-block: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+@media (min-width: 640px) {
+  /* sm: --breakpoint-sm */
+  .container {
+    padding-block: var(--space-2xl);
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.description {
+  max-width: var(--size-container-sm);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+.impactSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.impactLabel {
+  color: var(--color-text-secondary);
+}
+
+.impactGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xs);
+}
+
+@media (min-width: 640px) {
+  /* sm: --breakpoint-sm */
+  .impactGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.caseStudy {
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.caseStudySection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.caseStudySectionDivider {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  border-top: var(--space-px) solid var(--color-border-default);
+  padding-top: var(--space-lg);
+}
+
+.techSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}

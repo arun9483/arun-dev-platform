@@ -195,15 +195,83 @@ You must use:
 
 ### Styling
 
-- Tailwind CSS 4.x (CSS-first configuration, no JS config files)
+- CSS Modules + CSS custom properties (no utility framework, no CSS-in-JS)
 - Pure CSS custom properties for design tokens — no CSS-in-JS
 - Tokens live in `packages/tokens/` (pure CSS, publishable, white-label compatible)
 - Brand selection via `NEXT_PUBLIC_BRAND` env var and `prebuild` script
 - Theme support: system (default), dark, light via `data-theme` attribute
-- No inline styles (except dynamic cases)
-- No hardcoded color/font values — use CSS variables (`var(--token-name)`)
 - Components must use semantic tokens (`--color-bg-primary`) over raw brand tokens
 - See `docs/design-system.md` for full architecture
+
+#### CSS Token Rules (STRICT — consumer application `@arun-dev/web`)
+
+**Rule 1: No hardcoded values in `*.css` files (except `0`)**
+
+Every size, spacing, color, font, border-width, blur, and transition value in any `.css` or `.module.css` file MUST reference a design token via `var(--token-name)`. Raw numbers with units are forbidden except `0`.
+
+```css
+/* ❌ Forbidden */
+border: 1px solid #e2e8f0;
+outline-offset: 2px;
+font-size: 0.875rem;
+backdrop-filter: blur(12px);
+
+/* ✅ Correct */
+border: var(--space-px) solid var(--color-border-default);
+outline-offset: var(--space-2px);
+font-size: var(--text-sm);
+backdrop-filter: blur(var(--blur-lg));
+```
+
+If no token exists for a value, add one to `packages/tokens/src/primitives/` — do NOT write a raw value. Use `calc()` with existing tokens for derived values (e.g. `calc(-1 * var(--space-2xl))`).
+
+**Documented exceptions** (CSS language limitations — cannot be tokenized):
+
+| Pattern                                                             | Location                  | Reason                                                                                                                                           |
+| ------------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `@media (min-width: Npx)`                                           | All breakpoint queries    | CSS spec does not allow `var()` inside `@media` conditions. Use the raw value and add a comment referencing the matching `--breakpoint-*` token. |
+| `em` values inside `.prose`                                         | `globals.css` prose block | Intentionally relative to element font-size for typographic scaling. Converting to `rem` would break heading/body proportion.                    |
+| `min-height: 100vh`                                                 | `globals.css body`        | Viewport unit — no rem token applies.                                                                                                            |
+| `width/height: var(--space-px); margin: calc(-1 * var(--space-px))` | Skip-link hidden state    | Standard sr-only clip technique (already tokenized via `--space-px`).                                                                            |
+
+**Rule 2: No inline styles in `*.tsx` files**
+
+`.tsx` component files must not use `style={{...}}` or `style="..."` for design values. All visual styling belongs in CSS Modules.
+
+```tsx
+/* ❌ Forbidden */
+<div style={{ color: '#4f46e5', padding: '1rem' }}>
+
+/* ✅ Correct */
+<div className={styles.card}>
+```
+
+**One allowed exception — data-driven CSS custom properties:**
+When a visual value is computed from data at runtime (e.g. a depth level, a percentage), pass it as a CSS custom property via `style` and consume it in CSS:
+
+```tsx
+/* ✅ Allowed — value is data-driven, not a design constant */
+<li style={{ '--toc-depth': level - 2 } as React.CSSProperties}>
+```
+
+```css
+.tocItem {
+  padding-left: calc(var(--toc-depth, 0) * var(--size-toc-indent));
+}
+```
+
+Use `data-*` attributes for boolean/enum states — never inline style:
+
+```tsx
+/* ✅ Correct for state-driven styling */
+<button data-copied={copied ? 'true' : 'false'}>
+```
+
+```css
+.btn[data-copied='true'] {
+  background-color: var(--code-copied-bg);
+}
+```
 
 ### Content & Data
 

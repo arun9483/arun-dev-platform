@@ -4,52 +4,61 @@ import { ExperienceTimeline } from '@/features/profile/components/ExperienceTime
 import { ProjectList } from '@/features/projects/components/ProjectList';
 import { ArticleList } from '@/features/articles/components/ArticleList';
 import { AchievementList } from '@/features/achievements/components/AchievementList';
+import { Cover } from '@/components/Cover';
 import Link from 'next/link';
+import styles from './page.module.css';
 
 export default async function HomePage() {
   const { profile, featuredSkills, featuredProjects, featuredArticles, featuredAchievements } =
     await loadHomePage();
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-8 sm:py-16 space-y-12 sm:space-y-20">
-      <section>
-        <ProfileCard profile={profile} featuredSkills={featuredSkills} />
-      </section>
+    <>
+      <Cover src="placeholder" alt="" />
+      <div className={`page-container ${styles.sections}`}>
+        <section>
+          <ProfileCard profile={profile} featuredSkills={featuredSkills} />
+        </section>
 
-      <section className="space-y-6">
-        <h2 className="text-2xl font-semibold text-primary">Experience</h2>
-        <ExperienceTimeline experience={profile.experience} />
-      </section>
+        <section className="stack space-md">
+          <h2 className="text-size-2xl font-weight-semibold text-color-primary">Experience</h2>
+          <ExperienceTimeline experience={profile.experience} />
+        </section>
 
-      <section className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold text-primary">Featured Projects</h2>
-          <Link href="/projects" className="text-sm underline text-accent">
-            View all
-          </Link>
-        </div>
-        <ProjectList projects={featuredProjects} headingLevel="h3" />
-      </section>
+        <section className="stack space-md">
+          <div className={styles.sectionHeader}>
+            <h2 className="text-size-2xl font-weight-semibold text-color-primary">
+              Featured Projects
+            </h2>
+            <Link href="/projects" className="text-size-sm underline text-color-accent">
+              View all
+            </Link>
+          </div>
+          <ProjectList projects={featuredProjects} headingLevel="h3" />
+        </section>
 
-      <section className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold text-primary">Latest Articles</h2>
-          <Link href="/articles" className="text-sm underline text-accent">
-            View all
-          </Link>
-        </div>
-        <ArticleList articles={featuredArticles} headingLevel="h3" />
-      </section>
+        <section className="stack space-md">
+          <div className={styles.sectionHeader}>
+            <h2 className="text-size-2xl font-weight-semibold text-color-primary">
+              Latest Articles
+            </h2>
+            <Link href="/articles" className="text-size-sm underline text-color-accent">
+              View all
+            </Link>
+          </div>
+          <ArticleList articles={featuredArticles} headingLevel="h3" />
+        </section>
 
-      <section className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold text-primary">Achievements</h2>
-          <Link href="/achievements" className="text-sm underline text-accent">
-            View all
-          </Link>
-        </div>
-        <AchievementList achievements={featuredAchievements} headingLevel="h3" />
-      </section>
-    </div>
+        <section className="stack space-md">
+          <div className={styles.sectionHeader}>
+            <h2 className="text-size-2xl font-weight-semibold text-color-primary">Achievements</h2>
+            <Link href="/achievements" className="text-size-sm underline text-color-accent">
+              View all
+            </Link>
+          </div>
+          <AchievementList achievements={featuredAchievements} headingLevel="h3" />
+        </section>
+      </div>
+    </>
   );
 }

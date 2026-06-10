@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import { Card, Chip } from '@arun-dev/ui';
 import { TagChips } from '@/components/TagChips';
 import type { SearchResult } from '../types';
+import styles from './SearchResultCard.module.css';
 
 type Props = {
   result: SearchResult;
@@ -12,20 +14,19 @@ const TYPE_LABEL: Record<string, string> = {
 };
 
 export function SearchResultCard({ result }: Props) {
-  const chipVariant = result.type === 'project' ? 'chip-accent' : 'chip-default';
   const label = TYPE_LABEL[result.type] ?? result.type;
 
   return (
-    <Link
-      href={result.href}
-      className="card block rounded-xl p-5 space-y-2 hover:shadow-md transition-shadow"
-    >
-      <div className="flex items-center gap-2">
-        <span className={`chip ${chipVariant}`}>{label}</span>
-        <p className="text-sm font-semibold text-primary truncate">{result.title}</p>
+    <Card as="article" lift className={styles.article}>
+      <div className={styles.header}>
+        <Chip variant={result.type === 'project' ? 'accent' : 'default'}>{label}</Chip>
+        <p className="text-size-sm font-weight-semibold text-color-primary truncate">
+          {result.title}
+        </p>
       </div>
-      <p className="text-xs text-secondary line-clamp-2">{result.description}</p>
+      <p className="text-size-xs text-color-secondary line-clamp-2">{result.description}</p>
       {result.tags && <TagChips tags={result.tags.split(' ').filter(Boolean)} />}
-    </Link>
+      <Link href={result.href} aria-label={result.title} className={styles.overlay} />
+    </Card>
   );
 }

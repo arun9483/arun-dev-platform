@@ -1,5 +1,6 @@
 import type { ArticleMeta } from '../types';
 import { ArticleCard } from './ArticleCard';
+import styles from './ArticleList.module.css';
 
 type Props = {
   articles: ArticleMeta[];
@@ -8,11 +9,11 @@ type Props = {
 
 export function ArticleList({ articles, headingLevel = 'h2' }: Props) {
   if (articles.length === 0) {
-    return <p className="text-sm text-secondary">No articles found.</p>;
+    return <p className="text-size-sm text-color-secondary">No articles found.</p>;
   }
 
   return (
-    <ul className="space-y-6">
+    <ul className={styles.list}>
       {articles.map((article) => (
         <li key={article.id}>
           <ArticleCard article={article} headingLevel={headingLevel} />

@@ -296,7 +296,7 @@ flowchart LR
     A["NEXT_PUBLIC_BRAND=arun"] --> B["prebuild script"]
     B --> C["generates styles/brand.css<br/>@import '@arun-dev/tokens/brands/arun.css'"]
     C --> D["next build"]
-    D --> E["globals.css imports:<br/>1. tailwindcss<br/>2. base.css<br/>3. brand.css"]
+    D --> E["globals.css imports:<br/>1. base.css<br/>2. brand.css<br/>3. components.css"]
     E --> F["CSS bundle with<br/>only selected brand"]
 ```
 
@@ -305,16 +305,14 @@ flowchart LR
 ## 9. CSS Variable Resolution Order
 
 ```
-Tailwind defaults (@import 'tailwindcss')
-    ↓ overridden by
-Structural tokens (base.css: --radius-*, --shadow-*)
+Structural tokens (base.css: --radius-*, --shadow-*, --space-*)
     ↓ overridden by
 Brand tokens (brands/arun.css: --color-*, --font-*)
     ↓ overridden by
 Dark mode (@media prefers-color-scheme or [data-theme="dark"])
 ```
 
-Import order in `globals.css` matters. Later imports override earlier ones for overlapping variables. The correct order is always: `tailwindcss → base.css → brand.css`.
+Import order in `globals.css` matters. Later imports override earlier ones for overlapping variables. The correct order is always: `base.css → brand.css → components.css`.
 
 ---
 
@@ -362,15 +360,16 @@ The `apps/web/styles/` directory is retained for:
 
 ---
 
-## 12. Tailwind CSS v4 Compatibility
+## 12. CSS Modules Architecture
 
-This project uses **Tailwind CSS 4.2.2** which uses **CSS-first configuration**.
+This project uses **CSS Modules** for component-scoped styles with no utility framework.
 
 ### Rules
 
-- No `tailwind.config.ts` or `tailwind.config.js` — Tailwind v4 uses `@theme` blocks in CSS
-- No `@config` directive in `globals.css` — this is a v4 backward-compatibility escape hatch
-- Custom tokens are defined as CSS custom properties, consumed by Tailwind automatically
-- Tailwind v4's built-in defaults (spacing, breakpoints) are used as-is — only override what needs customization
+- No utility framework config files — styling is pure CSS
+- Component styles live in co-located `*.module.css` files
+- All visual values are CSS custom properties (`var(--token-name)`) — no hardcoded values
+- Shared layout utilities (`.truncate`, `.sr-only`, `.line-clamp-*`) live in `packages/ui/src/css/reset.css`
+- Global typographic scale utilities (`.text-*`, `.leading-*`, `.font-*`) live in `apps/web/app/globals.css`
 
 ---

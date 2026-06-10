@@ -16,48 +16,28 @@ describe('CodeBlock', () => {
     vi.useFakeTimers();
   });
 
-  it('renders the language label from the child className', () => {
-    render(
-      <CodeBlock>
-        <code className="language-typescript">const x = 1;</code>
-      </CodeBlock>,
-    );
+  it('renders the language label', () => {
+    render(<CodeBlock lang="typescript" rawCode="const x = 1;" />);
     expect(screen.getByText('typescript')).toBeInTheDocument();
   });
 
-  it('falls back to "code" when no language className is present', () => {
-    render(
-      <CodeBlock>
-        <code>plain text</code>
-      </CodeBlock>,
-    );
+  it('falls back to "code" when no lang prop is provided', () => {
+    render(<CodeBlock rawCode="plain text" />);
     expect(screen.getByText('code')).toBeInTheDocument();
   });
 
   it('renders highlighted code inside a <code> element', () => {
-    const { container } = render(
-      <CodeBlock>
-        <code className="language-ts">const x = 1;</code>
-      </CodeBlock>,
-    );
+    const { container } = render(<CodeBlock lang="ts" rawCode="const x = 1;" />);
     expect(container.querySelector('pre code')).not.toBeNull();
   });
 
-  it('renders MermaidDiagram for language-mermaid blocks', () => {
-    render(
-      <CodeBlock>
-        <code className="language-mermaid">graph TD; A--&gt;B;</code>
-      </CodeBlock>,
-    );
+  it('renders MermaidDiagram for mermaid language', () => {
+    render(<CodeBlock lang="mermaid" rawCode="graph TD; A-->B;" />);
     expect(screen.getByTestId('mermaid')).toBeInTheDocument();
   });
 
   it('copies the raw code to the clipboard and toggles the button label', () => {
-    render(
-      <CodeBlock>
-        <code className="language-ts">{`const greeting = "hi";`}</code>
-      </CodeBlock>,
-    );
+    render(<CodeBlock lang="ts" rawCode={`const greeting = "hi";`} />);
     const button = screen.getByRole('button', { name: /copy code to clipboard/i });
     expect(button).toHaveTextContent('Copy');
 
@@ -69,10 +49,5 @@ describe('CodeBlock', () => {
       vi.advanceTimersByTime(2000);
     });
     expect(button).toHaveTextContent('Copy');
-  });
-
-  it('renders without crashing when children is not a valid element', () => {
-    render(<CodeBlock>plain string</CodeBlock>);
-    expect(screen.getByText('code')).toBeInTheDocument();
   });
 });

@@ -1,3 +1,4 @@
+import { isValidElement } from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import type { Article } from '../types';
@@ -5,6 +6,7 @@ import { CodeBlock } from './CodeBlock';
 import { BackLink } from '@/components/BackLink';
 import { Cover } from '@/components/Cover';
 import { TagChips } from '@/components/TagChips';
+import styles from './ArticleDetail.module.css';
 
 type TocEntry = { id: string; text: string; level: number };
 
@@ -40,7 +42,18 @@ function makeHeading(level: 2 | 3) {
   };
 }
 
-const mdxComponents = { pre: CodeBlock, h2: makeHeading(2), h3: makeHeading(3) };
+function PreBlock({ children, className }: React.HTMLAttributes<HTMLPreElement>) {
+  const ownLang = className?.replace('language-', '') ?? '';
+  const codeEl = isValidElement(children)
+    ? (children as React.ReactElement<{ className?: string; children?: string }>)
+    : null;
+  const childLang = (codeEl?.props?.className ?? '').replace('language-', '');
+  const lang = ownLang || childLang || 'code';
+  const rawCode = String(codeEl?.props?.children ?? '').trimEnd();
+  return <CodeBlock lang={lang} rawCode={rawCode} />;
+}
+
+const mdxComponents = { pre: PreBlock, h2: makeHeading(2), h3: makeHeading(3) };
 const mdxOptions = { mdxOptions: { remarkPlugins: [remarkGfm] } };
 
 const DIFFICULTY_LABEL: Record<string, string> = {
@@ -66,57 +79,77 @@ export function ArticleDetail({ article }: Props) {
   const diff = metadata.difficulty;
   const toc = extractToc(content);
 
+  const tocNav =
+    toc.length >= 2 ? (
+      <nav aria-label="Table of contents" className={`card ${styles.toc}`}>
+        <p className="text-size-xs font-weight-semibold uppercase letter-spacing-wider text-color-muted">
+          On this page
+        </p>
+        <ul className={styles.tocList}>
+          {toc.map(({ id, text, level }) => (
+            <li
+              key={id}
+              className={styles.tocItem}
+              style={{ '--toc-depth': level - 2 } as React.CSSProperties}
+            >
+              <a href={`#${id}`} className={`text-size-sm text-color-secondary ${styles.tocLink}`}>
+                {text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    ) : null;
+
   return (
     <div>
-      {coverImage && <Cover src={coverImage} alt={`Cover image for ${title}`} />}
+      {coverImage && (
+        <Cover src={coverImage} alt={`Cover image for ${title}`}>
+          <BackLink href="/articles">Back to articles</BackLink>
+        </Cover>
+      )}
 
-      <div className="mx-auto max-w-2xl px-6 py-8 sm:py-12 space-y-10">
-        <BackLink href="/articles">Back to articles</BackLink>
+      <div className={styles.container}>
+        {!coverImage && <BackLink href="/articles">Back to articles</BackLink>}
 
-        <header className="space-y-5">
-          <div className="flex flex-wrap items-center gap-2 text-xs text-muted">
-            <span>{formatDate(publishedAt)}</span>
-            <span aria-hidden>·</span>
-            <span>{metadata.readTime} min read</span>
-            <span aria-hidden>·</span>
-            <span className={`chip badge difficulty-${diff}`}>
-              {DIFFICULTY_LABEL[diff] ?? diff}
-            </span>
+        <div className={styles.layout}>
+          {tocNav && (
+            <aside className={styles.sidebar} aria-label="Article navigation">
+              {tocNav}
+            </aside>
+          )}
+
+          <div className={styles.main}>
+            <header className={styles.header}>
+              <div className={`text-size-xs text-color-muted ${styles.meta}`}>
+                <span>{formatDate(publishedAt)}</span>
+                <span aria-hidden>·</span>
+                <span>{metadata.readTime} min read</span>
+                <span aria-hidden>·</span>
+                <span className={`chip badge difficulty-${diff}`}>
+                  {DIFFICULTY_LABEL[diff] ?? diff}
+                </span>
+              </div>
+
+              <div className={styles.headerInner}>
+                <div className="bar-accent" />
+                <h1 className="text-size-4xl font-weight-bold line-height-tight type-display">
+                  {title}
+                </h1>
+              </div>
+
+              <p className="text-size-base line-height-relaxed text-color-secondary">{summary}</p>
+
+              <TagChips tags={metadata.tags} />
+            </header>
+
+            {tocNav && <div className={styles.tocMobile}>{tocNav}</div>}
+
+            <article className={`prose max-w-none ${styles.prose}`}>
+              <MDXRemote source={content} components={mdxComponents} options={mdxOptions} />
+            </article>
           </div>
-
-          <div className="space-y-3">
-            <div className="bar-accent" />
-            <h1 className="text-4xl font-bold leading-tight text-display">{title}</h1>
-          </div>
-
-          <p className="text-base leading-relaxed text-secondary">{summary}</p>
-
-          <TagChips tags={metadata.tags} />
-        </header>
-
-        {toc.length >= 2 && (
-          <nav aria-label="Table of contents" className="card rounded-xl px-5 py-4 space-y-2.5">
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted">
-              On this page
-            </p>
-            <ul className="space-y-1.5">
-              {toc.map(({ id, text, level }) => (
-                <li key={id} style={{ paddingLeft: `${(level - 2) * 14}px` }}>
-                  <a
-                    href={`#${id}`}
-                    className="text-sm text-secondary hover:text-accent transition-colors"
-                  >
-                    {text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        )}
-
-        <article className="prose max-w-none border-top-default pt-10">
-          <MDXRemote source={content} components={mdxComponents} options={mdxOptions} />
-        </article>
+        </div>
       </div>
     </div>
   );

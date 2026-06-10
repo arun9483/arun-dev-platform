@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import { Card, Chip, Badge } from '@arun-dev/ui';
 import type { ArticleMeta } from '../types';
+import styles from './ArticleCard.module.css';
 
 type Props = {
   article: ArticleMeta;
@@ -22,36 +24,32 @@ export function ArticleCard({ article, headingLevel = 'h2' }: Props) {
   });
 
   return (
-    <article className="card rounded-xl p-6 space-y-4 transition-all hover:shadow-md hover:-translate-y-px relative group">
-      <div className="flex items-center gap-2 text-xs text-muted">
+    <Card as="article" lift className={styles.article}>
+      <div className={`text-size-xs text-color-muted ${styles.meta}`}>
         <time dateTime={publishedAt}>{date}</time>
         <span aria-hidden>·</span>
         <span>{metadata.readTime} min read</span>
         <span aria-hidden>·</span>
-        <span className={`chip badge difficulty-${metadata.difficulty}`}>
+        <Badge variant={`difficulty-${metadata.difficulty}`}>
           {DIFFICULTY_LABEL[metadata.difficulty]}
-        </span>
+        </Badge>
       </div>
 
-      <Heading className="text-base font-semibold leading-snug text-primary group-hover:text-accent group-hover:underline transition-colors">
+      <Heading
+        className={`text-size-base font-weight-semibold line-height-snug text-color-primary ${styles.heading}`}
+      >
         {title}
       </Heading>
 
-      <p className="text-sm leading-relaxed text-secondary">{summary}</p>
+      <p className="text-size-sm line-height-relaxed text-color-secondary">{summary}</p>
 
-      <div className="flex flex-wrap gap-1.5 pt-1">
+      <div className={styles.tags}>
         {metadata.tags.map((tag) => (
-          <span key={tag} className="chip chip-default">
-            {tag}
-          </span>
+          <Chip key={tag}>{tag}</Chip>
         ))}
       </div>
 
-      <Link
-        href={`/articles/${slug}`}
-        aria-label={title}
-        className="absolute inset-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--color-text-accent)]"
-      />
-    </article>
+      <Link href={`/articles/${slug}`} aria-label={title} className={styles.overlay} />
+    </Card>
   );
 }

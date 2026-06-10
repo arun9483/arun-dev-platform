@@ -1,0 +1,21 @@
+.article {
+  position: relative;
+  border-radius: var(--radius-xl);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-xl);
+  text-decoration: none;
+}

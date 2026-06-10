@@ -1,0 +1,36 @@
+.article {
+  border-radius: var(--radius-xl);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  position: relative;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+/* Heading changes on card hover (replaces group-hover:*) */
+.heading {
+  transition: color var(--duration-fast) var(--ease-smooth);
+}
+.article:hover .heading {
+  color: var(--color-text-accent);
+  text-decoration: underline;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+  padding-top: var(--space-3xs);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-xl);
+}

@@ -1,0 +1,18 @@
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+}
+
+@media (min-width: 640px) {
+  /* sm: --breakpoint-sm */
+  .sections {
+    gap: var(--space-4xl);
+  }
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

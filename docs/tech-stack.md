@@ -52,7 +52,7 @@ The tech stack is chosen based on:
 
 ## Primary Choice
 
-- **Tailwind CSS 4.x** (CSS-first configuration, no JS config files)
+- **CSS Modules** — scoped component styles, no utility framework
 - **Pure CSS custom properties** for design tokens
 - **No CSS-in-JS** — zero runtime style generation
 
@@ -79,7 +79,7 @@ The tech stack is chosen based on:
 
 - No inline styles (except dynamic cases)
 - No hardcoded color/font values — use CSS variables (`var(--token-name)`)
-- No `tailwind.config.ts` — Tailwind v4 uses CSS-first configuration
+- No utility framework config files
 - No CSS-in-JS, styled-components, or runtime style generation
 - Shared UI must use semantic tokens (`--color-bg-primary`) over raw brand tokens
 - Components must be brand-agnostic

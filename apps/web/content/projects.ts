@@ -13,7 +13,7 @@ export const projects: Project[] = [
       'Traditional portfolios are static and lack machine-readability, making it hard for AI systems or recruiters to extract structured insights quickly.',
     solution:
       'Built a feature-rich monorepo platform with Clean Architecture, agent-first data modeling, and a white-label design system — enabling both humans and AI to query and navigate content meaningfully.',
-    techStack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Turborepo', 'Vitest', 'Playwright'],
+    techStack: ['Next.js', 'TypeScript', 'CSS Modules', 'Turborepo', 'Vitest', 'Playwright'],
     impact: [
       { label: 'Lighthouse score', value: '~100' },
       { label: 'Unit test coverage', value: '100% on Phase 0' },
@@ -36,12 +36,12 @@ export const projects: Project[] = [
     updatedAt: '2024-06-01T00:00:00Z',
     title: 'Design System Migration',
     description:
-      'Led end-to-end migration of a legacy CSS Modules design system to Tailwind CSS 4 with white-label support.',
+      'Led end-to-end migration of a legacy design system to CSS custom properties with white-label support.',
     problem:
       'Existing design system had inconsistent tokens, no theme support, and a 120 KB CSS bundle causing poor Lighthouse scores.',
     solution:
-      'Introduced CSS custom properties as a token layer, migrated components to Tailwind CSS 4 utility classes, and implemented a brand/theme switching architecture — all without breaking existing consumers.',
-    techStack: ['Tailwind CSS', 'TypeScript', 'React', 'Storybook'],
+      'Introduced CSS custom properties as a token layer, migrated components to semantic utility classes, and implemented a brand/theme switching architecture — all without breaking existing consumers.',
+    techStack: ['CSS Custom Properties', 'TypeScript', 'React', 'Storybook'],
     impact: [
       { label: 'CSS bundle reduction', value: '34%' },
       { label: 'Lighthouse CSS score', value: '+18 points' },
@@ -50,7 +50,7 @@ export const projects: Project[] = [
     links: {},
     coverImage: '/images/placeholder-project.svg',
     metadata: {
-      tags: ['design-system', 'performance', 'tailwind', 'tokens', 'white-label'],
+      tags: ['design-system', 'performance', 'css-tokens', 'tokens', 'white-label'],
       featured: true,
     },
   },

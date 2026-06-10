@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useId, useRef, useState } from 'react';
+import styles from './MermaidDiagram.module.css';
 
 type Props = {
   chart: string;
@@ -66,24 +67,19 @@ export function MermaidDiagram({ chart }: Props) {
   }, [chart, diagramId]);
 
   return (
-    <div className="my-6 rounded-xl overflow-hidden border-default bg-surface">
-      {/* Diagram label bar */}
-      <div className="flex items-center gap-2 px-4 py-2 border-b-default bg-primary">
+    <div className={styles.wrapper}>
+      <div className={styles.header}>
         <span className="chip chip-accent">diagram</span>
       </div>
 
-      <div className="px-6 py-6">
+      <div className={styles.body}>
         {status === 'loading' && (
-          <div className="flex items-center justify-center py-8 gap-2 text-muted">
-            <span className="text-sm">Rendering diagram…</span>
+          <div className={styles.loading}>
+            <span>Rendering diagram…</span>
           </div>
         )}
-        {status === 'error' && (
-          <div className="text-sm rounded-lg px-4 py-3 bg-error-subtle text-error">
-            Failed to render diagram.
-          </div>
-        )}
-        <div ref={ref} className="flex justify-center [&_svg]:max-w-full [&_svg]:h-auto" />
+        {status === 'error' && <div className={styles.error}>Failed to render diagram.</div>}
+        <div ref={ref} className={styles.diagram} />
       </div>
     </div>
   );

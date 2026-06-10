@@ -1,5 +1,6 @@
 import type { Profile, Skill } from '../types';
 import { SkillList } from './SkillList';
+import styles from './ProfileCard.module.css';
 
 type Props = {
   profile: Profile;
@@ -10,29 +11,35 @@ export function ProfileCard({ profile, featuredSkills }: Props) {
   const { name, title, summary, location, socialLinks } = profile;
 
   return (
-    <article className="space-y-8" aria-labelledby="profile-name">
-      <div className="space-y-4">
+    <article className={styles.card} aria-labelledby="profile-name">
+      <div className={styles.intro}>
         <div className="bar-accent" />
-        <div>
-          <h1 id="profile-name" className="text-4xl font-bold text-display">
+        <div className={styles.nameBlock}>
+          <h1 id="profile-name" className="text-size-4xl font-weight-bold type-display">
             {name}
           </h1>
-          <p className="text-xl mt-2 font-medium text-accent">{title}</p>
-          {location && <p className="text-sm mt-1.5 text-muted">{location}</p>}
+          <p className={`text-size-xl font-weight-medium text-color-accent ${styles.title}`}>
+            {title}
+          </p>
+          {location && (
+            <p className={`text-size-sm text-color-muted ${styles.location}`}>{location}</p>
+          )}
         </div>
       </div>
 
-      <p className="text-base leading-relaxed max-w-2xl text-secondary">{summary}</p>
+      <p className={`text-size-base line-height-relaxed text-color-secondary ${styles.summary}`}>
+        {summary}
+      </p>
 
       <SkillList skills={featuredSkills} title="Core skills" />
 
-      <nav aria-label="Social links" className="flex gap-3 flex-wrap">
+      <nav aria-label="Social links" className={styles.socialLinks}>
         {socialLinks.github && (
           <a
             href={socialLinks.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-ghost hover:opacity-75"
+            className="btn btn-ghost"
           >
             GitHub ↗<span className="sr-only"> (opens in new tab)</span>
           </a>
@@ -42,7 +49,7 @@ export function ProfileCard({ profile, featuredSkills }: Props) {
             href={socialLinks.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-ghost hover:opacity-75"
+            className="btn btn-ghost"
           >
             LinkedIn ↗<span className="sr-only"> (opens in new tab)</span>
           </a>
@@ -52,7 +59,7 @@ export function ProfileCard({ profile, featuredSkills }: Props) {
             href={socialLinks.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-ghost hover:opacity-75"
+            className="btn btn-ghost"
           >
             Website ↗<span className="sr-only"> (opens in new tab)</span>
           </a>

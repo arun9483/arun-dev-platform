@@ -1,17 +1,34 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import type { Metadata, Viewport } from 'next';
+import localFont from 'next/font/local';
+import Script from 'next/script';
 import { THEME_SCRIPT } from '@/styles/themes/theme-script';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import './globals.css';
 
-const inter = Inter({
-  subsets: ['latin'],
+const inter = localFont({
+  src: [
+    {
+      path: '../node_modules/@arun-dev/tokens/src/fonts/inter-latin-wght-normal.woff2',
+      weight: '100 900',
+      style: 'normal',
+    },
+    {
+      path: '../node_modules/@arun-dev/tokens/src/fonts/inter-latin-wght-italic.woff2',
+      weight: '100 900',
+      style: 'italic',
+    },
+  ],
   variable: '--font-inter',
   display: 'swap',
   preload: true,
-  adjustFontFallback: true,
+  fallback: ['ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: {
@@ -24,22 +41,20 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
+    <html lang="en" suppressHydrationWarning className={inter.variable}>
+      <head />
+      <body>
         {/* Inline FOUC prevention: reads localStorage before first paint */}
-        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
-      </head>
-      <body className={`${inter.variable} min-h-screen antialiased flex flex-col bg-primary`}>
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[999] focus:px-4 focus:py-2 focus:rounded-lg focus:shadow-lg focus:text-sm focus:font-medium focus:bg-primary focus:text-accent focus:border-default"
-        >
+        <Script
+          id="theme-script"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }}
+        />
+        <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
         <Header />
-        <main id="main-content" className="flex-1">
-          {children}
-        </main>
+        <main id="main-content">{children}</main>
         <Footer />
       </body>
     </html>

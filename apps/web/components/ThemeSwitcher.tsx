@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { getStoredTheme, applyTheme } from '@/styles/themes/theme-script';
 import type { ThemeValue } from '@/styles/themes/theme-script';
+import styles from './ThemeSwitcher.module.css';
 
 const NEXT_THEME: Record<ThemeValue, ThemeValue> = {
   system: 'light',
@@ -14,6 +15,12 @@ const ARIA_LABEL: Record<ThemeValue, string> = {
   system: 'Switch to light theme',
   light: 'Switch to dark theme',
   dark: 'Switch to system theme',
+};
+
+const THEME_LABEL: Record<ThemeValue, string> = {
+  system: 'System',
+  light: 'Light',
+  dark: 'Dark',
 };
 
 export function ThemeSwitcher() {
@@ -42,11 +49,14 @@ export function ThemeSwitcher() {
       onClick={handleClick}
       aria-label={ARIA_LABEL[theme]}
       title={ARIA_LABEL[theme]}
-      className="flex items-center justify-center w-10 h-10 rounded-lg text-secondary hover:text-primary hover:bg-surface transition-colors"
+      className={styles.button}
     >
       {theme === 'system' && <MonitorIcon />}
       {theme === 'light' && <SunIcon />}
       {theme === 'dark' && <MoonIcon />}
+      <span className={styles.label} aria-hidden="true">
+        {THEME_LABEL[theme]}
+      </span>
     </button>
   );
 }

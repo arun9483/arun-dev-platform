@@ -95,7 +95,7 @@ Infrastructure Layer (Content, APIs, CMS)
 
 ### Styling
 
-- Tailwind CSS (with design tokens)
+- CSS Modules + CSS custom properties (design tokens)
 - Scalable theming system
 
 ### Content & Data

@@ -3,7 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./components.css": "./src/css/components.css",
+    "./css/reset": "./src/css/reset.css",
+    "./css/chip": "./src/css/chip.css",
+    "./css/card": "./src/css/card.css",
+    "./css/btn": "./src/css/btn.css",
+    "./css/badge": "./src/css/badge.css",
+    "./css/metric": "./src/css/metric.css"
   },
   "scripts": {
     "clean": "rm -rf dist .turbo",
@@ -15,6 +22,10 @@
   },
   "devDependencies": {
     "@arun-dev/config": "workspace:*",
+    "@testing-library/jest-dom": "6.6.3",
+    "@testing-library/react": "16.3.0",
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6",
     "eslint": "9.39.4",
     "jsdom": "29.0.1",
     "typescript": "5.9.3",

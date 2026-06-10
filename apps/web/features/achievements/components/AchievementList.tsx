@@ -1,5 +1,6 @@
 import type { Achievement } from '../types';
 import { AchievementCard } from './AchievementCard';
+import styles from './AchievementList.module.css';
 
 type Props = {
   achievements: Achievement[];
@@ -8,11 +9,11 @@ type Props = {
 
 export function AchievementList({ achievements, headingLevel = 'h2' }: Props) {
   if (achievements.length === 0) {
-    return <p className="text-sm text-secondary">No achievements found.</p>;
+    return <p className="text-size-sm text-color-secondary">No achievements found.</p>;
   }
 
   return (
-    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className={styles.grid}>
       {achievements.map((achievement) => (
         <li key={achievement.id}>
           <AchievementCard achievement={achievement} headingLevel={headingLevel} />

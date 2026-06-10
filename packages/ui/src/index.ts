@@ -1,1 +1,4 @@
-// Design system components — add exports here as components are created
+export { Chip } from './components/Chip';
+export { Card } from './components/Card';
+export { Button } from './components/Button';
+export { Badge } from './components/Badge';

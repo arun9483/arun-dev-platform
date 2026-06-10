@@ -15,7 +15,10 @@ const SECURITY_HEADERS = [
 ];
 
 const nextConfig: NextConfig = {
-  transpilePackages: ['@arun-dev/ui'],
+  transpilePackages: ['@arun-dev/tokens', '@arun-dev/ui'],
+  experimental: {
+    optimizePackageImports: ['mermaid', 'minisearch'],
+  },
   turbopack: {
     root: resolve(__dirname, '../../'),
   },

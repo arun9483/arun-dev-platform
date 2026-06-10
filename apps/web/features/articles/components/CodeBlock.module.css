@@ -1,0 +1,57 @@
+.codeBlock {
+  background-color: var(--code-bg);
+  border: var(--space-px) solid var(--code-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin-block: var(--space-md);
+}
+
+.codeHeader {
+  background-color: var(--code-header-bg);
+  border-bottom: var(--space-px) solid var(--code-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.codeLang {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  color: var(--code-text-dim);
+}
+
+.codeCopyBtn {
+  font-size: var(--text-xs);
+  font-weight: var(--font-weight-medium);
+  padding: var(--space-3xs) var(--space-xs);
+  border-radius: var(--radius-md);
+  min-width: calc(var(--space-3xl) + var(--space-2xs)); /* 4rem + 0.5rem = 4.5rem = 72px */
+  text-align: center;
+  background-color: var(--code-copy-bg);
+  color: var(--code-text-dim);
+  border: var(--space-px) solid var(--code-border-dim);
+  transition:
+    background-color var(--duration-fast) var(--ease-smooth),
+    color var(--duration-fast) var(--ease-smooth),
+    border-color var(--duration-fast) var(--ease-smooth);
+}
+
+.codeCopyBtn[data-copied='true'] {
+  background-color: var(--code-copied-bg);
+  color: var(--code-copied-color);
+  border-color: var(--code-copied-border);
+}
+
+.codePre {
+  background-color: var(--code-bg);
+  margin: 0;
+  overflow-x: auto;
+  padding: var(--space-md);
+  font-size: var(--text-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+.codeMono {
+  font-family: var(--font-mono);
+}

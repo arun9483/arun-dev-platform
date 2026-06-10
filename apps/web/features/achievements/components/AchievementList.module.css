@@ -1,0 +1,22 @@
+.grid {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.grid > li {
+  display: flex;
+}
+
+@media (min-width: 640px) {
+  /* sm: --breakpoint-sm */
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  /* lg: --breakpoint-lg */
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

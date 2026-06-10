@@ -1,4 +1,6 @@
+import { Card, Chip } from '@arun-dev/ui';
 import type { Achievement, AchievementType } from '../types';
+import styles from './AchievementCard.module.css';
 
 type Props = {
   achievement: Achievement;
@@ -18,29 +20,33 @@ export function AchievementCard({ achievement, headingLevel = 'h2' }: Props) {
   const formatted = new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
 
   return (
-    <article className="card rounded-xl p-5 space-y-3 transition-shadow hover:shadow-md">
-      <div className="flex items-center justify-between gap-2">
-        <span className="chip chip-accent">{TYPE_LABEL[type]}</span>
-        <time dateTime={date} className="text-xs text-muted">
+    <Card as="article" className={styles.article}>
+      <div className={styles.header}>
+        <Chip variant="accent">{TYPE_LABEL[type]}</Chip>
+        <time dateTime={date} className="text-size-xs text-color-muted">
           {formatted}
         </time>
       </div>
 
-      <Heading className="font-semibold text-sm text-primary">{title}</Heading>
-      <p className="text-xs text-secondary">{issuer}</p>
+      <Heading className="font-weight-semibold text-size-sm text-color-primary">{title}</Heading>
+      <p className="text-size-xs text-color-secondary">{issuer}</p>
 
-      {description && <p className="text-xs leading-relaxed text-secondary">{description}</p>}
+      {description && (
+        <p className="text-size-xs line-height-relaxed text-color-secondary">{description}</p>
+      )}
+
+      <div className={styles.spacer} />
 
       {credentialUrl && (
         <a
           href={credentialUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-xs font-medium underline underline-offset-2 text-accent"
+          className={`text-size-xs font-weight-medium text-color-accent ${styles.credential}`}
         >
           View credential ↗<span className="sr-only"> (opens in new tab)</span>
         </a>
       )}
-    </article>
+    </Card>
   );
 }

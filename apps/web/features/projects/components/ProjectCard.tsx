@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import { Card, Chip } from '@arun-dev/ui';
 import type { Project } from '../types';
 import { ImpactMetricBadge } from './ImpactMetricBadge';
+import styles from './ProjectCard.module.css';
 
 type Props = {
   project: Project;
@@ -12,37 +14,33 @@ export function ProjectCard({ project, headingLevel = 'h2' }: Props) {
   const Heading = headingLevel;
 
   return (
-    <article className="card rounded-xl p-6 space-y-5 transition-all hover:shadow-md hover:-translate-y-px relative group">
-      <div className="flex items-start justify-between gap-4">
-        <Heading className="text-lg font-semibold text-primary group-hover:text-accent group-hover:underline transition-colors">
+    <Card as="article" lift className={styles.article}>
+      <div className={styles.titleRow}>
+        <Heading
+          className={`text-size-lg font-weight-semibold text-color-primary ${styles.heading}`}
+        >
           {title}
         </Heading>
-        {metadata.featured && <span className="chip chip-accent shrink-0">Featured</span>}
+        {metadata.featured && <Chip variant="accent">Featured</Chip>}
       </div>
 
-      <p className="text-sm leading-relaxed text-secondary">{description}</p>
+      <p className="text-size-sm line-height-relaxed text-color-secondary">{description}</p>
 
       {impact.length > 0 && (
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <div className={styles.impactGrid}>
           {impact.map((metric, i) => (
             <ImpactMetricBadge key={i} metric={metric} />
           ))}
         </div>
       )}
 
-      <div className="flex flex-wrap gap-1.5">
+      <div className={styles.tags}>
         {techStack.map((tech) => (
-          <span key={tech} className="chip chip-default">
-            {tech}
-          </span>
+          <Chip key={tech}>{tech}</Chip>
         ))}
       </div>
 
-      <Link
-        href={`/projects/${slug}`}
-        aria-label={title}
-        className="absolute inset-0 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--color-text-accent)]"
-      />
-    </article>
+      <Link href={`/projects/${slug}`} aria-label={title} className={styles.overlay} />
+    </Card>
   );
 }
