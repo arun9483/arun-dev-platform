@@ -9,9 +9,15 @@ export type ImpactMetric = {
   value: string;
 };
 
+export type NamedLink = {
+  label: string;
+  url: string;
+};
+
 export type ProjectLinks = {
   github?: string;
   live?: string;
+  references?: NamedLink[];
 };
 
 export type ProjectMetadata = {

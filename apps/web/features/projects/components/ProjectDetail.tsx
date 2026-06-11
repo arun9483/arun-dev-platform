@@ -81,6 +81,26 @@ export function ProjectDetail({ project }: Props) {
           <h2 className="type-overline">Tech Stack</h2>
           <TagChips tags={techStack} />
         </section>
+
+        {links.references && links.references.length > 0 && (
+          <section className={styles.referencesSection}>
+            <h2 className="type-overline">References</h2>
+            <ul className={styles.referencesList}>
+              {links.references.map((reference) => (
+                <li key={reference.url}>
+                  <a
+                    href={reference.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`text-size-sm ${styles.referenceLink}`}
+                  >
+                    {reference.label} ↗<span className="sr-only"> (opens in new tab)</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </div>
     </div>
   );

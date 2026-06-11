@@ -1,0 +1,54 @@
+---
+id: design-system-migration
+slug: design-system-migration
+title: 'Extracting a Design System into Its Own Monorepo'
+summary: 'The story of moving @arun-dev/tokens and @arun-dev/ui out of an app monorepo into a standalone, npm-published design system — and the build, export-map, and release traps waiting along the way.'
+publishedAt: '2026-06-11T00:00:00Z'
+createdAt: '2026-06-11T00:00:00Z'
+updatedAt: '2026-06-11T00:00:00Z'
+category: 'frontend-architecture'
+tags: ['design-system', 'monorepo', 'npm-publishing', 'changesets', 'tsup']
+difficulty: 'intermediate'
+readTime: 3
+featured: true
+coverImage: '/images/placeholder-article.svg'
+---
+
+## A Design System That Wasn't One
+
+On paper, the [arun-dev-platform](https://github.com/arun9483/arun-dev-platform) monorepo had a design system. In practice, it had a folder. Two private workspace packages lived inside it — [`@arun-dev/tokens`](https://www.npmjs.com/package/@arun-dev/tokens), pure CSS custom properties with a `createBrand()` generator, and [`@arun-dev/ui`](https://www.npmjs.com/package/@arun-dev/ui), brand-agnostic React components. Version `0.0.0`. No build step. Raw `.ts` files in the exports map. Exactly one consumer, and it lived next door.
+
+Ask that "design system" to serve a second app and it had nothing to offer. A design system only one app can use is just a folder with good intentions.
+
+**The goal:** a standalone monorepo whose packages publish to npm and work in any project — without the one existing consumer noticing the move.
+
+## Moving Out
+
+The packages got their own home: the [arun-design-system](https://github.com/arun9483/arun-design-system) monorepo — pnpm workspaces, Turborepo, and `tsup` producing dual ESM/CJS builds with type declarations. Straightforward, right up until two quiet traps sprang:
+
+- **The extension trap.** With `"type": "module"` in `package.json`, tsup emits `.js` for ESM and `.cjs` for CJS. Forget that one line and you get `.mjs`/`.js` instead — and your carefully written `exports` map points at files that don't exist.
+- **The masquerading trap.** Each module format needs its own type declarations (`.d.ts` for ESM, `.d.cts` for CJS). Share a single `types` field and TypeScript will happily resolve the wrong module flavor — the infamous ESM/CJS "masquerading" problem.
+
+The CSS had its own gotcha. Stylesheets ship straight from `src/`, and the UI package copies them into `dist/` with an `onSuccess` hook — deliberately avoiding tsup's `publicDir`, which flattens directories and silently breaks every relative `@import` in `components.css`.
+
+## Could Anyone Tell the Difference?
+
+Here was the bet that mattered most: the published packages had to be drop-in replacements. Every specifier the app already imported — `@arun-dev/tokens/base`, `@arun-dev/tokens/brands/default`, `@arun-dev/ui/components.css` — had to resolve identically from npm. That meant an `exports` map covering twenty CSS entry points, font assets (`./primitives/fonts` plus the `woff2` files), and conditional ESM/CJS entries for `createBrand`.
+
+How do you trust an exports map before anyone has installed the package? You become your own first consumer. `pnpm pack` both packages, install the tarballs into a throwaway project, and try everything: ESM import, CJS require, every CSS path. The smoke test even confirmed that pnpm rewrites the internal `workspace:*` dependency to the exact published version inside the tarball. No surprises left for consumer number two.
+
+## Teaching the Robot to Publish
+
+Releases run through [Changesets](https://github.com/changesets/changesets): merge a changeset, a GitHub Action opens a "Version Packages" PR, and merging that publishes to npm. Elegant — once three lessons were paid for:
+
+1. Name the version script `version-packages`, never `version`. `pnpm version` resolves to the built-in command, and the release job silently versions nothing while reporting success.
+2. Set `HUSKY: 0` in the workflow. The bot's release commit won't pass a commit-msg hook, and hooks are redundant in CI anyway — the pipeline runs the same checks.
+3. The bot needs the repo setting that lets GitHub Actions create pull requests — and that switch deserves a moment of respect, because it also lets workflows _approve_ PRs, which can quietly undermine required-review protections. Treat it as a scoped trade: the bot may open the version PR, but branch protection ensures only a human reviews and merges it, and nothing publishes until that merge.
+
+## The Moment of Truth
+
+Then came the real test — the migration itself. Delete the local packages from the platform, install the published `0.1.0` releases, change nothing else, and hold your breath.
+
+The export map held. Zero app-code changes beyond `package.json`. The whole switch fits in two commits: [arun-dev-platform@32cf676](https://github.com/arun9483/arun-dev-platform/commit/32cf6762b0a8a1b6c69096ee3486bc6f8fada632) — before, local workspace packages — and [arun-dev-platform@4fa8ddb](https://github.com/arun9483/arun-dev-platform/commit/4fa8ddba222c5f6506822e27df3c620b9351ef90) — after, published npm packages. Tests passed, the rendered DOM showed token values flowing in from npm, and the [live application](https://arun-dev-platform-web.vercel.app) deployed cleanly.
+
+The folder is gone. In its place: a real dependency — versioned, tested, and ready for whatever app comes next.

@@ -63,6 +63,30 @@ describe('ProjectDetail', () => {
     expect(screen.queryByRole('link', { name: /Live site/ })).not.toBeInTheDocument();
   });
 
+  it('renders the References section when references are present', () => {
+    render(
+      <ProjectDetail
+        project={{
+          ...baseProject,
+          links: {
+            ...baseProject.links,
+            references: [{ label: 'Package on npm', url: 'https://npm/x' }],
+          },
+        }}
+      />,
+    );
+    expect(screen.getByText('References')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Package on npm/ })).toHaveAttribute(
+      'href',
+      'https://npm/x',
+    );
+  });
+
+  it('omits the References section when references are absent', () => {
+    render(<ProjectDetail project={baseProject} />);
+    expect(screen.queryByText('References')).not.toBeInTheDocument();
+  });
+
   it('omits the Impact section when impact is empty', () => {
     render(<ProjectDetail project={{ ...baseProject, impact: [] }} />);
     expect(screen.queryByText('Impact')).not.toBeInTheDocument();
