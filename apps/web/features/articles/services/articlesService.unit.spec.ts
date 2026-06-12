@@ -99,7 +99,7 @@ describe('articlesService', () => {
     const docs = await service.getSearchDocuments();
     expect(docs).toHaveLength(3);
     expect(docs[0]).toEqual({
-      id: 'article-a',
+      id: 'article:article-a',
       type: 'article',
       href: '/articles/article-a',
       title: 'Article A',

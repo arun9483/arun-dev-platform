@@ -12,7 +12,9 @@ export type ProjectsService = {
 
 function projectToSearchDocument(project: Project): SearchDocument {
   return {
-    id: project.slug,
+    // Namespaced by type: slugs are only unique within a content type, and the
+    // search index requires globally unique document IDs.
+    id: `project:${project.slug}`,
     type: 'project',
     href: `/projects/${project.slug}`,
     title: project.title,

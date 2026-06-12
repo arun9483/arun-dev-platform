@@ -72,7 +72,7 @@ describe('projectsService', () => {
     const docs = await service.getSearchDocuments();
     expect(docs).toHaveLength(2);
     expect(docs[0]).toEqual({
-      id: 'project-a',
+      id: 'project:project-a',
       type: 'project',
       href: '/projects/project-a',
       title: 'Project A',

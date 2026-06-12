@@ -18,7 +18,9 @@ function sortByDate(articles: ArticleMeta[]): ArticleMeta[] {
 
 function articleToSearchDocument(article: ArticleMeta): SearchDocument {
   return {
-    id: article.slug,
+    // Namespaced by type: slugs are only unique within a content type, and the
+    // search index requires globally unique document IDs.
+    id: `article:${article.slug}`,
     type: 'article',
     href: `/articles/${article.slug}`,
     title: article.title,
