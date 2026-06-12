@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignoreUnresolved": ["next"],
+  "workspaces": {
+    ".": {
+      "ignoreDependencies": ["@playwright/mcp", "eslint"]
+    },
+    "apps/web": {
+      "ignore": ["**/types/**"],
+      "ignoreDependencies": ["eslint-config-next", "@arun-dev/tokens"]
+    },
+    "packages/config": {}
+  }
+}

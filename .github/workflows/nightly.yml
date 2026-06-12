@@ -1,0 +1,17 @@
+# Nightly audit: osv-scanner full rescan (catches CVEs disclosed for unchanged
+# dependencies) + full e2e suite. Findings become labeled GitHub issues.
+
+name: Nightly
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  nightly:
+    uses: arun9483/frontend-platform-kit/.github/workflows/nightly-audit.yml@v1
+    permissions:
+      contents: write
+      issues: write
+    secrets: inherit

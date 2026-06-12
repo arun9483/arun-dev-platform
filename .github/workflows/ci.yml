@@ -1,3 +1,7 @@
+# PR gate — thin consumer of frontend-platform-kit reusable workflows.
+# Always pin to a tag (@v1), never @main: a bad main in platform-kit must not be
+# able to break every consumer repo simultaneously.
+
 name: CI
 
 on:
@@ -9,54 +13,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  ci:
-    name: Lint, Typecheck, Test, Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  quality:
+    uses: arun9483/frontend-platform-kit/.github/workflows/quality.yml@v1
+    secrets: inherit
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+  security:
+    uses: arun9483/frontend-platform-kit/.github/workflows/security.yml@v1
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'pnpm'
+  performance:
+    uses: arun9483/frontend-platform-kit/.github/workflows/performance.yml@v1
+    with:
+      routes: '/,/projects,/articles/react-server-components-deep-dive,/search'
+      # Warn mode until 2026-07-12 (30 days from rollout), then flip to true.
+      lighthouse-blocking: false
+    secrets: inherit
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Lint
-        run: pnpm lint
-        env:
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-          TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
-
-      - name: Format check
-        run: pnpm format:check
-
-      - name: Typecheck
-        run: pnpm typecheck
-        env:
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-          TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
-
-      - name: Tests
-        run: pnpm test
-        env:
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-          TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
-
-      - name: Build
-        run: pnpm build
-        env:
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-          TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
-
-      - name: E2E Tests
-        run: pnpm test:e2e
-        env:
-          TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-          TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+  ux:
+    uses: arun9483/frontend-platform-kit/.github/workflows/ux-regression.yml@v1
+    permissions:
+      contents: write
+      issues: write
+    with:
+      e2e-args: '--project=chromium'
+    secrets: inherit

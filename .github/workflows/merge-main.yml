@@ -1,0 +1,23 @@
+# Cross-browser UX matrix on merge to main (Firefox + WebKit; Chromium already
+# gated on the PR). Failure auto-opens a `ux-regression` issue instead of blocking.
+
+name: Merge to main
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: merge-main-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cross-browser:
+    uses: arun9483/frontend-platform-kit/.github/workflows/ux-regression.yml@v1
+    permissions:
+      contents: write
+      issues: write
+    with:
+      e2e-args: '--project=firefox --project=webkit'
+      issue-on-failure: true
+    secrets: inherit

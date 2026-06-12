@@ -14,11 +14,15 @@ export default defineConfig({
     setupFiles: ['./tests/setup.ts'],
     coverage: {
       provider: 'v8',
+      // Ratchet thresholds — set just below measured coverage (2026-06-12:
+      // 92.68% lines, 96.47% branches, 91.48% functions). The previous 100%
+      // values were never enforced (scripts didn't run --coverage) and fail
+      // against reality. Raise toward 100 as gaps close; never lower silently.
       thresholds: {
-        lines: 100,
-        functions: 100,
-        branches: 100,
-        statements: 100,
+        lines: 92,
+        functions: 91,
+        branches: 96,
+        statements: 92,
       },
       include: ['app/**', 'features/**', 'components/**', 'lib/**', 'styles/**', 'scripts/**'],
       exclude: [

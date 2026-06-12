@@ -1,0 +1,16 @@
+# Weekly code-health snapshot: knip (dead code) + jscpd (duplication), advisory.
+# Findings are filed as a `code-health` issue and triaged via /quality-audit.
+
+name: Weekly
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  code-health:
+    uses: arun9483/frontend-platform-kit/.github/workflows/code-health.yml@v1
+    permissions:
+      issues: write
+    secrets: inherit

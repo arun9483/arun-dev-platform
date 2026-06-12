@@ -1,0 +1,4 @@
+{
+  "$comment": "Allowlist for EXISTING serious/critical axe violations only. Every entry requires justification, owner, and expires <= 90 days out (reviewed in PR). The gate fails on any serious/critical violation not listed here, and entries past their expiry stop counting. Target: burn this list down to empty.",
+  "issues": []
+}

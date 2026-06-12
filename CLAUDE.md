@@ -182,7 +182,7 @@ See `docs/architecture.md §7.1` for full specification.
 
 You must use:
 
-- Next.js 16.2.0 (App Router mandatory, React Server Components default, Server Actions when needed)
+- Next.js 16.2.6 (App Router mandatory, React Server Components default, Server Actions when needed; patch bumps for security advisories are expected — keep exact pins)
 - TypeScript (strict mode)
 
 ### TypeScript Rules
@@ -317,8 +317,9 @@ Use `data-*` attributes for boolean/enum states — never inline style:
 ### Deployment
 
 - **Vercel** — native GitHub integration, auto-deploys on push to `main`
-- **GitHub Actions** — CI pipeline on PRs (lint, format, typecheck, tests, build, e2e)
-- **Pre-push hook** — local safeguard (lint, typecheck, tests) for direct pushes to `main`
+- **GitHub Actions** — PR gate via reusable workflows from [frontend-platform-kit](https://github.com/arun9483/frontend-platform-kit), pinned to `@v1` (never `@main`): quality (lint, format, typecheck, tests, build) · security (osv-scanner fail-at-high+, gitleaks) · performance (size-limit blocking, lighthouse ratchet) · ux-regression (e2e + axe + visual snapshots). Plus merge-to-main cross-browser e2e, nightly osv rescan, weekly knip/jscpd — see `docs/quality/README.md`
+- **Pre-commit hook** — lint-staged + `gitleaks protect --staged` (secret gate); unit tests moved to pre-push to keep commits < 5 s
+- **Pre-push hook** — lint, typecheck, affected tests (`turbo --filter='...[origin/main]'`) + non-blocking stale-`/preflight` reminder
 - Preview deployments auto-created on every PR
 - See `docs/deployment.md` for full deployment architecture
 
@@ -460,8 +461,8 @@ All test files follow the `<name>.<type>.spec.ts(x)` pattern:
 ### Vitest Configuration
 
 - Each test type has a dedicated config: `vitest.unit.config.ts`, `vitest.integration.config.ts`
-- Scripts use `--config` flag for isolated, non-mixed results
-- Pre-commit hook runs unit tests only; integration and E2E run in CI
+- Scripts use `--config` flag for isolated, non-mixed results and run with `--coverage` — thresholds are enforced ratchets set just below measured coverage (raise as coverage grows, never lower silently)
+- Pre-commit runs lint-staged + gitleaks only; unit + integration tests run at pre-push and in CI; E2E (incl. axe gate and CI-generated visual snapshots) runs in CI
 
 ### Must Write Tests For
 

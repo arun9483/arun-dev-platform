@@ -23,6 +23,7 @@ coverage/
 *.lcov
 test-results/
 playwright-report/
+playwright-transform-cache-*/
 
 # Playwright MCP — review screenshots and accessibility snapshots (never commit)
 screenshots/*
