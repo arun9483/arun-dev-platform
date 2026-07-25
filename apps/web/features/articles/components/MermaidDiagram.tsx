@@ -13,9 +13,35 @@ export function MermaidDiagram({ chart }: Props) {
   const rawId = useId();
   const diagramId = `mermaid${rawId.replace(/[^a-zA-Z0-9]/g, '')}`;
   const ref = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<Status>('loading');
+  const [visible, setVisible] = useState(false);
+
+  // Defer the ~2MB mermaid import + render until the diagram approaches the
+  // viewport — keeps its main-thread cost out of the TBT window on page load.
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') {
+      setVisible(true);
+      return;
+    }
+    const el = wrapperRef.current;
+    /* v8 ignore next */
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
+    if (!visible) return;
     let cancelled = false;
 
     import('mermaid').then(({ default: mermaid }) => {
@@ -64,10 +90,10 @@ export function MermaidDiagram({ chart }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [chart, diagramId]);
+  }, [visible, chart, diagramId]);
 
   return (
-    <div className={styles.wrapper}>
+    <div ref={wrapperRef} className={styles.wrapper}>
       <div className={styles.header}>
         <span className="chip chip-accent">diagram</span>
       </div>
