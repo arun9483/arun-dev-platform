@@ -17,6 +17,9 @@ const SECURITY_HEADERS = [
 const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['mermaid', 'minisearch'],
+    // Inline stylesheets into the HTML: removes render-blocking CSS round
+    // trips, which dominate LCP for server-rendered text on high-RTT paths.
+    inlineCss: true,
   },
   turbopack: {
     root: resolve(__dirname, '../../'),

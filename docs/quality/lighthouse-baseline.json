@@ -1,32 +1,32 @@
 {
-  "capturedAt": "2026-06-12",
+  "capturedAt": "2026-07-26",
   "routes": {
     "/": {
       "performance": 0.96,
       "accessibility": 1,
-      "lcpMs": 2855,
-      "tbtMs": 70,
+      "lcpMs": 2500,
+      "tbtMs": 50,
       "cls": 0
     },
     "/projects": {
       "performance": 0.96,
       "accessibility": 1,
-      "lcpMs": 2705,
-      "tbtMs": 0,
+      "lcpMs": 2500,
+      "tbtMs": 50,
       "cls": 0
     },
     "/articles/react-server-components-deep-dive": {
       "performance": 0.96,
       "accessibility": 0.96,
-      "lcpMs": 2855,
-      "tbtMs": 38,
+      "lcpMs": 2500,
+      "tbtMs": 50,
       "cls": 0
     },
     "/search": {
       "performance": 0.96,
       "accessibility": 1,
-      "lcpMs": 2854,
-      "tbtMs": 0,
+      "lcpMs": 2500,
+      "tbtMs": 50,
       "cls": 0
     }
   }

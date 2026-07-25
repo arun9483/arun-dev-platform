@@ -2,6 +2,7 @@
 // content and sugar-high never ship in the client bundle. The only interactive
 // piece is the CopyButton client island.
 
+import { Suspense } from 'react';
 import { highlight } from 'sugar-high';
 import { MermaidDiagram } from './MermaidDiagram';
 import { CopyButton } from './CopyButton';
@@ -23,7 +24,10 @@ export function CodeBlock({ lang = 'code', rawCode = '' }: Props) {
     <div className={styles.codeBlock}>
       <div className={styles.codeHeader}>
         <span className={styles.codeLang}>{lang}</span>
-        <CopyButton rawCode={rawCode} />
+        {/* Own selective-hydration unit per block — hydration stays in short tasks. */}
+        <Suspense fallback={null}>
+          <CopyButton rawCode={rawCode} />
+        </Suspense>
       </div>
 
       <pre className={styles.codePre}>
