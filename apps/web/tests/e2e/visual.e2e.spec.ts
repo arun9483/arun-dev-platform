@@ -10,10 +10,14 @@ test.skip(({ browserName }) => browserName !== 'chromium', 'Visual baselines are
 // only renders once scrolled near — walk the page and wait for it to settle
 // before capturing, so fullPage screenshots are deterministic.
 async function settleLazyContent(page: Page): Promise<void> {
-  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-  const diagramPlaceholder = page.getByText('Rendering diagram…');
-  if (await diagramPlaceholder.count()) {
-    await diagramPlaceholder.first().waitFor({ state: 'hidden' });
+  // Scroll each placeholder into view (an instant jump to the page bottom
+  // skips past mid-page diagrams without ever intersecting) and wait for the
+  // rendered diagram to replace it. waitFor(hidden) also accepts detachment.
+  const placeholders = page.getByText('Rendering diagram…');
+  while ((await placeholders.count()) > 0) {
+    const first = placeholders.first();
+    await first.scrollIntoViewIfNeeded();
+    await first.waitFor({ state: 'hidden' });
   }
   await page.evaluate(() => window.scrollTo(0, 0));
 }
