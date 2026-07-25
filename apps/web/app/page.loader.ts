@@ -10,7 +10,7 @@ import type { ProfileService } from '@/features/profile/services/profileService'
 import type { ProjectsService } from '@/features/projects/services/projectsService';
 import type { ArticlesService } from '@/features/articles/services/articlesService';
 import type { AchievementsService } from '@/features/achievements/services/achievementsService';
-import type { Profile, Skill } from '@/features/profile/types';
+import type { Experience, Profile, Skill } from '@/features/profile/types';
 import type { Project } from '@/features/projects/types';
 import type { ArticleMeta } from '@/features/articles/types';
 import type { Achievement } from '@/features/achievements/types';
@@ -32,23 +32,37 @@ function createHomePageDeps(): HomePageDeps {
 }
 
 export type HomePageData = {
+  // Above the fold — awaited, so it renders in the streamed shell alongside
+  // the LCP element.
   profile: Profile;
   featuredSkills: Skill[];
-  featuredProjects: Project[];
-  featuredArticles: ArticleMeta[];
-  featuredAchievements: Achievement[];
+  featuredExperience: Experience[];
+  // Below the fold — handed to Suspense boundaries as unresolved promises so
+  // their markup streams after the shell instead of delaying first paint.
+  featuredProjects: Promise<Project[]>;
+  featuredArticles: Promise<ArticleMeta[]>;
+  featuredAchievements: Promise<Achievement[]>;
 };
 
 export async function loadHomePage(
   deps: HomePageDeps = createHomePageDeps(),
 ): Promise<HomePageData> {
-  const [profile, featuredSkills, featuredProjects, featuredArticles, featuredAchievements] =
-    await Promise.all([
-      deps.profileService.getProfile(),
-      deps.profileService.getFeaturedSkills(),
-      deps.projectsService.getFeatured(),
-      deps.articlesService.getFeatured(),
-      deps.achievementsService.getFeatured(),
-    ]);
-  return { profile, featuredSkills, featuredProjects, featuredArticles, featuredAchievements };
+  const featuredProjects = deps.projectsService.getFeatured();
+  const featuredArticles = deps.articlesService.getFeatured();
+  const featuredAchievements = deps.achievementsService.getFeatured();
+
+  const [profile, featuredSkills, featuredExperience] = await Promise.all([
+    deps.profileService.getProfile(),
+    deps.profileService.getFeaturedSkills(),
+    deps.profileService.getFeaturedExperience(),
+  ]);
+
+  return {
+    profile,
+    featuredSkills,
+    featuredExperience,
+    featuredProjects,
+    featuredArticles,
+    featuredAchievements,
+  };
 }

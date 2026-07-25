@@ -2,6 +2,11 @@ import { defineConfig } from 'vitest/config';
 import { resolve } from 'path';
 
 export default defineConfig({
+  // Integration specs may render components (.tsx), not just call loaders.
+  esbuild: {
+    jsx: 'automatic',
+    jsxImportSource: 'react',
+  },
   test: {
     name: 'integration',
     environment: 'jsdom',

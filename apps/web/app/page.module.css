@@ -16,3 +16,9 @@
   align-items: center;
   justify-content: space-between;
 }
+
+/* Reserves space for a streamed below-the-fold section so its arrival cannot
+   shift layout (CLS) while the shell is already painted. */
+.sectionPlaceholder {
+  min-height: var(--space-7xl);
+}

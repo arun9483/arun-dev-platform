@@ -1,16 +1,23 @@
+import { Suspense } from 'react';
 import { loadHomePage } from './page.loader';
 import { ProfileCard } from '@/features/profile/components/ProfileCard';
 import { ExperienceTimeline } from '@/features/profile/components/ExperienceTimeline';
-import { ProjectList } from '@/features/projects/components/ProjectList';
-import { ArticleList } from '@/features/articles/components/ArticleList';
-import { AchievementList } from '@/features/achievements/components/AchievementList';
+import { FeaturedProjects } from '@/features/projects/components/FeaturedProjects';
+import { FeaturedArticles } from '@/features/articles/components/FeaturedArticles';
+import { FeaturedAchievements } from '@/features/achievements/components/FeaturedAchievements';
 import { Cover } from '@/components/Cover';
 import Link from 'next/link';
 import styles from './page.module.css';
 
 export default async function HomePage() {
-  const { profile, featuredSkills, featuredProjects, featuredArticles, featuredAchievements } =
-    await loadHomePage();
+  const {
+    profile,
+    featuredSkills,
+    featuredExperience,
+    featuredProjects,
+    featuredArticles,
+    featuredAchievements,
+  } = await loadHomePage();
 
   return (
     <>
@@ -22,7 +29,7 @@ export default async function HomePage() {
 
         <section className="stack space-md">
           <h2 className="text-size-2xl font-weight-semibold text-color-primary">Experience</h2>
-          <ExperienceTimeline experience={profile.experience} />
+          <ExperienceTimeline experience={featuredExperience} />
         </section>
 
         <section className="stack space-md">
@@ -34,7 +41,9 @@ export default async function HomePage() {
               View all
             </Link>
           </div>
-          <ProjectList projects={featuredProjects} headingLevel="h3" />
+          <Suspense fallback={<div className={styles.sectionPlaceholder} aria-hidden="true" />}>
+            <FeaturedProjects projects={featuredProjects} />
+          </Suspense>
         </section>
 
         <section className="stack space-md">
@@ -46,7 +55,9 @@ export default async function HomePage() {
               View all
             </Link>
           </div>
-          <ArticleList articles={featuredArticles} headingLevel="h3" />
+          <Suspense fallback={<div className={styles.sectionPlaceholder} aria-hidden="true" />}>
+            <FeaturedArticles articles={featuredArticles} />
+          </Suspense>
         </section>
 
         <section className="stack space-md">
@@ -56,7 +67,9 @@ export default async function HomePage() {
               View all
             </Link>
           </div>
-          <AchievementList achievements={featuredAchievements} headingLevel="h3" />
+          <Suspense fallback={<div className={styles.sectionPlaceholder} aria-hidden="true" />}>
+            <FeaturedAchievements achievements={featuredAchievements} />
+          </Suspense>
         </section>
       </div>
     </>
