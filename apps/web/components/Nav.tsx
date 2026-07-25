@@ -1,8 +1,8 @@
-'use client';
+// Server component: no hydration cost on any route. Active-link state comes
+// from the data-route attribute published by THEME_SCRIPT (matched in CSS), and
+// the mobile menu is a native <details> disclosure rather than React state.
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
 import styles from './Nav.module.css';
 
 const NAV_LINKS = [
@@ -13,69 +13,50 @@ const NAV_LINKS = [
 ] as const;
 
 export function Nav() {
-  const pathname = usePathname();
-  const [open, setOpen] = useState(false);
-
   return (
     <>
       <nav aria-label="Main navigation" className={styles.navDesktop}>
         <ul className={styles.list}>
-          {NAV_LINKS.map(({ href, label }) => {
-            const isActive = pathname.startsWith(href);
-            return (
+          {NAV_LINKS.map(({ href, label }) => (
+            <li key={href}>
+              <Link href={href} className={styles.navLink} data-nav={href}>
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <details className={styles.mobileMenu}>
+        <summary className={styles.hamburger} aria-label="Toggle menu">
+          <MenuIcon className={styles.iconOpen} />
+          <XIcon className={styles.iconClose} />
+        </summary>
+
+        <nav id="mobile-nav" aria-label="Mobile navigation" className={styles.mobileNav}>
+          <ul className={styles.mobileList}>
+            {NAV_LINKS.map(({ href, label }) => (
               <li key={href}>
                 <Link
                   href={href}
-                  className={styles.navLink}
-                  data-active={isActive ? 'true' : 'false'}
+                  className={`${styles.navLink} ${styles.mobileLink}`}
+                  data-nav={href}
                 >
                   {label}
                 </Link>
               </li>
-            );
-          })}
-        </ul>
-      </nav>
-
-      <button
-        type="button"
-        className={styles.hamburger}
-        aria-label={open ? 'Close menu' : 'Open menu'}
-        aria-expanded={open}
-        aria-controls="mobile-nav"
-        onClick={() => setOpen((o) => !o)}
-      >
-        {open ? <XIcon /> : <MenuIcon />}
-      </button>
-
-      {open && (
-        <nav id="mobile-nav" aria-label="Main navigation" className={styles.mobileNav}>
-          <ul className={styles.mobileList}>
-            {NAV_LINKS.map(({ href, label }) => {
-              const isActive = pathname.startsWith(href);
-              return (
-                <li key={href}>
-                  <Link
-                    href={href}
-                    className={`${styles.navLink} ${styles.mobileLink}`}
-                    data-active={isActive ? 'true' : 'false'}
-                    onClick={() => setOpen(false)}
-                  >
-                    {label}
-                  </Link>
-                </li>
-              );
-            })}
+            ))}
           </ul>
         </nav>
-      )}
+      </details>
     </>
   );
 }
 
-function MenuIcon() {
+function MenuIcon({ className }: { className?: string }) {
   return (
     <svg
+      className={className}
       width="18"
       height="18"
       viewBox="0 0 24 24"
@@ -93,9 +74,10 @@ function MenuIcon() {
   );
 }
 
-function XIcon() {
+function XIcon({ className }: { className?: string }) {
   return (
     <svg
+      className={className}
       width="18"
       height="18"
       viewBox="0 0 24 24"

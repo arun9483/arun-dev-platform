@@ -41,9 +41,30 @@
 
 @media (min-width: 640px) {
   /* sm: --breakpoint-sm */
-  .hamburger {
+  .mobileMenu {
     display: none;
   }
+}
+
+/* Native disclosure replaces the former React-state menu — no client JS. */
+.hamburger::-webkit-details-marker {
+  display: none;
+}
+
+.hamburger {
+  list-style: none;
+}
+
+.iconClose {
+  display: none;
+}
+
+.mobileMenu[open] > .hamburger .iconOpen {
+  display: none;
+}
+
+.mobileMenu[open] > .hamburger .iconClose {
+  display: block;
 }
 
 .mobileNav {
@@ -111,12 +132,20 @@
   width: 100%;
 }
 
-.navLink[data-active='true'] {
+/* Active link derived from the data-route attribute on <html> (published by
+   THEME_SCRIPT) so no client component is needed to read the pathname. */
+:global(html[data-route^='/projects']) .navLink[data-nav='/projects'],
+:global(html[data-route^='/articles']) .navLink[data-nav='/articles'],
+:global(html[data-route^='/achievements']) .navLink[data-nav='/achievements'],
+:global(html[data-route^='/search']) .navLink[data-nav='/search'] {
   color: var(--color-text-accent);
   font-weight: var(--font-weight-semibold);
 }
 
-.navLink[data-active='true']::after {
+:global(html[data-route^='/projects']) .navLink[data-nav='/projects']::after,
+:global(html[data-route^='/articles']) .navLink[data-nav='/articles']::after,
+:global(html[data-route^='/achievements']) .navLink[data-nav='/achievements']::after,
+:global(html[data-route^='/search']) .navLink[data-nav='/search']::after {
   width: 100%;
 }
 
