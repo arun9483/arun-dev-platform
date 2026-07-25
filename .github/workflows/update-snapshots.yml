@@ -18,5 +18,7 @@ jobs:
       issues: write
     with:
       update-snapshots: true
-      e2e-args: '--project=chromium'
+      # All browsers — nightly compares against webkit/firefox baselines too,
+      # so seeding only chromium leaves the nightly run permanently red.
+      e2e-args: ''
     secrets: inherit
