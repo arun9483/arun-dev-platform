@@ -20,8 +20,12 @@ const inter = localFont({
     },
   ],
   variable: '--font-inter',
-  display: 'swap',
-  preload: true,
+  // 'optional' over 'swap': LCP on every route is server-rendered text, and a
+  // late font swap re-times it to the font's arrival. If Inter misses the
+  // ~100ms block window (slow networks), the size-adjusted fallback stays for
+  // that load; fast connections and repeat visits still render Inter.
+  display: 'optional',
+  preload: false,
   fallback: ['ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
 });
 

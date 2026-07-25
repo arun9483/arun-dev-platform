@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { Nav } from './Nav';
 import { ThemeSwitcher } from './ThemeSwitcher';
@@ -11,8 +12,14 @@ export function Header() {
           arun.dev
         </Link>
         <div className={styles.actions}>
-          <Nav />
-          <ThemeSwitcher />
+          {/* Suspense boundaries make each island its own selective-hydration
+              unit, so hydration runs as short tasks instead of one long one. */}
+          <Suspense fallback={null}>
+            <Nav />
+          </Suspense>
+          <Suspense fallback={null}>
+            <ThemeSwitcher />
+          </Suspense>
         </div>
       </div>
     </header>

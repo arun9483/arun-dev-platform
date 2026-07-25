@@ -57,6 +57,36 @@ describe('MermaidDiagram', () => {
     expect(screen.queryByText(/Failed to render diagram/)).not.toBeInTheDocument();
   });
 
+  it('defers the mermaid import until the wrapper intersects the viewport', async () => {
+    render$.mockResolvedValue({ svg: '<svg></svg>' });
+
+    let intersect: () => void = () => {};
+    const disconnect = vi.fn();
+    class FakeIntersectionObserver {
+      constructor(cb: (entries: Array<{ isIntersecting: boolean }>) => void) {
+        intersect = () => cb([{ isIntersecting: true }]);
+      }
+      observe() {}
+      disconnect = disconnect;
+    }
+    vi.stubGlobal('IntersectionObserver', FakeIntersectionObserver);
+    try {
+      render(<MermaidDiagram chart="graph TD; A-->B;" />);
+
+      // Not yet visible: mermaid must not have been asked to render.
+      await new Promise((r) => setTimeout(r, 0));
+      expect(render$).not.toHaveBeenCalled();
+
+      await waitFor(async () => {
+        intersect();
+        expect(render$).toHaveBeenCalled();
+      });
+      expect(disconnect).toHaveBeenCalled();
+    } finally {
+      vi.unstubAllGlobals();
+    }
+  });
+
   it('returns early when the component unmounts before render resolves (cancelled path)', async () => {
     let resolve: (value: { svg: string }) => void = () => {};
     render$.mockReturnValue(

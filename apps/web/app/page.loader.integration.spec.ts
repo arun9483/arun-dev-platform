@@ -10,8 +10,9 @@ describe('loadHomePage (integration)', () => {
 
     expect(data.profile).toBeTruthy();
     expect(data.featuredSkills.length).toBeGreaterThan(0);
-    expect(data.featuredProjects.length).toBeGreaterThan(0);
-    expect(data.featuredArticles.length).toBeGreaterThan(0);
-    expect(data.featuredAchievements.length).toBeGreaterThan(0);
+    expect(data.featuredExperience.length).toBeGreaterThan(0);
+    expect((await data.featuredProjects).length).toBeGreaterThan(0);
+    expect((await data.featuredArticles).length).toBeGreaterThan(0);
+    expect((await data.featuredAchievements).length).toBeGreaterThan(0);
   });
 });
