@@ -1,0 +1,50 @@
+---
+id: choosing-a-package-manager
+slug: choosing-a-package-manager
+title: 'Choosing a Package Manager, With Data'
+summary: 'npm, Yarn or pnpm? The measured answer is pnpm for most projects — a 2-minute decision guide backed by 30 samples per cell across six fixtures, including the crossover point where the ranking flips and the reproducibility trap most benchmarks fall into.'
+publishedAt: '2026-08-15T00:00:00Z'
+createdAt: '2026-08-15T00:00:00Z'
+updatedAt: '2026-08-15T00:00:00Z'
+category: 'performance'
+tags: ['package-managers', 'pnpm', 'yarn', 'npm', 'benchmarking', 'tooling']
+difficulty: 'intermediate'
+readTime: 2
+featured: true
+coverImage: '/images/placeholder-article.svg'
+---
+
+## The Short Answer
+
+Most "npm vs Yarn vs pnpm" posts benchmark one project and declare a winner. That approach cannot work, because **the ranking changes with project size.**
+
+I measured it: [pm-benchmark](https://github.com/arun9483/pm-benchmark) — four arms (npm, pnpm, Yarn with PnP, Yarn with `node-modules`) across six fixtures from 79 to 561 packages, against a pinned offline registry. Three independent passes, 10 runs per cell, **30 samples behind every number**.
+
+> **The verdict, from run `20260815-0851Z-main`: use pnpm.** Not because it is fastest — it posts 8 wins, 3 ties _and_ 8 last places across the 6 fixtures. It wins because it is level with npm on speed (within 10 %) and decisively ahead on disk and defaults. Yarn PnP measured fastest overall but is ruled out on compatibility unless you own the entire toolchain.
+
+That is the default. The rest of this article is when to deviate from it.
+
+| Your situation                               | Choose                  | Why                                                         |
+| -------------------------------------------- | ----------------------- | ----------------------------------------------------------- |
+| You control the whole toolchain              | **Yarn PnP**            | 2.6–4.7× faster on warm and CI installs — won every fixture |
+| Large projects, or many repos on one machine | **pnpm**                | Five copies of a Next.js app: **886 MB vs npm's 2.9 GB**    |
+| Small projects, or you value zero surprises  | **npm**                 | No compatibility caveats, no config traps                   |
+| You need `node_modules` on disk              | **pnpm**, not `yarn-nm` | Yarn without PnP is mid-pack or last nearly everywhere      |
+
+## The Catch With Yarn PnP
+
+It is decisively the fastest, and the cost is real: **plain `node` cannot resolve dependencies** — on any fixture. Anything shelling out to `node`, or expecting a `node_modules` directory, must be routed through Yarn. That is a toolchain-wide commitment, not a flag. Evaluate it against your own tooling before adopting.
+
+## The Crossover Nobody Benchmarks
+
+npm and pnpm **swap places** somewhere between ~100 and ~600 packages. On warm installs pnpm is _last_ on a 79-package library and _second_ on a 561-package app, while npm goes the other way — 2.76× to 4.72×.
+
+The cleanest evidence holds composition fixed: `large500` is literally `mid300` plus `jest`. Within that one lineage, pnpm improves from 4.26× to 3.50× and npm degrades from 3.80× to 4.34×. **This is why a single-fixture benchmark tells you nothing** about a project that isn't the same size as the fixture.
+
+## Trust Your Own Numbers More Than Mine
+
+One finding matters beyond package managers. Running the identical suite three times, the winning arm **changed in 2 of 24 scenarios** — and cold installs varied ~4× more _between_ passes than _within_ one. The worst cell looked accurate to 0.89 % inside a single pass and moved 10.86 % across passes.
+
+Single-pass benchmarks — including most published comparisons — report error bars that describe only the noise they could observe. If a gap is smaller than that, it is not a ranking.
+
+Absolute seconds belong to my machine; the ratios are what travel. The full methodology, raw data and every caveat live in [REPORT.md](https://github.com/arun9483/pm-benchmark/blob/main/REPORT.md), and `make run N=3` reproduces the lot.
