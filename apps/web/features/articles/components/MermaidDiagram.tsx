@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 import styles from './MermaidDiagram.module.css';
+import { Chip } from '@arun-dev/ui';
 
 type Props = {
   chart: string;
@@ -95,7 +96,7 @@ export function MermaidDiagram({ chart }: Props) {
   return (
     <div ref={wrapperRef} className={styles.wrapper}>
       <div className={styles.header}>
-        <span className="chip chip-accent">diagram</span>
+        <Chip variant="accent">diagram</Chip>
       </div>
 
       <div className={styles.body}>

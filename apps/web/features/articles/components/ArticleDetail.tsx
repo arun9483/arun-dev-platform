@@ -1,7 +1,9 @@
 import { isValidElement } from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
+import { Badge } from '@arun-dev/ui';
 import type { Article } from '../types';
+import { difficultyPresentation } from '../lib/difficulty';
 import { CodeBlock } from './CodeBlock';
 import { BackLink } from '@/components/BackLink';
 import { Cover } from '@/components/Cover';
@@ -56,12 +58,6 @@ function PreBlock({ children, className }: React.HTMLAttributes<HTMLPreElement>)
 const mdxComponents = { pre: PreBlock, h2: makeHeading(2), h3: makeHeading(3) };
 const mdxOptions = { mdxOptions: { remarkPlugins: [remarkGfm] } };
 
-const DIFFICULTY_LABEL: Record<string, string> = {
-  beginner: 'Beginner',
-  intermediate: 'Intermediate',
-  advanced: 'Advanced',
-};
-
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -76,7 +72,7 @@ type Props = {
 
 export function ArticleDetail({ article }: Props) {
   const { title, summary, publishedAt, metadata, content, coverImage } = article;
-  const diff = metadata.difficulty;
+  const difficulty = difficultyPresentation(metadata.difficulty);
   const toc = extractToc(content);
 
   const tocNav =
@@ -126,9 +122,7 @@ export function ArticleDetail({ article }: Props) {
                 <span aria-hidden>·</span>
                 <span>{metadata.readTime} min read</span>
                 <span aria-hidden>·</span>
-                <span className={`chip badge difficulty-${diff}`}>
-                  {DIFFICULTY_LABEL[diff] ?? diff}
-                </span>
+                <Badge tone={difficulty.tone}>{difficulty.label}</Badge>
               </div>
 
               <div className={styles.headerInner}>

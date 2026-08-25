@@ -1,3 +1,4 @@
+import { Chip } from '@arun-dev/ui';
 import type { Skill } from '../types';
 import styles from './SkillList.module.css';
 
@@ -12,9 +13,9 @@ export function SkillList({ skills, title }: Props) {
       {title && <p className={`type-overline ${styles.label}`}>{title}</p>}
       <ul className={styles.chips}>
         {skills.map((skill) => (
-          <li key={skill.name} className="chip chip-accent">
+          <Chip key={skill.name} render={<li />} variant="accent">
             {skill.name}
-          </li>
+          </Chip>
         ))}
       </ul>
     </section>
