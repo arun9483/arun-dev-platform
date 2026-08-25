@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@arun-dev/tokens": "0.2.0",
-    "@arun-dev/ui": "0.2.0",
+    "@arun-dev/ui": "0.3.0",
     "gray-matter": "4.0.3",
     "mermaid": "11.16.1",
     "minisearch": "7.1.1",

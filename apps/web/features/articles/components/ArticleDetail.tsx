@@ -1,7 +1,7 @@
 import { isValidElement } from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
-import { Badge } from '@arun-dev/ui';
+import { Badge, Card } from '@arun-dev/ui';
 import type { Article } from '../types';
 import { difficultyPresentation } from '../lib/difficulty';
 import { CodeBlock } from './CodeBlock';
@@ -77,7 +77,7 @@ export function ArticleDetail({ article }: Props) {
 
   const tocNav =
     toc.length >= 2 ? (
-      <nav aria-label="Table of contents" className={`card ${styles.toc}`}>
+      <Card as="nav" aria-label="Table of contents" className={styles.toc}>
         <p className="text-size-xs font-weight-semibold uppercase letter-spacing-wider text-color-muted">
           On this page
         </p>
@@ -94,7 +94,7 @@ export function ArticleDetail({ article }: Props) {
             </li>
           ))}
         </ul>
-      </nav>
+      </Card>
     ) : null;
 
   return (

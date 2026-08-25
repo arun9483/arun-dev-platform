@@ -81,4 +81,19 @@ describe('ArticleDetail', () => {
       '/articles',
     );
   });
+
+  it('renders the table of contents as a labelled nav landmark', () => {
+    render(
+      <ArticleDetail
+        article={{ ...baseArticle, content: '## First section\nbody\n\n## Second section\nbody' }}
+      />,
+    );
+    // The TOC is a <Card as="nav">. Card forwards unrecognised props, so the
+    // aria-label survives — before 0.3.0 it was silently dropped, leaving an
+    // unlabelled landmark.
+    const nav = screen.getAllByRole('navigation', { name: 'Table of contents' })[0];
+    expect(nav).toBeDefined();
+    expect(nav?.tagName).toBe('NAV');
+    expect(nav).toHaveClass('card');
+  });
 });

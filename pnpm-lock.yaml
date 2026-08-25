@@ -71,8 +71,8 @@ importers:
         specifier: 0.2.0
         version: 0.2.0
       '@arun-dev/ui':
-        specifier: 0.2.0
-        version: 0.2.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: 0.3.0
+        version: 0.3.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       gray-matter:
         specifier: 4.0.3
         version: 4.0.3
@@ -192,8 +192,8 @@ packages:
   '@arun-dev/tokens@0.2.0':
     resolution: {integrity: sha512-73AafdmUD2NbLiQeff+TDSvHy2Qo+4EQ8pFVKCAZYMTtyw8SggDKELQr3n3gthM1vhDW3GjJkTHN+IArg3sm9w==}
 
-  '@arun-dev/ui@0.2.0':
-    resolution: {integrity: sha512-z5SV5hwLF0ItMIb5OVpaCbDegooed0M1x97I5zZrPLX20/LNPNg8aACGt+a3wpMK3awJw8mRg8TM5A8xEejvhQ==}
+  '@arun-dev/ui@0.3.0':
+    resolution: {integrity: sha512-ORmxHLk/NcQo3amW7SrtOZ3mALFUdsv6YlNJAdkxwJ7ZMlJ28ZnzztCiP8tOOQu8AIv8wTNoF3uDtWjtU+r/wg==}
     peerDependencies:
       react: '>=19.0.0'
       react-dom: '>=19.0.0'
@@ -4672,7 +4672,7 @@ snapshots:
 
   '@arun-dev/tokens@0.2.0': {}
 
-  '@arun-dev/ui@0.2.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@arun-dev/ui@0.3.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@arun-dev/tokens': 0.2.0
       react: 19.2.4
