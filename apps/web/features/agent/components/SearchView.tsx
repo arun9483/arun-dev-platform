@@ -47,7 +47,7 @@ export function SearchView({ documents }: Props) {
               {['Next.js', 'TypeScript', 'performance', 'design system', 'RSC'].map((term) => (
                 <Chip
                   key={term}
-                  as="button"
+                  render={<button type="button" />}
                   onClick={() => setQuery(term)}
                   className={styles.suggestionBtn}
                 >

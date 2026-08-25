@@ -1,3 +1,4 @@
+import { Button, Card } from '@arun-dev/ui';
 import type { Project } from '../types';
 import { ImpactMetricBadge } from './ImpactMetricBadge';
 import { BackLink } from '@/components/BackLink';
@@ -33,24 +34,14 @@ export function ProjectDetail({ project }: Props) {
           </p>
           <div className={styles.links}>
             {links.github && (
-              <a
-                href={links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-ghost"
-              >
+              <Button href={links.github} target="_blank" rel="noopener noreferrer" variant="ghost">
                 GitHub ↗<span className="sr-only"> (opens in new tab)</span>
-              </a>
+              </Button>
             )}
             {links.live && (
-              <a
-                href={links.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary"
-              >
+              <Button href={links.live} target="_blank" rel="noopener noreferrer" variant="primary">
                 Live site ↗<span className="sr-only"> (opens in new tab)</span>
-              </a>
+              </Button>
             )}
           </div>
         </div>
@@ -66,7 +57,7 @@ export function ProjectDetail({ project }: Props) {
           </section>
         )}
 
-        <div className={`card ${styles.caseStudy}`}>
+        <Card className={styles.caseStudy}>
           <div className={styles.caseStudySection}>
             <h2 className="type-overline">Problem</h2>
             <p className="text-size-base line-height-relaxed text-color-primary">{problem}</p>
@@ -75,7 +66,7 @@ export function ProjectDetail({ project }: Props) {
             <h2 className="type-overline">Solution</h2>
             <p className="text-size-base line-height-relaxed text-color-primary">{solution}</p>
           </div>
-        </div>
+        </Card>
 
         <section className={styles.techSection}>
           <h2 className="type-overline">Tech Stack</h2>

@@ -139,7 +139,7 @@ export function ArticleDetail({ article }: Props) {
 
             {tocNav && <div className={styles.tocMobile}>{tocNav}</div>}
 
-            <article className={`prose max-w-none ${styles.prose}`}>
+            <article className={`prose ${styles.prose}`}>
               <MDXRemote source={content} components={mdxComponents} options={mdxOptions} />
             </article>
           </div>
