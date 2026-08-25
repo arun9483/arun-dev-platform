@@ -1,3 +1,4 @@
+import { Button } from '@arun-dev/ui';
 import type { Profile, Skill } from '../types';
 import { SkillList } from './SkillList';
 import styles from './ProfileCard.module.css';
@@ -35,34 +36,34 @@ export function ProfileCard({ profile, featuredSkills }: Props) {
 
       <nav aria-label="Social links" className={styles.socialLinks}>
         {socialLinks.github && (
-          <a
+          <Button
             href={socialLinks.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-ghost"
+            variant="ghost"
           >
             GitHub ↗<span className="sr-only"> (opens in new tab)</span>
-          </a>
+          </Button>
         )}
         {socialLinks.linkedin && (
-          <a
+          <Button
             href={socialLinks.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-ghost"
+            variant="ghost"
           >
             LinkedIn ↗<span className="sr-only"> (opens in new tab)</span>
-          </a>
+          </Button>
         )}
         {socialLinks.website && (
-          <a
+          <Button
             href={socialLinks.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-ghost"
+            variant="ghost"
           >
             Website ↗<span className="sr-only"> (opens in new tab)</span>
-          </a>
+          </Button>
         )}
       </nav>
     </article>
