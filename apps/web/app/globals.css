@@ -3,17 +3,6 @@
 @import '@arun-dev/tokens/brands/default';
 @import '@arun-dev/ui/components.css';
 
-/* ── App-specific token overrides ── */
-:root {
-  /* Difficulty semantic tokens — map status colors to article difficulty levels */
-  --color-difficulty-beginner: var(--color-status-success);
-  --color-difficulty-beginner-bg: var(--color-status-success-bg);
-  --color-difficulty-intermediate: var(--color-status-warning);
-  --color-difficulty-intermediate-bg: var(--color-status-warning-bg);
-  --color-difficulty-advanced: var(--color-status-error);
-  --color-difficulty-advanced-bg: var(--color-status-error-bg);
-}
-
 /* ── Global focus ring — WCAG 2.2 §2.4.11 ── */
 *:focus-visible {
   outline: var(--space-2px) solid var(--color-text-accent);

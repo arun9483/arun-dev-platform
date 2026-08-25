@@ -1,17 +1,12 @@
 import Link from 'next/link';
 import { Card, Chip, Badge } from '@arun-dev/ui';
 import type { ArticleMeta } from '../types';
+import { DIFFICULTY } from '../lib/difficulty';
 import styles from './ArticleCard.module.css';
 
 type Props = {
   article: ArticleMeta;
   headingLevel?: 'h2' | 'h3';
-};
-
-const DIFFICULTY_LABEL: Record<ArticleMeta['metadata']['difficulty'], string> = {
-  beginner: 'Beginner',
-  intermediate: 'Intermediate',
-  advanced: 'Advanced',
 };
 
 export function ArticleCard({ article, headingLevel = 'h2' }: Props) {
@@ -30,8 +25,8 @@ export function ArticleCard({ article, headingLevel = 'h2' }: Props) {
         <span aria-hidden>·</span>
         <span>{metadata.readTime} min read</span>
         <span aria-hidden>·</span>
-        <Badge variant={`difficulty-${metadata.difficulty}`}>
-          {DIFFICULTY_LABEL[metadata.difficulty]}
+        <Badge tone={DIFFICULTY[metadata.difficulty].tone}>
+          {DIFFICULTY[metadata.difficulty].label}
         </Badge>
       </div>
 
