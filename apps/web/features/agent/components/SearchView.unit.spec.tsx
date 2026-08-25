@@ -125,4 +125,20 @@ describe('SearchView', () => {
     render(<SearchView documents={docs} />);
     expect(screen.queryByText(/No results found/)).not.toBeInTheDocument();
   });
+
+  it('renders each suggestion chip as a real button', () => {
+    render(<SearchView documents={docs} />);
+    const suggestion = screen.getByRole('button', { name: 'TypeScript' });
+    // Chip's render prop supplies the chip styling while keeping button semantics,
+    // so the suggestion stays keyboard-operable and is not submitted by a form.
+    expect(suggestion.tagName).toBe('BUTTON');
+    expect(suggestion).toHaveAttribute('type', 'button');
+    expect(suggestion).toHaveClass('chip');
+  });
+
+  it('sets the query when a suggestion chip is clicked', () => {
+    render(<SearchView documents={docs} />);
+    fireEvent.click(screen.getByRole('button', { name: 'performance' }));
+    expect(mockSetQuery).toHaveBeenCalledWith('performance');
+  });
 });
