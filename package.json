@@ -52,7 +52,7 @@
       "picomatch@2": "2.3.2",
       "picomatch@4": "4.0.4",
       "vite@7": "7.3.5",
-      "fast-uri@3": "3.1.5",
+      "fast-uri@3": "3.1.6",
       "brace-expansion@5": "5.0.9",
       "brace-expansion@1": "1.1.18",
       "brace-expansion@2": "2.1.4",
@@ -65,7 +65,9 @@
       "dompurify@3": "3.4.13",
       "@babel/core@7": "7.29.7",
       "esbuild@0.27": "0.28.1",
-      "sharp": "0.35.0"
+      "sharp": "0.35.0",
+      "browserslist@4": "4.28.7",
+      "@humanfs/node@0": "0.16.8"
     }
   }
 }
