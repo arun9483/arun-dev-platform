@@ -18,11 +18,14 @@ export default defineConfig({
       // Ratchet thresholds — set just below measured coverage (2026-06-12:
       // 13.94% lines, 61.53% branches, 61.03% functions). Raise as integration
       // coverage grows; never lower without a reviewed justification.
+      // Re-baselined 2026-09-19 for vitest 4, whose AST-aware v8 remapping
+      // counts real branches/functions in untested files (same tests, v3 → v4:
+      // branches 63.63% → 18.51%, functions 62.65% → 36.02%).
       thresholds: {
-        lines: 13,
-        statements: 13,
-        branches: 60,
-        functions: 60,
+        lines: 28,
+        statements: 28,
+        branches: 18,
+        functions: 36,
       },
       include: ['app/**', 'features/**', 'components/**', 'lib/**'],
       exclude: [

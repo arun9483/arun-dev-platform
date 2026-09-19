@@ -18,11 +18,14 @@ export default defineConfig({
       // 92.68% lines, 96.47% branches, 91.48% functions). The previous 100%
       // values were never enforced (scripts didn't run --coverage) and fail
       // against reality. Raise toward 100 as gaps close; never lower silently.
+      // Re-baselined 2026-09-19 for vitest 4, whose AST-aware v8 remapping
+      // counts real branches in untested files (same tests, v3 → v4:
+      // branches 98.84% → 88.67%; statements 97.8% → 94.68%).
       thresholds: {
-        lines: 92,
-        functions: 91,
-        branches: 96,
-        statements: 92,
+        lines: 95,
+        functions: 95,
+        branches: 88,
+        statements: 94,
       },
       include: ['app/**', 'features/**', 'components/**', 'lib/**', 'styles/**', 'scripts/**'],
       exclude: [
