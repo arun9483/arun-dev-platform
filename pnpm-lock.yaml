@@ -71,12 +71,15 @@ importers:
 
   apps/web:
     dependencies:
+      '@arun-dev/headless':
+        specifier: 4.28.1
+        version: 4.28.1(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@arun-dev/tokens':
-        specifier: 0.2.0
-        version: 0.2.0
+        specifier: 1.0.0
+        version: 1.0.0
       '@arun-dev/ui':
-        specifier: 0.3.0
-        version: 0.3.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: 5.14.2
+        version: 5.14.2(@arun-dev/headless@4.28.1(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       gray-matter:
         specifier: 4.0.3
         version: 4.0.3
@@ -189,12 +192,23 @@ packages:
   '@antfu/install-pkg@1.1.0':
     resolution: {integrity: sha512-MGQsmw10ZyI+EJo45CdSER4zEb+p31LpDAFp2Z3gkSd1yqVZGi0Ebx++YTEMonJy4oChEMLsxZ64j8FH6sSqtQ==}
 
-  '@arun-dev/tokens@0.2.0':
-    resolution: {integrity: sha512-73AafdmUD2NbLiQeff+TDSvHy2Qo+4EQ8pFVKCAZYMTtyw8SggDKELQr3n3gthM1vhDW3GjJkTHN+IArg3sm9w==}
-
-  '@arun-dev/ui@0.3.0':
-    resolution: {integrity: sha512-ORmxHLk/NcQo3amW7SrtOZ3mALFUdsv6YlNJAdkxwJ7ZMlJ28ZnzztCiP8tOOQu8AIv8wTNoF3uDtWjtU+r/wg==}
+  '@arun-dev/headless@4.28.1':
+    resolution: {integrity: sha512-inCkXbmQoKv/Y46sQDhKezFdqct0xaBt/3xnJn1+5XS9+JUjU7T8KMUI3W2NSA1e42uoPVzT5TEGSXWfmGLXow==}
     peerDependencies:
+      '@types/react': '>=19.0.0'
+      react: '>=19.0.0'
+      react-dom: '>=19.0.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  '@arun-dev/tokens@1.0.0':
+    resolution: {integrity: sha512-oWpqYJSBCsjFSwasQOfcRAQNh6RcB/PYU3zZbx5QgO5F7iBFlNpxtIyO3MfpyBB4TfVrW9+sD5loGkOAWO+toQ==}
+
+  '@arun-dev/ui@5.14.2':
+    resolution: {integrity: sha512-jBZL0iXY7gcmwaXIV0ODoViDg6MfDROr2olaUbxmu1oGHi71SYrdv9Oei97/8p1t1G84gDx3G3jndbNuRhaANg==}
+    peerDependencies:
+      '@arun-dev/headless': '>=4.28.0'
       react: '>=19.0.0'
       react-dom: '>=19.0.0'
 
@@ -4577,11 +4591,19 @@ snapshots:
       package-manager-detector: 1.6.0
       tinyexec: 1.0.4
 
-  '@arun-dev/tokens@0.2.0': {}
-
-  '@arun-dev/ui@0.3.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@arun-dev/headless@4.28.1(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
-      '@arun-dev/tokens': 0.2.0
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+    optionalDependencies:
+      '@types/react': 19.2.14
+
+  '@arun-dev/tokens@1.0.0': {}
+
+  '@arun-dev/ui@5.14.2(@arun-dev/headless@4.28.1(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+    dependencies:
+      '@arun-dev/headless': 4.28.1(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@arun-dev/tokens': 1.0.0
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
 

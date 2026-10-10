@@ -1,6 +1,6 @@
 /* Import order: primitives → brand tokens → component CSS */
 @import '@arun-dev/tokens/base';
-@import '@arun-dev/tokens/brands/default';
+@import '@arun-dev/tokens/brands/arun';
 @import '@arun-dev/ui/components.css';
 
 /* ── Global focus ring — WCAG 2.2 §2.4.11 ── */

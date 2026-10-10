@@ -46,45 +46,15 @@
   }
 }
 
-/* Native disclosure replaces the former React-state menu — no client JS. */
-.hamburger::-webkit-details-marker {
-  display: none;
-}
-
-.hamburger {
-  list-style: none;
-}
-
-.iconClose {
-  display: none;
-}
-
-.mobileMenu[open] > .hamburger .iconOpen {
-  display: none;
-}
-
-.mobileMenu[open] > .hamburger .iconClose {
-  display: block;
-}
-
-.mobileNav {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background-color: var(--color-bg-primary);
-  border-bottom: var(--space-px) solid var(--color-border-default);
-  box-shadow: var(--shadow-md);
-  padding-inline: var(--space-md);
-  padding-block: var(--space-sm);
-  z-index: var(--z-sticky);
-}
-
-@media (min-width: 640px) {
-  /* sm: --breakpoint-sm */
-  .mobileNav {
-    display: none;
-  }
+/* The Drawer's header: its title, and the button that closes it. The title's own gap below it
+   moves to the header, so the button centres on the title rather than on the title and its gap. */
+.drawerHeader {
+  --drawer-title-gap: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding-block-end: var(--space-xs);
 }
 
 .mobileList {

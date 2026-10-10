@@ -21,11 +21,13 @@ export default defineConfig({
       // Re-baselined 2026-09-19 for vitest 4, whose AST-aware v8 remapping
       // counts real branches/functions in untested files (same tests, v3 → v4:
       // branches 63.63% → 18.51%, functions 62.65% → 36.02%).
+      // Raised 2026-10-10 with the header integration spec (design-system upgrade):
+      // 34.15% lines, 32.77% statements, 22.52% branches, 41.71% functions.
       thresholds: {
-        lines: 28,
-        statements: 28,
-        branches: 18,
-        functions: 36,
+        lines: 34,
+        statements: 32,
+        branches: 22,
+        functions: 41,
       },
       include: ['app/**', 'features/**', 'components/**', 'lib/**'],
       exclude: [

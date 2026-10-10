@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Chip } from '@arun-dev/ui';
+import { Card, Chip, Heading, Input } from '@arun-dev/ui';
 import { useSearch } from '../hooks/useSearch';
 import { SearchResultCard } from './SearchResultCard';
 import type { SearchDocument } from '@/lib/search/types';
@@ -17,17 +17,19 @@ export function SearchView({ documents }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.heading}>
-        <h1 className="text-size-3xl font-weight-bold type-display">Search</h1>
+        <Heading level={1} size="3xl" className="font-weight-bold type-display">
+          Search
+        </Heading>
         <p className="text-size-base text-color-secondary">Search across projects and articles.</p>
       </div>
 
       <form role="search" onSubmit={(e) => e.preventDefault()}>
-        <input
+        <Input
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search projects and articles…"
-          className={styles.input}
+          className={styles.search}
           aria-label="Search"
           disabled={isIndexing}
         />
@@ -82,7 +84,7 @@ export function SearchView({ documents }: Props) {
       )}
 
       {results.length > 0 && (
-        <ul className={styles.results} aria-label="Search results">
+        <ul role="list" className={styles.results} aria-label="Search results">
           {results.map((result) => (
             <li key={result.id}>
               <SearchResultCard result={result} />

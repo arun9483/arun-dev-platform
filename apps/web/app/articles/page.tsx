@@ -1,5 +1,6 @@
 import { loadArticlesPage } from './page.loader';
 import { ArticleList } from '@/features/articles/components/ArticleList';
+import { Heading } from '@arun-dev/ui';
 
 export const metadata = {
   title: 'Articles',
@@ -11,7 +12,9 @@ export default async function ArticlesPage() {
   return (
     <div className="page-container stack space-xl">
       <div className="stack space-2xs">
-        <h1 className="text-size-3xl font-weight-bold type-display">Articles</h1>
+        <Heading level={1} size="3xl" className="font-weight-bold type-display">
+          Articles
+        </Heading>
         <p className="text-size-base text-color-secondary">
           Deep technical writing on frontend architecture, performance, and browser APIs.
         </p>

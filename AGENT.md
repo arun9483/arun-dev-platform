@@ -343,7 +343,7 @@ You MUST:
 
 ### White-Labeling
 
-- Brand CSS ships with the `@arun-dev/tokens` package (`@arun-dev/tokens/brands/default`)
+- Brand CSS ships with the `@arun-dev/tokens` package; this app uses the arun brand (`@arun-dev/tokens/brands/arun`), shared by every arun app
 - Each brand must satisfy the `BrandSemanticContract` type from `@arun-dev/tokens/createBrand`
 - To add a new brand: generate it with `createBrand()` (build-time, in the arun-design-system repo or locally) and swap the brand import in `globals.css`
 

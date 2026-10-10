@@ -35,6 +35,10 @@ export const reactConfig = [
     rules: {
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
+      // `role="list"` is not redundant on a list whose markers are removed: Safari drops the
+      // list semantics with `list-style: none`, and @arun-dev/ui 5's reset keeps markers, so a
+      // layout list opts out with it. As in the design system's own config.
+      'jsx-a11y/no-redundant-roles': ['error', { nav: ['navigation'], ul: ['list'], ol: ['list'] }],
     },
     settings: {
       react: {

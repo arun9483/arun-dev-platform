@@ -8,6 +8,7 @@ import { FeaturedAchievements } from '@/features/achievements/components/Feature
 import { Cover } from '@/components/Cover';
 import Link from 'next/link';
 import styles from './page.module.css';
+import { Heading } from '@arun-dev/ui';
 
 export default async function HomePage() {
   const {
@@ -28,15 +29,17 @@ export default async function HomePage() {
         </section>
 
         <section className="stack space-md">
-          <h2 className="text-size-2xl font-weight-semibold text-color-primary">Experience</h2>
+          <Heading level={2} size="2xl" className="font-weight-semibold text-color-primary">
+            Experience
+          </Heading>
           <ExperienceTimeline experience={featuredExperience} />
         </section>
 
         <section className="stack space-md">
           <div className={styles.sectionHeader}>
-            <h2 className="text-size-2xl font-weight-semibold text-color-primary">
+            <Heading level={2} size="2xl" className="font-weight-semibold text-color-primary">
               Featured Projects
-            </h2>
+            </Heading>
             <Link href="/projects" className="text-size-sm underline text-color-accent">
               View all
             </Link>
@@ -48,9 +51,9 @@ export default async function HomePage() {
 
         <section className="stack space-md">
           <div className={styles.sectionHeader}>
-            <h2 className="text-size-2xl font-weight-semibold text-color-primary">
+            <Heading level={2} size="2xl" className="font-weight-semibold text-color-primary">
               Latest Articles
-            </h2>
+            </Heading>
             <Link href="/articles" className="text-size-sm underline text-color-accent">
               View all
             </Link>
@@ -62,7 +65,9 @@ export default async function HomePage() {
 
         <section className="stack space-md">
           <div className={styles.sectionHeader}>
-            <h2 className="text-size-2xl font-weight-semibold text-color-primary">Achievements</h2>
+            <Heading level={2} size="2xl" className="font-weight-semibold text-color-primary">
+              Achievements
+            </Heading>
             <Link href="/achievements" className="text-size-sm underline text-color-accent">
               View all
             </Link>

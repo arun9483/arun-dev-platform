@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Button } from '@arun-dev/ui';
 import styles from './CodeBlock.module.css';
 
 type Props = {
@@ -17,13 +18,14 @@ export function CopyButton({ rawCode }: Props) {
   };
 
   return (
-    <button
+    <Button
+      variant="ghost"
       onClick={copy}
       className={styles.codeCopyBtn}
       data-copied={copied ? 'true' : 'false'}
       aria-label="Copy code to clipboard"
     >
       {copied ? '✓ Copied' : 'Copy'}
-    </button>
+    </Button>
   );
 }

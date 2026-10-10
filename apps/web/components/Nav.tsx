@@ -1,8 +1,10 @@
-// Server component: no hydration cost on any route. Active-link state comes
-// from the data-route attribute published by THEME_SCRIPT (matched in CSS), and
-// the mobile menu is a native <details> disclosure rather than React state.
+// The desktop links render on the server: no hydration cost there. Active-link state comes from
+// the data-route attribute published by THEME_SCRIPT (matched in CSS). On narrow screens the menu
+// is MobileNav, the design system's Drawer — the one client part of the navigation.
 
-import Link from 'next/link';
+import NextLink from 'next/link';
+import { Link } from '@arun-dev/ui';
+import { MobileNav } from './MobileNav';
 import styles from './Nav.module.css';
 
 const NAV_LINKS = [
@@ -16,10 +18,10 @@ export function Nav() {
   return (
     <>
       <nav aria-label="Main navigation" className={styles.navDesktop}>
-        <ul className={styles.list}>
+        <ul role="list" className={styles.list}>
           {NAV_LINKS.map(({ href, label }) => (
             <li key={href}>
-              <Link href={href} className={styles.navLink} data-nav={href}>
+              <Link render={<NextLink href={href} />} className={styles.navLink} data-nav={href}>
                 {label}
               </Link>
             </li>
@@ -27,69 +29,7 @@ export function Nav() {
         </ul>
       </nav>
 
-      <details className={styles.mobileMenu}>
-        <summary className={styles.hamburger} aria-label="Toggle menu">
-          <MenuIcon className={styles.iconOpen} />
-          <XIcon className={styles.iconClose} />
-        </summary>
-
-        <nav id="mobile-nav" aria-label="Mobile navigation" className={styles.mobileNav}>
-          <ul className={styles.mobileList}>
-            {NAV_LINKS.map(({ href, label }) => (
-              <li key={href}>
-                <Link
-                  href={href}
-                  className={`${styles.navLink} ${styles.mobileLink}`}
-                  data-nav={href}
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </details>
+      <MobileNav links={NAV_LINKS} />
     </>
-  );
-}
-
-function MenuIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <line x1="3" y1="6" x2="21" y2="6" />
-      <line x1="3" y1="12" x2="21" y2="12" />
-      <line x1="3" y1="18" x2="21" y2="18" />
-    </svg>
-  );
-}
-
-function XIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="18"
-      height="18"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
-    </svg>
   );
 }

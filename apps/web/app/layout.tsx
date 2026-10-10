@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import Script from 'next/script';
+import { Link } from '@arun-dev/ui';
 import { THEME_SCRIPT } from '@/styles/themes/theme-script';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -54,9 +55,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }}
         />
-        <a href="#main-content" className="skip-link">
+        <Link href="#main-content" className="skip-link">
           Skip to main content
-        </a>
+        </Link>
         <Header />
         <main id="main-content">{children}</main>
         <Footer />

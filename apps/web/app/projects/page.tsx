@@ -1,5 +1,6 @@
 import { loadProjectsPage } from './page.loader';
 import { ProjectList } from '@/features/projects/components/ProjectList';
+import { Heading } from '@arun-dev/ui';
 
 export const metadata = {
   title: 'Projects',
@@ -11,7 +12,9 @@ export default async function ProjectsPage() {
   return (
     <div className="page-container stack space-xl">
       <div className="stack space-2xs">
-        <h1 className="text-size-3xl font-weight-bold type-display">Projects</h1>
+        <Heading level={1} size="3xl" className="font-weight-bold type-display">
+          Projects
+        </Heading>
         <p className="text-size-base text-color-secondary">
           Engineering case studies with measurable impact.
         </p>

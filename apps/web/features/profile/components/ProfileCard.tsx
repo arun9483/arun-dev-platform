@@ -1,4 +1,4 @@
-import { Button } from '@arun-dev/ui';
+import { Heading, Link } from '@arun-dev/ui';
 import type { Profile, Skill } from '../types';
 import { SkillList } from './SkillList';
 import styles from './ProfileCard.module.css';
@@ -16,9 +16,9 @@ export function ProfileCard({ profile, featuredSkills }: Props) {
       <div className={styles.intro}>
         <div className="bar-accent" />
         <div className={styles.nameBlock}>
-          <h1 id="profile-name" className="text-size-4xl font-weight-bold type-display">
+          <Heading level={1} size="4xl" id="profile-name" className="font-weight-bold type-display">
             {name}
-          </h1>
+          </Heading>
           <p className={`text-size-xl font-weight-medium text-color-accent ${styles.title}`}>
             {title}
           </p>
@@ -36,34 +36,19 @@ export function ProfileCard({ profile, featuredSkills }: Props) {
 
       <nav aria-label="Social links" className={styles.socialLinks}>
         {socialLinks.github && (
-          <Button
-            href={socialLinks.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="ghost"
-          >
+          <Link href={socialLinks.github} target="_blank" rel="noopener noreferrer">
             GitHub ↗<span className="sr-only"> (opens in new tab)</span>
-          </Button>
+          </Link>
         )}
         {socialLinks.linkedin && (
-          <Button
-            href={socialLinks.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="ghost"
-          >
+          <Link href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer">
             LinkedIn ↗<span className="sr-only"> (opens in new tab)</span>
-          </Button>
+          </Link>
         )}
         {socialLinks.website && (
-          <Button
-            href={socialLinks.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="ghost"
-          >
+          <Link href={socialLinks.website} target="_blank" rel="noopener noreferrer">
             Website ↗<span className="sr-only"> (opens in new tab)</span>
-          </Button>
+          </Link>
         )}
       </nav>
     </article>

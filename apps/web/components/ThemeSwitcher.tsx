@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { Button } from '@arun-dev/ui';
 import { getStoredTheme, applyTheme } from '@/styles/themes/theme-script';
 import type { ThemeValue } from '@/styles/themes/theme-script';
 import styles from './ThemeSwitcher.module.css';
@@ -44,8 +45,8 @@ export function ThemeSwitcher() {
   }
 
   return (
-    <button
-      type="button"
+    <Button
+      variant="ghost"
       onClick={handleClick}
       aria-label={ARIA_LABEL[theme]}
       title={ARIA_LABEL[theme]}
@@ -57,7 +58,7 @@ export function ThemeSwitcher() {
       <span className={styles.label} aria-hidden="true">
         {THEME_LABEL[theme]}
       </span>
-    </button>
+    </Button>
   );
 }
 
