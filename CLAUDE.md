@@ -198,7 +198,7 @@ You must use:
 - CSS Modules + CSS custom properties (no utility framework, no CSS-in-JS)
 - Pure CSS custom properties for design tokens — no CSS-in-JS
 - Design tokens come from the published `@arun-dev/tokens` npm package (pure CSS, white-label compatible) — maintained in the separate [arun-design-system](https://github.com/arun9483/arun-design-system) monorepo
-- Brand selection: `globals.css` imports `@arun-dev/tokens/base` + a brand stylesheet (`@arun-dev/tokens/brands/default`); custom brands are generated with `createBrand()` from `@arun-dev/tokens/createBrand`
+- Brand selection: `globals.css` imports `@arun-dev/tokens/base` + a brand stylesheet (`@arun-dev/tokens/brands/arun`, the arun brand shared by every arun app); custom brands are generated with `createBrand()` from `@arun-dev/tokens/createBrand`
 - Theme support: system (default), dark, light via `data-theme` attribute
 - Components must use semantic tokens (`--color-bg-primary`) over raw brand tokens
 - See `docs/design-system.md` for full architecture

@@ -62,7 +62,7 @@ The tech stack is chosen based on:
 
 - Tokens come from the published `@arun-dev/tokens` npm package, maintained in the separate [arun-design-system](https://github.com/arun9483/arun-design-system) monorepo
 - Structural tokens (radius, shadows, typography scale) via `@arun-dev/tokens/base`
-- Brand-specific tokens (colors) via `@arun-dev/tokens/brands/default`
+- Brand-specific tokens (colors) via `@arun-dev/tokens/brands/arun`, the arun brand shared by every arun app
 - White-label compatible: custom brands generated with `createBrand()` from `@arun-dev/tokens/createBrand`
 
 ---

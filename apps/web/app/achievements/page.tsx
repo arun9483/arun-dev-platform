@@ -1,5 +1,6 @@
 import { loadAchievementsPage } from './page.loader';
 import { AchievementList } from '@/features/achievements/components/AchievementList';
+import { Heading } from '@arun-dev/ui';
 
 export const metadata = {
   title: 'Achievements',
@@ -11,7 +12,9 @@ export default async function AchievementsPage() {
   return (
     <div className="page-container stack space-xl">
       <div className="stack space-2xs">
-        <h1 className="text-size-3xl font-weight-bold type-display">Achievements</h1>
+        <Heading level={1} size="3xl" className="font-weight-bold type-display">
+          Achievements
+        </Heading>
         <p className="text-size-base text-color-secondary">
           Certifications, awards, and recognitions.
         </p>

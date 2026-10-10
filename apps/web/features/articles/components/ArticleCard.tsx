@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Card, Chip, Badge } from '@arun-dev/ui';
+import { Badge, Card, Chip, Heading } from '@arun-dev/ui';
 import type { ArticleMeta } from '../types';
 import { DIFFICULTY } from '../lib/difficulty';
 import styles from './ArticleCard.module.css';
@@ -11,7 +11,7 @@ type Props = {
 
 export function ArticleCard({ article, headingLevel = 'h2' }: Props) {
   const { slug, title, summary, publishedAt, metadata } = article;
-  const Heading = headingLevel;
+  const level = headingLevel === 'h2' ? 2 : 3;
   const date = new Date(publishedAt).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
@@ -31,7 +31,9 @@ export function ArticleCard({ article, headingLevel = 'h2' }: Props) {
       </div>
 
       <Heading
-        className={`text-size-base font-weight-semibold line-height-snug text-color-primary ${styles.heading}`}
+        level={level}
+        size="base"
+        className={`font-weight-semibold line-height-snug text-color-primary ${styles.heading}`}
       >
         {title}
       </Heading>

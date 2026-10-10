@@ -13,7 +13,7 @@ export function AchievementList({ achievements, headingLevel = 'h2' }: Props) {
   }
 
   return (
-    <ul className={styles.grid}>
+    <ul role="list" className={styles.grid}>
       {achievements.map((achievement) => (
         <li key={achievement.id}>
           <AchievementCard achievement={achievement} headingLevel={headingLevel} />

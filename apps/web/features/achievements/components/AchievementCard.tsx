@@ -1,4 +1,4 @@
-import { Card, Chip } from '@arun-dev/ui';
+import { Card, Chip, Heading } from '@arun-dev/ui';
 import type { Achievement, AchievementType } from '../types';
 import styles from './AchievementCard.module.css';
 
@@ -16,7 +16,7 @@ const TYPE_LABEL: Record<AchievementType, string> = {
 
 export function AchievementCard({ achievement, headingLevel = 'h2' }: Props) {
   const { title, issuer, date, type, description, credentialUrl } = achievement;
-  const Heading = headingLevel;
+  const level = headingLevel === 'h2' ? 2 : 3;
   const formatted = new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
 
   return (
@@ -28,7 +28,9 @@ export function AchievementCard({ achievement, headingLevel = 'h2' }: Props) {
         </time>
       </div>
 
-      <Heading className="font-weight-semibold text-size-sm text-color-primary">{title}</Heading>
+      <Heading level={level} size="sm" className="font-weight-semibold text-color-primary">
+        {title}
+      </Heading>
       <p className="text-size-xs text-color-secondary">{issuer}</p>
 
       {description && (

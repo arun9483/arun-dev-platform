@@ -13,7 +13,7 @@ export function ArticleList({ articles, headingLevel = 'h2' }: Props) {
   }
 
   return (
-    <ul className={styles.list}>
+    <ul role="list" className={styles.list}>
       {articles.map((article) => (
         <li key={article.id}>
           <ArticleCard article={article} headingLevel={headingLevel} />

@@ -28,13 +28,17 @@ The design system is a **pure CSS** token-based architecture that supports:
 ```mermaid
 graph TD
     subgraph "@arun-dev/tokens (npm)"
-        BASE["base<br/>(primitives + default brand)"]
-        DEFAULT["brands/default<br/>(palette + semantic)"]
+        BASE["base<br/>(primitives + component tokens)"]
+        DEFAULT["brands/arun<br/>(palette + semantic)"]
     end
 
     subgraph "@arun-dev/ui (npm)"
-        COMP["Components<br/>(Badge, Button, Card, Chip)"]
+        COMP["Components<br/>(Card, Heading, Link, Drawer, …)"]
         UICSS["components.css"]
+    end
+
+    subgraph "@arun-dev/headless (npm)"
+        HEADLESS["Behaviour<br/>(Drawer, Dialog, Tabs, …)"]
     end
 
     subgraph "apps/web"
@@ -50,6 +54,7 @@ graph TD
     GLOBALS --> LAYOUT
     THEME_SCRIPT --> LAYOUT
     COMP --> FEATURES
+    HEADLESS --> COMP
     COMP -.->|"uses CSS variable names"| BASE
 ```
 
@@ -115,7 +120,7 @@ sequenceDiagram
     participant Browser as Browser
 
     Dev->>CreateBrand: createBrand({ name, seed }) → brand CSS file
-    Dev->>Globals: swap @import '@arun-dev/tokens/brands/default' for the custom brand
+    Dev->>Globals: swap @import '@arun-dev/tokens/brands/arun' for the custom brand
     Globals->>Build: globals.css imports base + brand + components.css
     Build->>Browser: CSS bundle contains only the selected brand tokens
 ```
@@ -185,7 +190,7 @@ Each brand CSS file must define the complete set of brand tokens:
 
 1. Generate the brand stylesheet with `createBrand()` from `@arun-dev/tokens/createBrand` (or hand-write one satisfying the `BrandSemanticContract` type)
 2. For a reusable brand, add it under `packages/tokens/src/brands/` in the [arun-design-system](https://github.com/arun9483/arun-design-system) repo and release; for an app-local brand, commit the generated CSS in this repo
-3. Swap the brand import in `app/globals.css` (`@arun-dev/tokens/brands/default` → the new brand)
+3. Swap the brand import in `app/globals.css` (`@arun-dev/tokens/brands/arun` → the new brand)
 4. No changes needed in `@arun-dev/ui` or application component code
 
 ---
@@ -237,22 +242,29 @@ This script is ~100 bytes, has no dependencies, and executes before React hydrat
 graph TD
     WEB["apps/web<br/>(owns brand decision)"]
     UI["@arun-dev/ui (npm)<br/>(brand-agnostic components)"]
+    HEADLESS["@arun-dev/headless (npm)<br/>(behaviour, no styling)"]
     TOKENS["@arun-dev/tokens (npm)<br/>(pure CSS, zero runtime deps)"]
     CONFIG["packages/config<br/>(ESLint, TypeScript only)"]
 
     WEB --> UI
+    WEB --> HEADLESS
     WEB --> TOKENS
+    UI --> HEADLESS
     UI --> TOKENS
     WEB --> CONFIG
 ```
 
 ### 6.1 Dependency Direction Rules
 
-| Package                  | Can Import               | Cannot Import |
-| ------------------------ | ------------------------ | ------------- |
-| `@arun-dev/tokens` (npm) | Nothing (leaf package)   | `ui`, `web`   |
-| `@arun-dev/ui` (npm)     | `tokens`                 | `web`         |
-| `apps/web`               | `tokens`, `ui`, `config` | —             |
+| Package                    | Can Import                           | Cannot Import |
+| -------------------------- | ------------------------------------ | ------------- |
+| `@arun-dev/tokens` (npm)   | Nothing (leaf package)               | `ui`, `web`   |
+| `@arun-dev/headless` (npm) | Nothing (leaf package)               | `ui`, `web`   |
+| `@arun-dev/ui` (npm)       | `headless`, `tokens`                 | `web`         |
+| `apps/web`                 | `tokens`, `headless`, `ui`, `config` | —             |
+
+`@arun-dev/headless` is a peer dependency of `@arun-dev/ui`, so `apps/web` lists it too (pnpm does
+not install peers on its own).
 
 ---
 
@@ -264,7 +276,8 @@ The token and UI package sources live in the [arun-design-system](https://github
 
 ```
 @arun-dev/tokens
-  /base                     # All primitives + default brand (one import)
+  /base                     # All primitives and the component tokens — no brand
+  /brands/arun              # The arun brand: createBrand(ARUN_BRAND), shared by every arun app
   /brands/default           # Default brand (palette + semantic, incl. dark mode)
   /primitives/*             # Individual scales (typography, spacing, radius, shadow, ...)
   /primitives/fonts         # Inter variable font (opt-in @font-face)
@@ -275,9 +288,18 @@ The token and UI package sources live in the [arun-design-system](https://github
 
 ```
 @arun-dev/ui
-  .                         # Badge, Button, Card, Chip (compiled ESM/CJS + types)
+  .                         # Every component (ESM/CJS, one module per file, + types)
   /components.css           # All component styles (one import)
-  /css/*                    # Individual stylesheets (reset, btn, card, chip, badge, metric, utilities)
+  /css/*                    # One stylesheet per component, plus reset, metric and utilities
+```
+
+In a React Server Component, ui's presentational components (Card, Chip, Badge, Heading,
+Paragraph, Text, Link, Button, …) render on the server and ship no JavaScript; the stateful ones
+(Drawer, Dialog, Tabs, …) are client components. Here only the mobile menu, `MobileNav`, is one:
+the rest of the navigation stays server-rendered. See the design system's Server Components guide.
+
+```
+
 ```
 
 ### 7.3 `apps/web/styles/` (updated)
@@ -297,7 +319,7 @@ apps/web/
 flowchart LR
     A["npm install"] --> B["@arun-dev/tokens + @arun-dev/ui<br/>(published packages)"]
     B --> C["next build"]
-    C --> D["globals.css imports:<br/>1. @arun-dev/tokens/base<br/>2. @arun-dev/tokens/brands/default<br/>3. @arun-dev/ui/components.css"]
+    C --> D["globals.css imports:<br/>1. @arun-dev/tokens/base<br/>2. @arun-dev/tokens/brands/arun<br/>3. @arun-dev/ui/components.css"]
     D --> E["CSS bundle with<br/>only selected brand"]
 ```
 

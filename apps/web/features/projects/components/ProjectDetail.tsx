@@ -1,4 +1,4 @@
-import { Button, Card } from '@arun-dev/ui';
+import { Card, Heading, Link } from '@arun-dev/ui';
 import type { Project } from '../types';
 import { ImpactMetricBadge } from './ImpactMetricBadge';
 import { BackLink } from '@/components/BackLink';
@@ -26,7 +26,9 @@ export function ProjectDetail({ project }: Props) {
 
         <div className={styles.header}>
           <div className="bar-accent" />
-          <h1 className="text-size-4xl font-weight-bold type-display">{title}</h1>
+          <Heading level={1} size="4xl" className="font-weight-bold type-display">
+            {title}
+          </Heading>
           <p
             className={`text-size-base line-height-relaxed text-color-secondary ${styles.description}`}
           >
@@ -34,21 +36,23 @@ export function ProjectDetail({ project }: Props) {
           </p>
           <div className={styles.links}>
             {links.github && (
-              <Button href={links.github} target="_blank" rel="noopener noreferrer" variant="ghost">
+              <Link href={links.github} target="_blank" rel="noopener noreferrer">
                 GitHub ↗<span className="sr-only"> (opens in new tab)</span>
-              </Button>
+              </Link>
             )}
             {links.live && (
-              <Button href={links.live} target="_blank" rel="noopener noreferrer" variant="primary">
+              <Link href={links.live} target="_blank" rel="noopener noreferrer">
                 Live site ↗<span className="sr-only"> (opens in new tab)</span>
-              </Button>
+              </Link>
             )}
           </div>
         </div>
 
         {impact.length > 0 && (
           <section className={styles.impactSection}>
-            <h2 className={`type-overline ${styles.impactLabel}`}>Impact</h2>
+            <Heading level={2} size="xs" className={`type-overline ${styles.impactLabel}`}>
+              Impact
+            </Heading>
             <div className={styles.impactGrid}>
               {impact.map((metric, i) => (
                 <ImpactMetricBadge key={i} metric={metric} />
@@ -59,24 +63,32 @@ export function ProjectDetail({ project }: Props) {
 
         <Card className={styles.caseStudy}>
           <div className={styles.caseStudySection}>
-            <h2 className="type-overline">Problem</h2>
+            <Heading level={2} size="xs" className="type-overline">
+              Problem
+            </Heading>
             <p className="text-size-base line-height-relaxed text-color-primary">{problem}</p>
           </div>
           <div className={styles.caseStudySectionDivider}>
-            <h2 className="type-overline">Solution</h2>
+            <Heading level={2} size="xs" className="type-overline">
+              Solution
+            </Heading>
             <p className="text-size-base line-height-relaxed text-color-primary">{solution}</p>
           </div>
         </Card>
 
         <section className={styles.techSection}>
-          <h2 className="type-overline">Tech Stack</h2>
+          <Heading level={2} size="xs" className="type-overline">
+            Tech Stack
+          </Heading>
           <TagChips tags={techStack} />
         </section>
 
         {links.references && links.references.length > 0 && (
           <section className={styles.referencesSection}>
-            <h2 className="type-overline">References</h2>
-            <ul className={styles.referencesList}>
+            <Heading level={2} size="xs" className="type-overline">
+              References
+            </Heading>
+            <ul role="list" className={styles.referencesList}>
               {links.references.map((reference) => (
                 <li key={reference.url}>
                   <a

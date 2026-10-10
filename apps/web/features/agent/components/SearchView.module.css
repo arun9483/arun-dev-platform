@@ -21,25 +21,9 @@
   gap: var(--space-2xs);
 }
 
-.input {
+/* The design system's Input draws the field; it only needs the full width here. */
+.search {
   width: 100%;
-  padding-inline: var(--space-sm);
-  padding-block: var(--space-xs);
-  border-radius: var(--radius-xl);
-  font-size: var(--text-sm);
-  background-color: var(--color-bg-surface);
-  color: var(--color-text-primary);
-  border: var(--space-px) solid var(--color-border-default);
-  outline: none;
-}
-
-.input::placeholder {
-  color: var(--color-text-muted);
-}
-
-.input:focus {
-  outline: var(--space-2px) solid var(--color-text-accent);
-  outline-offset: var(--space-2px);
 }
 
 .emptyState {

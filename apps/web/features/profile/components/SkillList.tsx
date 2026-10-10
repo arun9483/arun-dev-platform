@@ -11,7 +11,7 @@ export function SkillList({ skills, title }: Props) {
   return (
     <section className={styles.section}>
       {title && <p className={`type-overline ${styles.label}`}>{title}</p>}
-      <ul className={styles.chips}>
+      <ul role="list" className={styles.chips}>
         {skills.map((skill) => (
           <Chip key={skill.name} render={<li />} variant="accent">
             {skill.name}

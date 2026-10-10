@@ -1,7 +1,7 @@
 import { isValidElement } from 'react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
-import { Badge, Card } from '@arun-dev/ui';
+import { Badge, Card, Heading, Link } from '@arun-dev/ui';
 import type { Article } from '../types';
 import { difficultyPresentation } from '../lib/difficulty';
 import { CodeBlock } from './CodeBlock';
@@ -81,16 +81,19 @@ export function ArticleDetail({ article }: Props) {
         <p className="text-size-xs font-weight-semibold uppercase letter-spacing-wider text-color-muted">
           On this page
         </p>
-        <ul className={styles.tocList}>
+        <ul role="list" className={styles.tocList}>
           {toc.map(({ id, text, level }) => (
             <li
               key={id}
               className={styles.tocItem}
               style={{ '--toc-depth': level - 2 } as React.CSSProperties}
             >
-              <a href={`#${id}`} className={`text-size-sm text-color-secondary ${styles.tocLink}`}>
+              <Link
+                href={`#${id}`}
+                className={`text-size-sm text-color-secondary ${styles.tocLink}`}
+              >
                 {text}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -127,9 +130,13 @@ export function ArticleDetail({ article }: Props) {
 
               <div className={styles.headerInner}>
                 <div className="bar-accent" />
-                <h1 className="text-size-4xl font-weight-bold line-height-tight type-display">
+                <Heading
+                  level={1}
+                  size="4xl"
+                  className="font-weight-bold line-height-tight type-display"
+                >
                   {title}
-                </h1>
+                </Heading>
               </div>
 
               <p className="text-size-base line-height-relaxed text-color-secondary">{summary}</p>

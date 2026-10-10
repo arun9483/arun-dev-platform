@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Card, Chip } from '@arun-dev/ui';
+import { Card, Chip, Heading } from '@arun-dev/ui';
 import type { Project } from '../types';
 import { ImpactMetricBadge } from './ImpactMetricBadge';
 import styles from './ProjectCard.module.css';
@@ -11,13 +11,15 @@ type Props = {
 
 export function ProjectCard({ project, headingLevel = 'h2' }: Props) {
   const { slug, title, description, techStack, impact, metadata } = project;
-  const Heading = headingLevel;
+  const level = headingLevel === 'h2' ? 2 : 3;
 
   return (
     <Card as="article" lift className={styles.article}>
       <div className={styles.titleRow}>
         <Heading
-          className={`text-size-lg font-weight-semibold text-color-primary ${styles.heading}`}
+          level={level}
+          size="lg"
+          className={`font-weight-semibold text-color-primary ${styles.heading}`}
         >
           {title}
         </Heading>

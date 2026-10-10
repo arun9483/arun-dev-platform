@@ -13,7 +13,7 @@ export function ProjectList({ projects, headingLevel = 'h2' }: Props) {
   }
 
   return (
-    <ul className={styles.list}>
+    <ul role="list" className={styles.list}>
       {projects.map((project) => (
         <li key={project.id}>
           <ProjectCard project={project} headingLevel={headingLevel} />
