@@ -65,11 +65,12 @@
       "dompurify@3": "3.4.16",
       "@babel/core@7": "7.29.7",
       "esbuild@0.27": "0.28.1",
-      "sharp": "0.35.4",
+      "sharp": "0.35.5",
       "browserslist@4": "4.28.7",
       "@humanfs/node@0": "0.16.8",
-      "smol-toml@1": "1.7.1",
-      "baseline-browser-mapping@2": "2.11.21"
+      "smol-toml@1": "1.9.0",
+      "baseline-browser-mapping@2": "2.11.21",
+      "source-map-js@1": "1.2.2"
     }
   }
 }

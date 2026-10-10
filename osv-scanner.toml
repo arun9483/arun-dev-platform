@@ -2,7 +2,23 @@
 # security.yml). Each entry needs a justification, an owner, and an expiry
 # date <= 90 days out. No permanent exceptions.
 #
-# Currently empty: every known advisory is cleared by a real version bump.
 # Prefer bumping the pinned `pnpm.overrides` entry over adding a waiver here —
 # an override pinned to a version that later becomes vulnerable is the failure
 # mode this file exists to avoid, not to paper over.
+
+# Owner: arun9483. Waived 2026-10-10 (#17). The October wave's other findings are cleared by
+# version bumps; these three have no fix this app can install.
+[[IgnoredVulns]]
+id = "GHSA-vfj7-8cjw-p6xm"
+ignoreUntil = 2027-01-08
+reason = "braces 3.0.3 is the latest release and no fix is published. Reached only through eslint-config-next -> @next/eslint-plugin-next -> fast-glob -> micromatch, so it runs at lint time on this repo's own file paths, never in the built site or on user input. Remove once braces ships a fix."
+
+[[IgnoredVulns]]
+id = "GHSA-hp3w-g68c-fv3c"
+ignoreUntil = 2027-01-08
+reason = "sprintf-js 1.0.3 has no published fix. Reached only through gray-matter -> js-yaml@3 -> argparse, which js-yaml uses for its command-line tool, not the parser gray-matter calls; frontmatter is parsed at build time from this repo's own MDX. Remove once a fix ships or gray-matter drops js-yaml@3."
+
+[[IgnoredVulns]]
+id = "GHSA-238p-pmpm-9mq7"
+ignoreUntil = 2027-01-08
+reason = "katex 0.16.47, low severity (CVSS 2.1). The fix, 0.18.2, is outside the ^0.16 range every mermaid release requires (11.16.1 through 12.1.0), so forcing it risks breaking diagram rendering. mermaid renders only diagrams authored in this repo's articles. Remove once mermaid accepts katex >= 0.18.2."
